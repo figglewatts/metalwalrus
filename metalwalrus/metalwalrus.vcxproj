@@ -18,11 +18,25 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Dependencies\lib\lodepng.cpp" />
+    <ClCompile Include="Src\Framework\Util\Debug.cpp" />
+    <ClCompile Include="Src\Framework\Util\IOUtil.cpp" />
+    <ClCompile Include="Src\Framework\Game.cpp" />
+    <ClCompile Include="Src\main.cpp" />
+    <ClCompile Include="Src\Framework\Graphics\Texture2D.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Src\Framework\Util\Debug.h" />
+    <ClInclude Include="Src\Framework\Util\IOUtil.h" />
+    <ClInclude Include="Src\Framework\Game.h" />
+    <ClInclude Include="Src\Framework\Graphics\Texture2D.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{BC71CF58-3950-4419-8D2A-03A201012C6D}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>metalwalrus</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -101,8 +115,10 @@
       <AdditionalOptions>/ENTRY:mainCRTStartup %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PostBuildEvent>
-      <Message>Copy 3rd party DLLs into output folder</Message>
-      <Command>xcopy $(SolutionDir)Dependencies\$(PlatformTarget)\bin\*.dll $(OutputPath) /Y</Command>
+      <Message>
+      </Message>
+      <Command>xcopy $(SolutionDir)Dependencies\$(PlatformTarget)\bin\*.dll $(OutputPath) /Y
+xcopy "$(SolutionDir)assets\*.*" "$(OutputPath)assets\" /E /Y /D</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -138,8 +154,10 @@
       <AdditionalOptions>/ENTRY:mainCRTStartup %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PostBuildEvent>
-      <Message>Copy 3rd party DLLs into output folder</Message>
-      <Command>xcopy $(SolutionDir)Dependencies\$(PlatformTarget)\bin\*.dll $(OutputPath) /Y</Command>
+      <Message>
+      </Message>
+      <Command>xcopy $(SolutionDir)Dependencies\$(PlatformTarget)\bin\*.dll $(OutputPath) /Y
+xcopy "$(SolutionDir)assets\*.*" "$(OutputPath)assets\" /E /Y /D</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -159,9 +177,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="main.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

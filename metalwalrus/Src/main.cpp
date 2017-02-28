@@ -1,23 +1,48 @@
-#include<GL/glew.h>
-#include<GL/freeglut.h>
+#include <GL/glew.h>
+#include <GL/freeglut.h>
+#include <time.h>
+#include <algorithm>
+using namespace std;
 
-void draw()
+#include "Framework/Game.h"
+using namespace metalwalrus;
+
+Game *game;
+double t = 0;
+double targetDeltaTime = 1 / 60.0; // target fps: 60
+double lag = 0;
+clock_t prevTime = clock();
+
+void display()
 {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	// semi-fixed timestep
+	clock_t currTime = clock();
+	clock_t elapsedTime = currTime - prevTime;
+	prevTime = currTime;
 
-	glBegin(GL_TRIANGLES);
-		glVertex2f(0, 0);
-		glVertex2f(50, 75);
-		glVertex2f(100, 0);
-	glEnd();
+	double frameTime = ((double)elapsedTime) / CLOCKS_PER_SEC;
+	lag += frameTime;
 
+	// process input here
+
+	while (lag >= targetDeltaTime)
+	{
+		// if the frame time is too large then use the target
+		double deltaTime = min(frameTime, targetDeltaTime);
+		game->Update(deltaTime);
+		lag -= deltaTime;
+		t += deltaTime;
+	}
+
+	game->Draw();
+	
 	glutSwapBuffers();
 }
 
 void changeSize(int w, int h)
 {
 	// TODO: resolution independence
-	
+
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glViewport(0, 0, w, h);
@@ -27,16 +52,22 @@ void changeSize(int w, int h)
 
 int main(int argc, char **argv)
 {
+	game = new Game("Sam's Game", 300, 200);
+	
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 	glutInitWindowPosition(-1, -1);
-	glutInitWindowSize(300, 200);
-	glutCreateWindow("Metal Walrus");
+	glutInitWindowSize(game->getWidth(), game->getHeight());
+	glutCreateWindow(game->getTitle());
 
-	glutDisplayFunc(draw);
+	game->Start();
+
+	glutDisplayFunc(display);
 	glutReshapeFunc(changeSize);
+	glutIdleFunc(display);
 
 	glutMainLoop();
 
+	delete game;
 	return 1;
 }

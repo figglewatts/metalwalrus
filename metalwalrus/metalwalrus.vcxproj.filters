@@ -15,8 +15,37 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="Src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Framework\Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Dependencies\lib\lodepng.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Framework\Graphics\Texture2D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Framework\Util\IOUtil.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Framework\Util\Debug.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Src\Framework\Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Framework\Graphics\Texture2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Framework\Util\IOUtil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Framework\Util\Debug.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
