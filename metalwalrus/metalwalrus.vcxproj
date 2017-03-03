@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Dependencies\lib\lodepng.cpp" />
+    <ClCompile Include="lib\lodepng.cpp" />
     <ClCompile Include="Src\Framework\Util\Debug.cpp" />
     <ClCompile Include="Src\Framework\Util\IOUtil.cpp" />
     <ClCompile Include="Src\Framework\Game.cpp" />
@@ -27,6 +27,7 @@
     <ClCompile Include="Src\Framework\Graphics\Texture2D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\lodepng.h" />
     <ClInclude Include="Src\Framework\Util\Debug.h" />
     <ClInclude Include="Src\Framework\Util\IOUtil.h" />
     <ClInclude Include="Src\Framework\Game.h" />
@@ -106,18 +107,19 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opengl32.lib;freeglut.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>Dependencies\freeglut;Dependencies\glew</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32.lib;freeglut.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)lib</AdditionalLibraryDirectories>
       <AdditionalOptions>/ENTRY:mainCRTStartup %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PostBuildEvent>
       <Message>
       </Message>
-      <Command>xcopy $(SolutionDir)Dependencies\$(PlatformTarget)\bin\*.dll $(OutputPath) /Y
+      <Command>xcopy $(SolutionDir)bin\*.dll $(OutputPath) /Y
 xcopy "$(SolutionDir)assets\*.*" "$(OutputPath)assets\" /E /Y /D</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
