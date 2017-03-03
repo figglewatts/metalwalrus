@@ -306,3 +306,5 @@ __pycache__/
 *.exe
 *.out
 *.app
+
+!bin/

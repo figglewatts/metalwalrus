@@ -1,0 +1,2 @@
+freeglut.dll
+glew32.dll
