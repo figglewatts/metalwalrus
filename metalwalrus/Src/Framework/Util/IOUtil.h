@@ -4,10 +4,8 @@
 
 namespace metalwalrus
 {
-	class IOUtil
+	namespace utilities 
 	{
-		IOUtil(); // static class
-	public:
 		static std::vector<unsigned char> *loadTexture(char *filePath, unsigned int &texWidth, unsigned int &texHeight);
-	};
+	}
 }

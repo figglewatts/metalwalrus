@@ -5,17 +5,20 @@
 
 namespace metalwalrus
 {
-	std::vector<unsigned char> *IOUtil::loadTexture(char *filePath, unsigned int &texWidth, unsigned int &texHeight)
+	namespace utilities
 	{
-		std::vector<unsigned char> *imgBuffer = new std::vector<unsigned char>();
-		unsigned error = lodepng::decode(*imgBuffer, texWidth, texHeight, filePath);
-
-		if (error != 0)
+		std::vector<unsigned char> *loadTexture(char *filePath, unsigned int &texWidth, unsigned int &texHeight)
 		{
-			Debug::log(lodepng_error_text(error), Debug::LogType::ERR);
-			return nullptr;
-		}
+			std::vector<unsigned char> *imgBuffer = new std::vector<unsigned char>();
+			unsigned error = lodepng::decode(*imgBuffer, texWidth, texHeight, filePath);
 
-		return imgBuffer;
+			if (error != 0)
+			{
+				Debug::log(lodepng_error_text(error), Debug::LogType::ERR);
+				return nullptr;
+			}
+
+			return imgBuffer;
+		}
 	}
 }

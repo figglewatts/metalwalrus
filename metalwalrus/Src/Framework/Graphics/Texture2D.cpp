@@ -28,7 +28,7 @@ namespace metalwalrus
 		GLint sWrap, GLint tWrap)
 	{
 		// TODO(sam): Integrate with eventual implementation of resource manager
-		this->data = IOUtil::loadTexture(filePath, this->width, this->height);
+		this->data = utilities::loadTexture(filePath, this->width, this->height);
 		this->format = format;
 		this->type = type;
 		this->minFilter = minFilter;
