@@ -25,13 +25,16 @@
     <ClCompile Include="Src\Framework\Game.cpp" />
     <ClCompile Include="Src\main.cpp" />
     <ClCompile Include="Src\Framework\Graphics\Texture2D.cpp" />
+    <ClCompile Include="src\Framework\Graphics\TextureRegion.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\lodepng.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Src\Framework\Util\Debug.h" />
     <ClInclude Include="Src\Framework\Util\IOUtil.h" />
     <ClInclude Include="Src\Framework\Game.h" />
     <ClInclude Include="Src\Framework\Graphics\Texture2D.h" />
+    <ClInclude Include="src\Framework\Graphics\TextureRegion.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{BC71CF58-3950-4419-8D2A-03A201012C6D}</ProjectGuid>

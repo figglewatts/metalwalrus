@@ -7,15 +7,13 @@ using namespace std;
 #include "Game.h"
 #include "Util\Debug.h"
 #include "Graphics\Texture2D.h"
+#include "Graphics\TextureRegion.h"
 #include "Util\IOUtil.h"
 
 namespace metalwalrus
 {
 	Texture2D *tex;
-
-	vector<unsigned char> *texData;
-
-	GLuint texHandle;
+	TextureRegion *texRegion;
 
 	Game::Game(char *windowTitle, int w, int h)
 	{
@@ -32,7 +30,9 @@ namespace metalwalrus
 	void Game::Start()
 	{
 		Debug::redirect("log.txt");
-		tex = Texture2D::create("assets/test.png");
+		tex = Texture2D::create("assets/spritesheet.png");
+		texRegion = new TextureRegion(tex, 0, 0, 16, 16);
+
 	}
 
 	void Game::Update(double delta)
@@ -44,7 +44,7 @@ namespace metalwalrus
 	{
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		tex->draw();
+		texRegion->draw();
 
 		glMatrixMode(GL_MODELVIEW);
 	}

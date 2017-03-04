@@ -91,19 +91,18 @@ namespace metalwalrus
 		return new Texture2D(filePath);
 	}
 
-	void Texture2D::draw()
+	void Texture2D::draw(float scaleX, float scaleY, float u, float v, float u2, float v2)
 	{
 		glEnable(GL_TEXTURE_2D);
 		this->bind();
-		glBindTexture(GL_TEXTURE_2D, this->glHandle);
 
 		glPushMatrix();
 
 		glBegin(GL_QUADS);
-			glTexCoord2f(0, 1);	glVertex2f(0, 0);
-			glTexCoord2f(0, 0);	glVertex2f(0, 150);
-			glTexCoord2f(1, 0);	glVertex2f(150, 150);
-			glTexCoord2f(1, 1);	glVertex2f(150, 0);
+			glTexCoord2f(u, v2);	glVertex2f(0, 0);
+			glTexCoord2f(u, v);		glVertex2f(0, 1);
+			glTexCoord2f(u2, v);	glVertex2f(1, 1);
+			glTexCoord2f(u2, v2);	glVertex2f(1, 0);
 		glEnd();
 
 		glPopMatrix();

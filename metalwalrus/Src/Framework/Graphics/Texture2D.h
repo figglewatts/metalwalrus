@@ -36,7 +36,7 @@ namespace metalwalrus
 
 		static Texture2D *create(char *filePath);
 
-		void draw();
+		void draw(float scaleX = 1, float scaleY = 1, float u = 0, float v = 0, float u2 = 1, float v2 = 1);
 		void bind();
 
 		~Texture2D();
