@@ -32,6 +32,8 @@ namespace metalwalrus
 	{
 		Debug::redirect("log.txt");
 		
+		// test comment
+
 		tex = Texture2D::create("assets/spritesheet.png");
 		texRegion = new TextureRegion(tex, 8, 0, 16, 16);
 	}
