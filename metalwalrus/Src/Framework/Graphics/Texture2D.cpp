@@ -28,7 +28,7 @@ namespace metalwalrus
 		GLint sWrap, GLint tWrap)
 	{
 		// TODO(sam): Integrate with eventual implementation of resource manager
-		this->data = utilities::loadTexture(filePath, this->width, this->height);
+		this->data = utilities::IOUtil::loadTexture(filePath, this->width, this->height);
 		this->format = format;
 		this->type = type;
 		this->minFilter = minFilter;
@@ -91,7 +91,7 @@ namespace metalwalrus
 		return new Texture2D(filePath);
 	}
 
-	void Texture2D::draw(float scaleX, float scaleY, float u, float v, float u2, float v2)
+	void Texture2D::draw(float u, float v, float u2, float v2)
 	{
 		glEnable(GL_TEXTURE_2D);
 		this->bind();
@@ -100,9 +100,9 @@ namespace metalwalrus
 
 		glBegin(GL_QUADS);
 			glTexCoord2f(u, v2);	glVertex2f(0, 0);
-			glTexCoord2f(u, v);		glVertex2f(0, 1);
-			glTexCoord2f(u2, v);	glVertex2f(1, 1);
-			glTexCoord2f(u2, v2);	glVertex2f(1, 0);
+			glTexCoord2f(u, v);		glVertex2f(0, 100);
+			glTexCoord2f(u2, v);	glVertex2f(100, 100);
+			glTexCoord2f(u2, v2);	glVertex2f(100, 0);
 		glEnd();
 
 		glPopMatrix();

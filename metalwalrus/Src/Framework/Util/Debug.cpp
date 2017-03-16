@@ -39,7 +39,7 @@ namespace metalwalrus
 		logFile.open(logFilePath);
 		if (!logFile.is_open())
 		{
-			std::cerr << "Redirecting log output failed: " << std::strerror(errno);
+			std::cerr << "Redirecting log output failed.";
 			return false;
 		}
 		std::clog.rdbuf(logFile.rdbuf());
