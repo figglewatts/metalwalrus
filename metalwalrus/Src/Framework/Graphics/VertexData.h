@@ -2,7 +2,7 @@
 #define VERTEX_H
 #pragma once
 
-#include <GL/glut.h>
+#include <GL/glew.h>
 #include <vector>
 
 namespace metalwalrus
@@ -11,14 +11,21 @@ namespace metalwalrus
 	{
 		GLuint vertHandle = 0;
 		GLuint indHandle = 0;
-		std::vector<float> vertices;
-		std::vector<int> indices;
+		std::vector<GLfloat> vertices;
+		std::vector<GLubyte> indices;
 		void bindVertices();
 		void bindIndices();
 
-	public:
 		VertexData(float vertices[], unsigned vertNum, GLubyte indices[], unsigned indNum);
+
+	public:
 		~VertexData();
+
+		VertexData operator=(VertexData& other);
+
+		VertexData(const VertexData& other); // copy constructor
+
+		static VertexData *create(float vertices[], unsigned vertNum, GLubyte indices[], unsigned indNum);
 
 		void load();
 

@@ -308,4 +308,6 @@ __pycache__/
 *.out
 *.app
 
+log.txt
+
 !bin/

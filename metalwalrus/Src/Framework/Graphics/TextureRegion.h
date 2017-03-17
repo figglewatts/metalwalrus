@@ -15,6 +15,11 @@ namespace metalwalrus
 
 	public:
 		TextureRegion(Texture2D *tex, int x, int y, int w, int h);
+		TextureRegion(const TextureRegion& other);
+
+		~TextureRegion();
+
+		TextureRegion operator=(const TextureRegion& other);
 
 		void setRegion(Texture2D *tex);
 		void setRegion(int x, int y, int w, int h);

@@ -1,5 +1,7 @@
 #include "Game.h"
 
+#include <GL/glew.h>
+
 #include <iostream>
 #include <vector>
 using namespace std;
@@ -12,14 +14,24 @@ using namespace std;
 
 #include <lodepng.h>
 
-#include <GL/freeglut.h>
-
 namespace metalwalrus
 {
 	Texture2D *tex;
 	TextureRegion *texRegion;
 
-	VertexData vertData;
+	float vertices[] =
+	{
+		100, 100,
+		100, 200,
+		200, 200,
+		200, 100
+	};
+	GLubyte indices[] =
+	{
+		0, 1, 2, 3
+	};
+
+	VertexData *vertData;
 
 	Game::Game(char *windowTitle, int w, int h)
 	{
@@ -32,30 +44,15 @@ namespace metalwalrus
 	{
 		delete tex;
 		delete texRegion;
+		delete vertData;
 	}
 
 	void Game::Start()
 	{
-		Debug::redirect("log.txt");
-		
-		// test comment
-
 		tex = Texture2D::create("assets/spritesheet.png");
 		texRegion = new TextureRegion(tex, 8, 0, 16, 16);
-
-		float vertices[] =
-		{
-			100, 100,
-			100, 200,
-			200, 200,
-			200, 100
-		};
-		GLubyte indices[] = 
-		{
-			0, 1, 2, 3
-		};
-
-		vertData = VertexData(vertices, 4, indices, 4);
+		
+		vertData = VertexData::create(vertices, 4, indices, 4);
 	}
 
 	void Game::Update(double delta)
@@ -69,7 +66,7 @@ namespace metalwalrus
 
 		texRegion->draw();
 
-		vertData.draw(1);
+		vertData->draw(1);
 
 		glMatrixMode(GL_MODELVIEW);
 	}

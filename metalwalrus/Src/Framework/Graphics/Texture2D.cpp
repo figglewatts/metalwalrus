@@ -47,6 +47,12 @@ namespace metalwalrus
 
 	void Texture2D::load()
 	{
+		if (glHandle != 0)
+		{
+			throw std::runtime_error("Cannot load texture, already loaded!");
+			return;
+		}
+		
 		glGenTextures(1, &glHandle);
 		bind();
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data->data());
@@ -56,19 +62,23 @@ namespace metalwalrus
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minFilter);
 	}
 
-	void Texture2D::operator=(Texture2D & other)
+	Texture2D Texture2D::operator=(Texture2D & other)
 	{
-		this->width = other.width;
-		this->height = other.height;
-		this->format = other.format;
-		*this->data = *other.data;
-		this->type = other.type;
-		this->minFilter = other.minFilter;
-		this->magFilter = other.magFilter;
-		this->sWrap = other.sWrap;
-		this->tWrap = other.tWrap;
-		this->glHandle = other.glHandle;
-		load();
+		if (this != &other)
+		{
+			this->width = other.width;
+			this->height = other.height;
+			this->format = other.format;
+			*this->data = *other.data;
+			this->type = other.type;
+			this->minFilter = other.minFilter;
+			this->magFilter = other.magFilter;
+			this->sWrap = other.sWrap;
+			this->tWrap = other.tWrap;
+			this->glHandle = other.glHandle;
+			load();
+		}
+		return *this;
 	}
 
 	Texture2D::Texture2D(const Texture2D & other)
@@ -106,6 +116,8 @@ namespace metalwalrus
 		glEnd();
 
 		glPopMatrix();
+
+		this->unbind();
 	}
 
 	void Texture2D::bind()
@@ -116,5 +128,10 @@ namespace metalwalrus
 			return;
 		}
 		glBindTexture(GL_TEXTURE_2D, this->glHandle);
+	}
+
+	void Texture2D::unbind()
+	{
+		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 }

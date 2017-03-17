@@ -3,7 +3,7 @@
 #pragma once
 
 #include <vector>
-#include <GL/freeglut.h>
+#include <GL/glew.h>
 
 namespace metalwalrus
 {
@@ -20,8 +20,6 @@ namespace metalwalrus
 		GLint tWrap;
 		GLuint glHandle = 0;
 
-		void load();
-
 		Texture2D(std::vector<unsigned char> *data, GLuint width, GLuint height,
 			GLint format = GL_RGBA, GLenum type = GL_UNSIGNED_BYTE,
 			GLint minFilter = GL_NEAREST, GLint magFilter = GL_NEAREST,
@@ -32,14 +30,16 @@ namespace metalwalrus
 			GLint sWrap = GL_CLAMP, GLint tWrap = GL_CLAMP);
 
 	public:
-		void operator=(Texture2D& other);
+		Texture2D operator=(Texture2D& other);
 
 		Texture2D(const Texture2D& other); // copy constructor
 
 		static Texture2D *create(char *filePath);
 
 		void draw(float u = 0, float v = 0, float u2 = 1, float v2 = 1);
+		void load();
 		void bind();
+		void unbind();
 
 		~Texture2D();
 

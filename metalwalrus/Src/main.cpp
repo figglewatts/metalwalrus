@@ -1,9 +1,12 @@
 #include <GL/glew.h>
 #include <GL/freeglut.h>
+
 #include <ctime>
 #include <algorithm>
 using namespace std;
 
+#include "Framework/Util/Debug.h"
+#include "Framework/Util/GLError.h"
 #include "Framework/Game.h"
 using namespace metalwalrus;
 
@@ -35,6 +38,8 @@ void display()
 	}
 
 	game->Draw();
+
+	check_gl_error();
 	
 	glutSwapBuffers();
 }
@@ -52,6 +57,8 @@ void changeSize(int w, int h)
 
 int main(int argc, char **argv)
 {
+	Debug::redirect("log.txt");
+	
 	game = new Game("Sam's Game", 300, 200);
 	
 	glutInit(&argc, argv);
@@ -59,6 +66,8 @@ int main(int argc, char **argv)
 	glutInitWindowPosition(-1, -1);
 	glutInitWindowSize(game->getWidth(), game->getHeight());
 	glutCreateWindow(game->getTitle());
+
+	glewInit();
 
 	game->Start();
 
