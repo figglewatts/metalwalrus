@@ -1,3 +1,5 @@
+#ifndef MATRIX3_H
+#define MATRIX3_H
 #pragma once
 
 #include "Vector2.h"
@@ -56,3 +58,4 @@ namespace metalwalrus
 	};
 
 }
+#endif

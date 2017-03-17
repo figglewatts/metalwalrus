@@ -1,3 +1,5 @@
+#ifndef VERTEXBUFFER_H
+#define VERTEXBUFFER_H
 #pragma once
 
 namespace metalwalrus
@@ -10,3 +12,4 @@ namespace metalwalrus
 	};
 
 }
+#endif

@@ -1,3 +1,5 @@
+#ifndef GAME_H
+#define GAME_H
 #pragma once
 
 namespace metalwalrus
@@ -22,3 +24,4 @@ public:
 };
 
 }
+#endif

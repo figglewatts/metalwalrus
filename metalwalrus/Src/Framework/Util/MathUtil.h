@@ -1,3 +1,5 @@
+#ifndef MATHUTIL_H
+#define MATHUTIL_H
 #pragma once
 
 namespace metalwalrus
@@ -13,3 +15,4 @@ namespace metalwalrus
 		};
 	}
 }
+#endif

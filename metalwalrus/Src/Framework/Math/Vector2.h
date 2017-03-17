@@ -1,3 +1,5 @@
+#ifndef VECTOR2_H
+#define VECTOR2_H
 #pragma once
 
 namespace metalwalrus
@@ -33,3 +35,4 @@ namespace metalwalrus
 	Vector2 operator*(float scalar, const Vector2& other);
 	Vector2 operator/(float scalar, const Vector2& other);
 }
+#endif

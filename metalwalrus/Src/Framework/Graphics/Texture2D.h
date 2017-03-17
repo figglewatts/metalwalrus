@@ -1,3 +1,5 @@
+#ifndef TEXTURE2D_H
+#define TEXTURE2D_H
 #pragma once
 
 #include <vector>
@@ -52,3 +54,4 @@ namespace metalwalrus
 		inline GLint get_tWrap() const { return tWrap; }
 	};
 }
+#endif

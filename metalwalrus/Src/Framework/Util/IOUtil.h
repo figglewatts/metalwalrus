@@ -1,3 +1,5 @@
+#ifndef IOUTIL_H
+#define IOUTIL_H
 #pragma once
 
 #include <vector>
@@ -15,3 +17,4 @@ namespace metalwalrus
 		};
 	}
 }
+#endif

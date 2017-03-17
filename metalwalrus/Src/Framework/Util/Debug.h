@@ -1,3 +1,5 @@
+#ifndef DEBUG_H
+#define DEBUG_H
 #pragma once
 
 #include <fstream>
@@ -26,3 +28,4 @@ namespace metalwalrus
 		
 	};
 }
+#endif

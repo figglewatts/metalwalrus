@@ -1,3 +1,5 @@
+#ifndef TEXTUREREGION_H
+#define TEXTUREREGION_H
 #pragma once
 
 #include "Texture2D.h"
@@ -31,3 +33,4 @@ namespace metalwalrus
 	};
 
 }
+#endif
