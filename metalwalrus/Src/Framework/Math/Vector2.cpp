@@ -4,8 +4,8 @@
 
 namespace metalwalrus
 {
-	const Vector2 Vector2::X = Vector2(1, 0);
-	const Vector2 Vector2::Y = Vector2(0, 1);
+	const Vector2 Vector2::RIGHT = Vector2(1, 0);
+	const Vector2 Vector2::UP = Vector2(0, 1);
 	const Vector2 Vector2::ZERO = Vector2(0, 0);
 	
 	Vector2::Vector2(float x, float y)

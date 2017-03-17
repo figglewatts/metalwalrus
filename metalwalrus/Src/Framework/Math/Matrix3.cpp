@@ -31,6 +31,8 @@ namespace metalwalrus
 		{
 			this->val = other.val;
 		}
+
+		return *this;
 	}
 
 	float Matrix3::operator[](unsigned i) const

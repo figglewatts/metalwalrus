@@ -20,9 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="lib\lodepng.cpp" />
-    <ClCompile Include="Src\Framework\Graphics\VertexBuffer.cpp" />
     <ClCompile Include="Src\Framework\Math\Matrix3.cpp" />
-    <ClCompile Include="Src\Framework\Math\Matrix4.cpp" />
     <ClCompile Include="Src\Framework\Math\Vector2.cpp" />
     <ClCompile Include="Src\Framework\Util\Debug.cpp" />
     <ClCompile Include="Src\Framework\Util\IOUtil.cpp" />
@@ -31,13 +29,12 @@
     <ClCompile Include="Src\main.cpp" />
     <ClCompile Include="Src\Framework\Graphics\Texture2D.cpp" />
     <ClCompile Include="src\Framework\Graphics\TextureRegion.cpp" />
+    <ClCompile Include="Src\Framework\Graphics\VertexData.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\lodepng.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="Src\Framework\Graphics\VertexBuffer.h" />
     <ClInclude Include="Src\Framework\Math\Matrix3.h" />
-    <ClInclude Include="Src\Framework\Math\Matrix4.h" />
     <ClInclude Include="Src\Framework\Math\Vector2.h" />
     <ClInclude Include="Src\Framework\Util\Debug.h" />
     <ClInclude Include="Src\Framework\Util\IOUtil.h" />
@@ -45,6 +42,7 @@
     <ClInclude Include="Src\Framework\Graphics\Texture2D.h" />
     <ClInclude Include="src\Framework\Graphics\TextureRegion.h" />
     <ClInclude Include="Src\Framework\Util\MathUtil.h" />
+    <ClInclude Include="Src\Framework\Graphics\VertexData.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{BC71CF58-3950-4419-8D2A-03A201012C6D}</ProjectGuid>
@@ -123,6 +121,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ShowIncludes>true</ShowIncludes>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

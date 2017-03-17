@@ -42,13 +42,10 @@
     <ClCompile Include="Src\Framework\Math\Vector2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Framework\Math\Matrix4.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Framework\Math\Matrix3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Framework\Graphics\VertexBuffer.cpp">
+    <ClCompile Include="Src\Framework\Graphics\VertexData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -80,13 +77,10 @@
     <ClInclude Include="Src\Framework\Math\Vector2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Framework\Math\Matrix4.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Framework\Math\Matrix3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Framework\Graphics\VertexBuffer.h">
+    <ClInclude Include="Src\Framework\Graphics\VertexData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
