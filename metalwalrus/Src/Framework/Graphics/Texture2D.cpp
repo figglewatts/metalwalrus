@@ -101,6 +101,11 @@ namespace metalwalrus
 		return new Texture2D(filePath);
 	}
 
+	Texture2D * Texture2D::create(std::vector<unsigned char>* data, GLuint width, GLuint height)
+	{
+		return new Texture2D(data, width, height);
+	}
+
 	void Texture2D::draw(float u, float v, float u2, float v2)
 	{
 		glEnable(GL_TEXTURE_2D);

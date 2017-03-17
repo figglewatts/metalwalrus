@@ -35,6 +35,7 @@ namespace metalwalrus
 		Texture2D(const Texture2D& other); // copy constructor
 
 		static Texture2D *create(char *filePath);
+		static Texture2D *create(std::vector<unsigned char> *data, GLuint width, GLuint height);
 
 		void draw(float u = 0, float v = 0, float u2 = 1, float v2 = 1);
 		void load();
@@ -43,6 +44,7 @@ namespace metalwalrus
 
 		~Texture2D();
 
+		inline GLuint get_glHandle() const { return glHandle; }
 		inline GLsizei get_width() const { return width; }
 		inline GLsizei get_height() const { return height; }
 		inline GLint get_format() const { return format; }
