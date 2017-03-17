@@ -10,8 +10,8 @@ namespace metalwalrus
 		float x;
 		float y;
 
-		const static Vector2 X;
-		const static Vector2 Y;
+		const static Vector2 RIGHT;
+		const static Vector2 UP;
 		const static Vector2 ZERO;
 
 		Vector2(float x, float y);
