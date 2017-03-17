@@ -1,6 +1,6 @@
 #include <GL/glew.h>
 #include <GL/freeglut.h>
-#include <time.h>
+#include <ctime>
 #include <algorithm>
 using namespace std;
 
