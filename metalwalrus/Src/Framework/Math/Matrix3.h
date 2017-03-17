@@ -27,8 +27,12 @@ namespace metalwalrus
 
 		Matrix3();
 		Matrix3(float values[MATRIX_VALS]);
+		Matrix3(const Matrix3& other);
+
+		Matrix3 operator=(const Matrix3& other);
 
 		float operator[](unsigned i) const;
+		float& operator[](unsigned i);
 		Matrix3 operator+(const Matrix3& other) const;
 		Matrix3 operator-() const;
 		Matrix3 operator-(const Matrix3& other) const;
@@ -36,18 +40,19 @@ namespace metalwalrus
 		Matrix3 operator*(const float scalar) const;
 		friend Matrix3 operator*(const float scalar, const Matrix3& other);
 
+		void set(float values[MATRIX_VALS]);
 		Matrix3 *identity();
 		float det() const;
 		Matrix3 inv() const;
 		Matrix3 trans() const;
 		Matrix3 cofactor() const;
 		Matrix3 adj() const;
-		Matrix3 rotate(float degrees) const;
-		Matrix3 rotateRad(float radians) const;
-		Matrix3 scale(float x, float y) const;
-		Matrix3 scale(Vector2 scale) const;
-		Matrix3 translation(float x, float y) const;
-		Matrix3 translation(Vector2 translation) const;
+		Matrix3 rotate(float degrees);
+		Matrix3 rotateRad(float radians);
+		Matrix3 scale(float x, float y);
+		Matrix3 scale(Vector2 scale);
+		Matrix3 translation(float x, float y);
+		Matrix3 translation(Vector2 translation);
 	};
 
 }

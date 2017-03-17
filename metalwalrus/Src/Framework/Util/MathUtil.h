@@ -4,7 +4,12 @@ namespace metalwalrus
 {
 	namespace utilities
 	{
-		static float radToDeg(float rads);
-		static float degToRad(float degs);
+		class MathUtil
+		{
+			MathUtil();
+		public:	
+			static float radToDeg(float rads);
+			static float degToRad(float degs);
+		};
 	}
 }
