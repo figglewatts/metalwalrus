@@ -2,6 +2,8 @@
 
 #include <GL/glew.h>
 
+#include <stdexcept>
+
 namespace metalwalrus
 {
 	VertexData::VertexData(float vertices[], unsigned vertNum, GLubyte indices[], unsigned indNum)

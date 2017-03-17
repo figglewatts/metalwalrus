@@ -1,6 +1,7 @@
 #include "Matrix3.h"
 
 #include <stdexcept>
+#include <cmath>
 
 #include "../Util/MathUtil.h"
 
