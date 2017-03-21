@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="100">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <df root="." name="0">
+      <df name="lib">
+        <in>lodepng.cpp</in>
+      </df>
+      <df name="Src">
+        <df name="Framework">
+          <df name="Graphics">
+            <in>Texture2D.cpp</in>
+            <in>TextureRegion.cpp</in>
+            <in>VertexData.cpp</in>
+          </df>
+          <df name="Math">
+            <in>Matrix3.cpp</in>
+            <in>Vector2.cpp</in>
+          </df>
+          <df name="Util">
+            <in>Debug.cpp</in>
+            <in>GLError.cpp</in>
+            <in>IOUtil.cpp</in>
+            <in>MathUtil.cpp</in>
+          </df>
+          <in>Game.cpp</in>
+        </df>
+        <in>main.cpp</in>
+      </df>
+    </df>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>nbproject/private/launcher.properties</itemPath>
+      <itemPath>makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <sourceFolderFilter>^(nbproject)$</sourceFolderFilter>
+  <sourceRootList>
+    <Elem>.</Elem>
+  </sourceRootList>
+  <projectmakefile>makefile</projectmakefile>
+  <confs>
+    <conf name="Default" type="0">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>false</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <flagsDictionary>
+        <element flagsID="0" commonFlags="-std=c++11"/>
+      </flagsDictionary>
+      <codeAssistance>
+      </codeAssistance>
+      <makefileType>
+        <makeTool>
+          <buildCommandWorkingDir>.</buildCommandWorkingDir>
+          <buildCommand>${MAKE} -f makefile</buildCommand>
+          <cleanCommand>${MAKE} -f makefile clean</cleanCommand>
+          <executablePath>build/metalwalrus</executablePath>
+          <ccTool>
+            <incDir>
+              <pElem>include</pElem>
+              <pElem>.</pElem>
+            </incDir>
+          </ccTool>
+        </makeTool>
+        <preBuild>
+          <preBuildCommandWorkingDir>.</preBuildCommandWorkingDir>
+          <preBuildCommand></preBuildCommand>
+        </preBuild>
+      </makefileType>
+      <item path="Src/Framework/Game.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="Src/Framework/Graphics/Texture2D.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="Src/Framework/Graphics/TextureRegion.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="Src/Framework/Graphics/VertexData.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="Src/Framework/Math/Matrix3.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="Src/Framework/Math/Vector2.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="Src/Framework/Util/Debug.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="Src/Framework/Util/GLError.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="Src/Framework/Util/IOUtil.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="Src/Framework/Util/MathUtil.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="Src/main.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="lib/lodepng.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="100">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <df root="." name="0">
+      <df name=".idea">
+      </df>
+      <df name="assets">
+      </df>
+      <df name="bin">
+      </df>
+      <df name="build">
+        <df name="assets">
+        </df>
+      </df>
+      <df name="cmake-build-debug">
+        <df name="CMakeFiles">
+          <df name="3.6.3">
+            <df name="CompilerIdC">
+              <in>CMakeCCompilerId.c</in>
+            </df>
+            <df name="CompilerIdCXX">
+              <in>CMakeCXXCompilerId.cpp</in>
+            </df>
+          </df>
+          <df name="CMakeTmp">
+          </df>
+          <df name="metalwalrus.dir">
+            <df name="lib">
+            </df>
+            <df name="Src">
+              <df name="Framework">
+                <df name="Graphics">
+                </df>
+                <df name="Math">
+                </df>
+                <df name="Util">
+                </df>
+              </df>
+            </df>
+          </df>
+          <in>feature_tests.c</in>
+          <in>feature_tests.cxx</in>
+        </df>
+      </df>
+      <df name="include">
+        <df name="GL">
+          <in>eglew.h</in>
+          <in>freeglut.h</in>
+          <in>freeglut_ext.h</in>
+          <in>freeglut_std.h</in>
+          <in>glew.h</in>
+          <in>glut.h</in>
+          <in>glxew.h</in>
+          <in>wglew.h</in>
+        </df>
+        <in>lodepng.h</in>
+      </df>
+      <df name="lib">
+        <in>lodepng.cpp</in>
+      </df>
+      <df name="obj">
+        <df name="lib">
+        </df>
+        <df name="Src">
+          <df name="Framework">
+            <df name="Graphics">
+            </df>
+            <df name="Math">
+            </df>
+            <df name="Util">
+            </df>
+          </df>
+        </df>
+      </df>
+      <df name="Src">
+        <df name="Framework">
+          <df name="Graphics">
+            <in>Texture2D.cpp</in>
+            <in>Texture2D.h</in>
+            <in>TextureRegion.cpp</in>
+            <in>TextureRegion.h</in>
+            <in>VertexData.cpp</in>
+            <in>VertexData.h</in>
+          </df>
+          <df name="Math">
+            <in>Matrix3.cpp</in>
+            <in>Matrix3.h</in>
+            <in>Vector2.cpp</in>
+            <in>Vector2.h</in>
+          </df>
+          <df name="Util">
+            <in>Debug.cpp</in>
+            <in>Debug.h</in>
+            <in>GLError.cpp</in>
+            <in>GLError.h</in>
+            <in>IOUtil.cpp</in>
+            <in>IOUtil.h</in>
+            <in>MathUtil.cpp</in>
+            <in>MathUtil.h</in>
+          </df>
+          <in>Game.cpp</in>
+          <in>Game.h</in>
+        </df>
+        <in>main.cpp</in>
+      </df>
+    </df>
+  </logicalFolder>
+  <projectmakefile>makefile</projectmakefile>
+  <confs>
+    <conf name="Default" type="0">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <platform>2</platform>
+      </toolsSet>
+      <compile>
+        <compiledirpicklist>
+          <compiledirpicklistitem>.</compiledirpicklistitem>
+          <compiledirpicklistitem>${AUTO_FOLDER}</compiledirpicklistitem>
+        </compiledirpicklist>
+        <compiledir>${AUTO_FOLDER}</compiledir>
+        <compilecommandpicklist>
+          <compilecommandpicklistitem>${MAKE} ${ITEM_NAME}.o</compilecommandpicklistitem>
+          <compilecommandpicklistitem>${AUTO_COMPILE}</compilecommandpicklistitem>
+        </compilecommandpicklist>
+        <compilecommand>${AUTO_COMPILE}</compilecommand>
+      </compile>
+      <dbx_gdbdebugger version="1">
+        <gdb_pathmaps>
+        </gdb_pathmaps>
+        <gdb_interceptlist>
+          <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
+        </gdb_interceptlist>
+        <gdb_options>
+          <DebugOptions>
+          </DebugOptions>
+        </gdb_options>
+        <gdb_buildfirst gdb_buildfirst_overriden="false" gdb_buildfirst_old="false"/>
+      </dbx_gdbdebugger>
+      <nativedebugger version="1">
+        <engine>gdb</engine>
+      </nativedebugger>
+      <runprofile version="9">
+        <runcommandpicklist>
+          <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
+        </runcommandpicklist>
+        <runcommand>"${OUTPUT_PATH}"</runcommand>
+        <rundir>.</rundir>
+        <buildfirst>false</buildfirst>
+        <terminal-type>0</terminal-type>
+        <remove-instrumentation>0</remove-instrumentation>
+        <environment>
+        </environment>
+      </runprofile>
+    </conf>
+  </confs>
+</configurationDescriptor>
