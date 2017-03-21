@@ -2,7 +2,7 @@
 #define FRAMEBUFFER_H
 #pragma once
 
-#include <GL/freeglut.h>
+#include <GL/glew.h>
 
 #include "Texture2D.h"
 

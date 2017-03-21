@@ -8,6 +8,7 @@
       <df name="Src">
         <df name="Framework">
           <df name="Graphics">
+            <in>FrameBuffer.cpp</in>
             <in>Texture2D.cpp</in>
             <in>TextureRegion.cpp</in>
             <in>VertexData.cpp</in>
@@ -71,6 +72,13 @@
         </preBuild>
       </makefileType>
       <item path="Src/Framework/Game.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="Src/Framework/Graphics/FrameBuffer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
         <ccTool flags="0">
         </ccTool>
       </item>

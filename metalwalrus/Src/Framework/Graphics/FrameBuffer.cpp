@@ -18,7 +18,12 @@ namespace metalwalrus
 	}
 
 	FrameBuffer::FrameBuffer(const FrameBuffer & other)
-	{}
+        {
+            this->bufferTex = new Texture2D(*other.bufferTex);
+            this->height = other.height;
+            this->width = other.width;
+            this->load(this->width, this->height);
+        }
 
 
 	FrameBuffer::~FrameBuffer()
@@ -28,7 +33,14 @@ namespace metalwalrus
 
 	FrameBuffer FrameBuffer::operator=(const FrameBuffer & other)
 	{
-		return FrameBuffer();
+            if (&other != this) 
+            {
+                this->bufferTex = new Texture2D(*other.bufferTex);
+                this->height = other.height;
+                this->width = other.width;
+                this->load(this->width, this->height);
+            }
+            return *this;
 	}
 
 	void FrameBuffer::bind()

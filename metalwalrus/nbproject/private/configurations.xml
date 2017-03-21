@@ -8,10 +8,6 @@
       </df>
       <df name="bin">
       </df>
-      <df name="build">
-        <df name="assets">
-        </df>
-      </df>
       <df name="cmake-build-debug">
         <df name="CMakeFiles">
           <df name="3.6.3">
@@ -75,6 +71,8 @@
       <df name="Src">
         <df name="Framework">
           <df name="Graphics">
+            <in>FrameBuffer.cpp</in>
+            <in>FrameBuffer.h</in>
             <in>Texture2D.cpp</in>
             <in>Texture2D.h</in>
             <in>TextureRegion.cpp</in>
