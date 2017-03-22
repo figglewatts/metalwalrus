@@ -8,6 +8,12 @@ namespace metalwalrus
 	const Vector2 Vector2::UP = Vector2(0, 1);
 	const Vector2 Vector2::ZERO = Vector2(0, 0);
 	
+	Vector2::Vector2()
+	{
+		this->x = 0;
+		this->y = 0;
+	}
+
 	Vector2::Vector2(float x, float y)
 	{
 		this->x = x;

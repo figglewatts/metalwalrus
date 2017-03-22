@@ -11,9 +11,7 @@ namespace metalwalrus
 	class FrameBuffer
 	{
 		GLuint frameBufferHandle = 0;
-		//Texture2D *bufferTex;
 		GLuint colorTexHandle = 0;
-		GLuint rbo = 0;
 		GLuint width, height;
 
 		void load(unsigned width, unsigned height);
@@ -30,9 +28,8 @@ namespace metalwalrus
 
 		GLuint get_color() const { return colorTexHandle; }
 
-		//inline Texture2D *get_BufferTex() const { return bufferTex; }
-		//inline unsigned get_width() const { return bufferTex->get_width(); }
-		//inline unsigned get_height() const { return bufferTex->get_height(); }
+		inline GLuint get_width() const { return width; }
+		inline GLuint get_height() const { return height; }
 	};
 }
 #endif

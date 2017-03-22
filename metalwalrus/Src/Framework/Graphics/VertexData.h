@@ -1,9 +1,12 @@
-#ifndef VERTEX_H
-#define VERTEX_H
+#ifndef VERTEXDATA_H
+#define VERTEXDATA_H
 #pragma once
 
 #include <GL/glew.h>
 #include <vector>
+
+#include "Vertex.h"
+#include "../Math/Vector2.h"
 
 namespace metalwalrus
 {
@@ -11,12 +14,12 @@ namespace metalwalrus
 	{
 		GLuint vertHandle = 0;
 		GLuint indHandle = 0;
-		std::vector<GLfloat> vertices;
+		std::vector<VertData2D> vertices;
 		std::vector<GLubyte> indices;
 		void bindVertices();
 		void bindIndices();
 
-		VertexData(float vertices[], unsigned vertNum, GLubyte indices[], unsigned indNum);
+		VertexData(VertData2D vertices[], unsigned vertNum, GLubyte indices[], unsigned indNum);
 
 	public:
 		~VertexData();
@@ -25,7 +28,7 @@ namespace metalwalrus
 
 		VertexData(const VertexData& other); // copy constructor
 
-		static VertexData *create(float vertices[], unsigned vertNum, GLubyte indices[], unsigned indNum);
+		static VertexData *create(VertData2D vertices[], unsigned vertNum, GLubyte indices[], unsigned indNum);
 
 		void load();
 
@@ -33,6 +36,8 @@ namespace metalwalrus
 		void unbind();
 
 		void draw(int count);
+
+		
 	};
 }
 #endif

@@ -55,6 +55,8 @@ namespace metalwalrus
 		Matrix3 scale(Vector2 scale);
 		Matrix3 translation(float x, float y);
 		Matrix3 translation(Vector2 translation);
+
+		float* glMatrix() const;
 	};
 
 }

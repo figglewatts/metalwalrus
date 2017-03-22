@@ -236,6 +236,27 @@ namespace metalwalrus
 		return translated;
 	}
 
+	float * Matrix3::glMatrix() const
+	{
+		float glMat[16];
+		glMat[0] = val[M00];
+		glMat[1] = val[M10];
+		glMat[2] = val[M20];
+		glMat[4] = 0;
+		glMat[5] = val[M01];
+		glMat[6] = val[M11];
+		glMat[7] = val[M21];
+		glMat[8] = 0;
+		glMat[9] = val[M02];
+		glMat[10] = val[M12];
+		glMat[11] = val[M22];
+		glMat[12] = 0;
+		glMat[13] = 0;
+		glMat[14] = 0;
+		glMat[15] = 1;
+		return glMat;
+	}
+
 	Matrix3 operator*(const float scalar, const Matrix3& other)
 	{
 		return other * scalar;

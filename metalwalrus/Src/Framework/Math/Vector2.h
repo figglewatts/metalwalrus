@@ -14,6 +14,7 @@ namespace metalwalrus
 		const static Vector2 UP;
 		const static Vector2 ZERO;
 
+		Vector2();
 		Vector2(float x, float y);
 
 		Vector2 operator+(const Vector2& other) const;

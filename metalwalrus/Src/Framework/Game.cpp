@@ -22,13 +22,7 @@ namespace metalwalrus
 	TextureRegion *texRegion;
 	FrameBuffer *frameBuffer;
 
-	float vertices[] =
-	{
-		0, 0,
-		0, 200,
-		250, 200,
-		250, 0
-	};
+	VertData2D vertices[4];
 	GLubyte indices[] =
 	{
 		0, 1, 2, 3
@@ -50,6 +44,7 @@ namespace metalwalrus
 		delete tex;
 		delete texRegion;
 		delete vertData;
+		delete frameBuffer;
 	}
 
 	void Game::Start()
@@ -57,6 +52,16 @@ namespace metalwalrus
 		tex = Texture2D::create("assets/spritesheet.png");
 		texRegion = new TextureRegion(tex, 8, 0, 16, 16);
 		
+		vertices[0].pos = Vector2(0, 0);
+		vertices[1].pos = Vector2(0, 200);
+		vertices[2].pos = Vector2(300, 200);
+		vertices[3].pos = Vector2(300, 0);
+
+		vertices[0].texCoord = Vector2(0, 0);
+		vertices[1].texCoord = Vector2(0, 1);
+		vertices[2].texCoord = Vector2(1, 1);
+		vertices[3].texCoord = Vector2(1, 0);
+
 		vertData = VertexData::create(vertices, 4, indices, 4);
 		frameBuffer = new FrameBuffer(150, 100);
 	}
@@ -70,25 +75,25 @@ namespace metalwalrus
 	{
 		frameBuffer->bind();
 
-		glClearColor(1, 0, 0, 0);
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);     // Clear The Screen And The Depth Buffer
+		glLoadIdentity();                       // Reset The View
 
-		//texRegion->draw();
-		
-		//glColor3f(0, 1, 0);
+		texRegion->draw();
 
 		glPushMatrix();
 
-		glBegin(GL_QUADS);
-		glVertex2f(0, 0);
-		glVertex2f(0, 0.5F);
-		glVertex2f(0.5F, 0.5F);
-		glVertex2f(0.5F, 0);
+		glBegin(GL_TRIANGLES);                      // Drawing Using Triangles
+		glVertex3f(25, 50, 0);              // Top
+		glVertex3f(0, 0, 0);              // Bottom Left
+		glVertex3f(50, 0, 0);              // Bottom Right
 		glEnd();
+
+		glColor3f(1, 1, 1);
 
 		glPopMatrix();
 
 		frameBuffer->unbind();
+		
 
 		glClearColor(0, 0, 0, 0);
 		glClear(GL_COLOR_BUFFER_BIT);
@@ -97,11 +102,21 @@ namespace metalwalrus
 
 		glBindTexture(GL_TEXTURE_2D, frameBuffer->get_color());
 
-		//glBindTexture(GL_TEXTURE_2D, frameBuffer->get_BufferTex()->get_glHandle());
-		vertData->draw(1);
-		//frameBuffer->get_BufferTex()->bind();
+		glPushMatrix();
 
-		//frameBuffer->get_BufferTex()->unbind();
+		
+
+		vertData->draw(1);
+
+		/*glBegin(GL_QUADS);
+		glTexCoord2f(0, 0);	glVertex2f(0, 0);
+		glTexCoord2f(0, 1);	glVertex2f(0, 200);
+		glTexCoord2f(1, 1);	glVertex2f(250, 200);
+		glTexCoord2f(1, 0);	glVertex2f(250, 0);
+		glEnd();*/
+
+		glPopMatrix();
+		
 
 		glMatrixMode(GL_MODELVIEW);
 	}
