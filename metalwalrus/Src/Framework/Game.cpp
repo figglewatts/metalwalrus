@@ -6,9 +6,11 @@
 #include <vector>
 using namespace std;
 
+#include "Settings.h"
 #include "Graphics/VertexData.h"
 #include "Graphics/Texture2D.h"
 #include "Graphics/TextureRegion.h"
+#include "Graphics/FrameBuffer.h"
 #include "Util/Debug.h"
 #include "Util/IOUtil.h"
 
@@ -18,13 +20,14 @@ namespace metalwalrus
 {
 	Texture2D *tex;
 	TextureRegion *texRegion;
+	FrameBuffer *frameBuffer;
 
 	float vertices[] =
 	{
-		100, 100,
-		100, 200,
-		200, 200,
-		200, 100
+		0, 0,
+		0, 200,
+		250, 200,
+		250, 0
 	};
 	GLubyte indices[] =
 	{
@@ -38,6 +41,8 @@ namespace metalwalrus
 		this->windowTitle = windowTitle;
 		this->width = w;
 		this->height = h;
+		Settings::WIDTH = w;
+		Settings::HEIGHT = h;
 	}
 
 	Game::~Game()
@@ -53,6 +58,7 @@ namespace metalwalrus
 		texRegion = new TextureRegion(tex, 8, 0, 16, 16);
 		
 		vertData = VertexData::create(vertices, 4, indices, 4);
+		frameBuffer = new FrameBuffer(150, 100);
 	}
 
 	void Game::Update(double delta)
@@ -62,11 +68,40 @@ namespace metalwalrus
 
 	void Game::Draw()
 	{
+		frameBuffer->bind();
+
+		glClearColor(1, 0, 0, 0);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		texRegion->draw();
+		//texRegion->draw();
+		
+		//glColor3f(0, 1, 0);
 
+		glPushMatrix();
+
+		glBegin(GL_QUADS);
+		glVertex2f(0, 0);
+		glVertex2f(0, 0.5F);
+		glVertex2f(0.5F, 0.5F);
+		glVertex2f(0.5F, 0);
+		glEnd();
+
+		glPopMatrix();
+
+		frameBuffer->unbind();
+
+		glClearColor(0, 0, 0, 0);
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		glEnable(GL_TEXTURE_2D);
+
+		glBindTexture(GL_TEXTURE_2D, frameBuffer->get_color());
+
+		//glBindTexture(GL_TEXTURE_2D, frameBuffer->get_BufferTex()->get_glHandle());
 		vertData->draw(1);
+		//frameBuffer->get_BufferTex()->bind();
+
+		//frameBuffer->get_BufferTex()->unbind();
 
 		glMatrixMode(GL_MODELVIEW);
 	}

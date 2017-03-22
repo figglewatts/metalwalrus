@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Src\Framework\Graphics\FrameBuffer.cpp" />
+    <ClCompile Include="Src\Framework\Settings.cpp" />
     <ClCompile Include="Src\Framework\Util\GLError.cpp" />
     <ClCompile Include="lib\lodepng.cpp" />
     <ClCompile Include="Src\Framework\Math\Matrix3.cpp" />
@@ -33,9 +35,10 @@
     <ClCompile Include="Src\Framework\Graphics\VertexData.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Src\Framework\Settings.h" />
+    <ClInclude Include="Src\Framework\Graphics\FrameBuffer.h" />
     <ClInclude Include="Src\Framework\Util\GLError.h" />
     <ClInclude Include="include\lodepng.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="Src\Framework\Math\Matrix3.h" />
     <ClInclude Include="Src\Framework\Math\Vector2.h" />
     <ClInclude Include="Src\Framework\Util\Debug.h" />

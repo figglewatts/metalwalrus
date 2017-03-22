@@ -4,6 +4,19 @@
 
 namespace metalwalrus
 {
+	Texture2D::Texture2D(GLuint width, GLuint height, GLint format, GLenum type, GLint minFilter, GLint magFilter, GLint sWrap, GLint tWrap)
+	{
+		this->data = new std::vector<unsigned char>();
+		this->width = width;
+		this->height = height;
+		this->format = format;
+		this->type = type;
+		this->minFilter = minFilter;
+		this->magFilter = magFilter;
+		this->sWrap = sWrap;
+		this->tWrap = tWrap;
+	}
+
 	Texture2D::Texture2D(std::vector<unsigned char> *data, GLuint width, GLuint height,
 		GLint format, GLenum type,
 		GLint minFilter, GLint magFilter,
@@ -96,6 +109,11 @@ namespace metalwalrus
 		load();
 	}
 
+	Texture2D * Texture2D::create(GLuint width, GLuint height)
+	{
+		return new Texture2D(width, height);
+	}
+
 	Texture2D *Texture2D::create(char *filePath)
 	{
 		return new Texture2D(filePath);
@@ -115,9 +133,9 @@ namespace metalwalrus
 
 		glBegin(GL_QUADS);
 			glTexCoord2f(u, v2);	glVertex2f(0, 0);
-			glTexCoord2f(u, v);		glVertex2f(0, 100);
-			glTexCoord2f(u2, v);	glVertex2f(100, 100);
-			glTexCoord2f(u2, v2);	glVertex2f(100, 0);
+			glTexCoord2f(u, v);		glVertex2f(0, 50);
+			glTexCoord2f(u2, v);	glVertex2f(50, 50);
+			glTexCoord2f(u2, v2);	glVertex2f(50, 0);
 		glEnd();
 
 		glPopMatrix();

@@ -8,6 +8,7 @@ using namespace std;
 #include "Framework/Util/Debug.h"
 #include "Framework/Util/GLError.h"
 #include "Framework/Game.h"
+#include "Framework/Settings.h"
 using namespace metalwalrus;
 
 Game *game;
@@ -47,6 +48,9 @@ void display()
 void changeSize(int w, int h)
 {
 	// TODO: resolution independence
+
+	Settings::WIDTH = w;
+	Settings::HEIGHT = h;
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();

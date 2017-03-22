@@ -51,6 +51,12 @@
     <ClCompile Include="Src\Framework\Util\GLError.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Framework\Graphics\FrameBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Framework\Settings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Framework\Game.h">
@@ -71,9 +77,6 @@
     <ClInclude Include="src\Framework\Graphics\TextureRegion.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Framework\Util\MathUtil.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -87,6 +90,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Src\Framework\Util\GLError.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Framework\Graphics\FrameBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Framework\Settings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
