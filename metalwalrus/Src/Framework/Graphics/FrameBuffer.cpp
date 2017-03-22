@@ -52,7 +52,7 @@ namespace metalwalrus
 
 	FrameBuffer::~FrameBuffer()
 	{
-		glDeleteFramebuffersEXT(1, &frameBufferHandle);
+		glDeleteFramebuffers(1, &frameBufferHandle);
 		glDeleteTextures(1, &colorTexHandle);
 	}
 
@@ -68,11 +68,11 @@ namespace metalwalrus
 	void FrameBuffer::bind()
 	{
 		glBindTexture(GL_TEXTURE_2D, 0);
-		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, frameBufferHandle);
+		glBindFramebuffer(GL_FRAMEBUFFER, frameBufferHandle);
 	}
 
 	void FrameBuffer::unbind()
 	{
-		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}
 }
