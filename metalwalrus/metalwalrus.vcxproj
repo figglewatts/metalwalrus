@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Src\Framework\Graphics\GLContext.cpp" />
     <ClCompile Include="Src\Framework\Graphics\FrameBuffer.cpp" />
     <ClCompile Include="Src\Framework\Settings.cpp" />
     <ClCompile Include="Src\Framework\Util\GLError.cpp" />
@@ -35,6 +36,7 @@
     <ClCompile Include="Src\Framework\Graphics\VertexData.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Src\Framework\Graphics\GLContext.h" />
     <ClInclude Include="Src\Framework\Graphics\Vertex.h" />
     <ClInclude Include="Src\Framework\Settings.h" />
     <ClInclude Include="Src\Framework\Graphics\FrameBuffer.h" />

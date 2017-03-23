@@ -2,6 +2,8 @@
 #define GAME_H
 #pragma once
 
+#include "Graphics\GLContext.h"
+
 namespace metalwalrus
 {
 
@@ -10,10 +12,11 @@ class Game
 	char *windowTitle;
 	int width;
 	int height;
+	GLContext *context;
 
 	void drawFrameBuffer();
 public:
-	Game(char *windowTitle, int w, int h);
+	Game(char *windowTitle, int w, int h, GLContext *context);
 	~Game();
 	void Start();
 	void Update(double delta);

@@ -69,10 +69,17 @@ namespace metalwalrus
 	{
 		glBindTexture(GL_TEXTURE_2D, 0);
 		glBindFramebuffer(GL_FRAMEBUFFER, frameBufferHandle);
+
+		// before we draw make sure coordinates are zeroed
+		glViewport(0, 0, Settings::TARGET_WIDTH, Settings::TARGET_HEIGHT);
 	}
 
 	void FrameBuffer::unbind()
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+		// reset viewport coords
+		glViewport(Settings::VIEWPORT_X, Settings::VIEWPORT_Y,
+			Settings::VIEWPORT_WIDTH, Settings::VIEWPORT_HEIGHT);
 	}
 }

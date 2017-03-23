@@ -31,11 +31,12 @@ namespace metalwalrus
 
 	VertexData *vertData;
 
-	Game::Game(char *windowTitle, int w, int h)
+	Game::Game(char *windowTitle, int w, int h, GLContext *context)
 	{
 		this->windowTitle = windowTitle;
 		this->width = w;
 		this->height = h;
+		this->context = context;
 		Settings::WIDTH = w;
 		Settings::HEIGHT = h;
 	}
@@ -54,9 +55,9 @@ namespace metalwalrus
 		texRegion = new TextureRegion(tex, 8, 0, 16, 16);
 		
 		vertices[0].pos = Vector2(0, 0);
-		vertices[1].pos = Vector2(0, 200);
-		vertices[2].pos = Vector2(300, 200);
-		vertices[3].pos = Vector2(300, 0);
+		vertices[1].pos = Vector2(0, 480);
+		vertices[2].pos = Vector2(512, 480);
+		vertices[3].pos = Vector2(512, 0);
 
 		vertices[0].texCoord = Vector2(0, 0);
 		vertices[1].texCoord = Vector2(0, 1);
@@ -64,7 +65,7 @@ namespace metalwalrus
 		vertices[3].texCoord = Vector2(1, 0);
 
 		vertData = VertexData::create(vertices, 4, indices, 4);
-		frameBuffer = new FrameBuffer(150, 100);
+		frameBuffer = new FrameBuffer(Settings::VIRTUAL_WIDTH, Settings::VIRTUAL_HEIGHT);
 	}
 
 	void Game::Update(double delta)
@@ -74,27 +75,25 @@ namespace metalwalrus
 
 	void Game::Draw()
 	{
+		glLoadIdentity();
 		frameBuffer->bind();
 
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);     // Clear The Screen And The Depth Buffer
-		glLoadIdentity();                       // Reset The View
-
-		texRegion->draw();
+		context->clear(1, 0, 0);
 
 		glPushMatrix();
+			texRegion->draw();
+		glPopMatrix();
 
-		Matrix3 transMat = Matrix3();
-		transMat.translation(30, 0).translation(0, 50).rotate(10).scale(1.5, 2);
-		glLoadMatrixf(transMat.glMatrix());
+		glPushMatrix();
+			Matrix3 transMat = Matrix3();
+			transMat.translation(30, 0).translation(0, 50).rotate(10).scale(1.5, 2);
+			glLoadMatrixf(transMat.glMatrix());
 
-		glBegin(GL_TRIANGLES);                      // Drawing Using Triangles
-		glVertex3f(25, 50, 0);              // Top
-		glVertex3f(0, 0, 0);              // Bottom Left
-		glVertex3f(50, 0, 0);              // Bottom Right
-		glEnd();
-
-		glColor3f(1, 1, 1);
-
+			glBegin(GL_TRIANGLES);
+			glVertex3f(25, 50, 0);
+			glVertex3f(0, 0, 0);
+			glVertex3f(50, 0, 0);
+			glEnd();
 		glPopMatrix();
 
 		frameBuffer->unbind();
@@ -102,6 +101,7 @@ namespace metalwalrus
 		drawFrameBuffer();
 
 		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
 	}
 
 	void Game::drawFrameBuffer()
@@ -113,10 +113,6 @@ namespace metalwalrus
 
 		glBindTexture(GL_TEXTURE_2D, frameBuffer->get_color());
 
-		glPushMatrix();
-
 		vertData->draw(1);
-
-		glPopMatrix();
 	}
 }

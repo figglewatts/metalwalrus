@@ -12,6 +12,7 @@ using namespace std;
 using namespace metalwalrus;
 
 Game *game;
+GLContext *context;
 double t = 0;
 double targetDeltaTime = 1 / 60.0; // target fps: 60
 double lag = 0;
@@ -38,32 +39,66 @@ void display()
 		t += deltaTime;
 	}
 
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	float scaleX = (float)Settings::WIDTH / (float)Settings::VIRTUAL_WIDTH;
+	float scaleY = (float)Settings::HEIGHT / (float)Settings::VIRTUAL_HEIGHT;
+	glScalef(scaleX, scaleY, 0);
+
 	game->Draw();
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glPopMatrix();
 
 	check_gl_error();
 	
 	glutSwapBuffers();
 }
 
+void resolutionIndependentViewport(int w, int h)
+{
+	context->clear(0, 0, 0);
+
+	float targetAspect = (float)Settings::TARGET_WIDTH / (float)Settings::TARGET_HEIGHT;
+	
+	int width = w;
+	int height = (int)(width / targetAspect + 0.5F);
+
+	if (height > h)
+	{
+		height = h;
+		width = (int)(height * targetAspect + 0.5F);
+	}
+
+	int xPos = (w / 2) - (width / 2);
+	int yPos = (h / 2) - (height / 2);
+
+	context->viewport(xPos, yPos, width, height);
+}
+
 void changeSize(int w, int h)
 {
-	// TODO: resolution independence
-
 	Settings::WIDTH = w;
 	Settings::HEIGHT = h;
 
+	resolutionIndependentViewport(w, h);
+
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glViewport(0, 0, w, h);
-	gluOrtho2D(0, w, 0, h);
+
+	gluOrtho2D(0, Settings::TARGET_WIDTH, 0, Settings::TARGET_HEIGHT);
+
 	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
 }
 
 int main(int argc, char **argv)
 {
 	Debug::redirect("log.txt");
 	
-	game = new Game("Sam's Game", 300, 200);
+	context = new GLContext();
+	game = new Game("Sam's Game", Settings::TARGET_WIDTH, Settings::TARGET_HEIGHT, context);
 	
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
@@ -72,6 +107,8 @@ int main(int argc, char **argv)
 	glutCreateWindow(game->getTitle());
 
 	glewInit();
+
+	//resolutionIndependentViewport(game->getWidth(), game->getHeight());
 
 	game->Start();
 
@@ -82,5 +119,6 @@ int main(int argc, char **argv)
 	glutMainLoop();
 
 	delete game;
+	delete context;
 	return 1;
 }
