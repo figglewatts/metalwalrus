@@ -49,12 +49,12 @@ namespace metalwalrus
 		Matrix3 trans() const;
 		Matrix3 cofactor() const;
 		Matrix3 adj() const;
-		Matrix3 rotate(float degrees);
-		Matrix3 rotateRad(float radians);
-		Matrix3 scale(float x, float y);
-		Matrix3 scale(Vector2 scale);
-		Matrix3 translation(float x, float y);
-		Matrix3 translation(Vector2 translation);
+		Matrix3& rotate(float degrees);
+		Matrix3& rotateRad(float radians);
+		Matrix3& scale(float x, float y);
+		Matrix3& scale(Vector2 scale);
+		Matrix3& translation(float x, float y);
+		Matrix3& translation(Vector2 translation);
 
 		float* glMatrix() const;
 	};

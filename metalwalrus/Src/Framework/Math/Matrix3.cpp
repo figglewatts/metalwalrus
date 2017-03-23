@@ -182,14 +182,14 @@ namespace metalwalrus
 	}
 
 	// postmultiplies this matrix with a rotation matrix
-	Matrix3 Matrix3::rotate(float degrees)
+	Matrix3& Matrix3::rotate(float degrees)
 	{
 		float rad = utilities::MathUtil::degToRad(degrees);
 		return rotateRad(rad);
 	}
 
 	// postmultiplies this matrix with a rotation matrix
-	Matrix3 Matrix3::rotateRad(float radians)
+	Matrix3& Matrix3::rotateRad(float radians)
 	{
 		Matrix3 rotMat = Matrix3();
 		float cosine = cosf(radians);
@@ -201,15 +201,15 @@ namespace metalwalrus
 
 		Matrix3 rotated = *this * rotMat;
 		this->set(&rotated.val[0]);
-		return rotated;
+		return *this;
 	}
 
-	Matrix3 Matrix3::scale(float x, float y)
+	Matrix3& Matrix3::scale(float x, float y)
 	{
 		return scale(Vector2(x, y));
 	}
 
-	Matrix3 Matrix3::scale(Vector2 scale)
+	Matrix3& Matrix3::scale(Vector2 scale)
 	{
 		Matrix3 scaleMat = Matrix3();
 		scaleMat[M00] = scale.x;
@@ -217,15 +217,15 @@ namespace metalwalrus
 
 		Matrix3 scaled = *this * scaleMat;
 		this->set(&scaled.val[0]);
-		return scaled;
+		return *this;
 	}
 
-	Matrix3 Matrix3::translation(float x, float y)
+	Matrix3& Matrix3::translation(float x, float y)
 	{
 		return translation(Vector2(x, y));
 	}
 
-	Matrix3 Matrix3::translation(Vector2 translation)
+	Matrix3& Matrix3::translation(Vector2 translation)
 	{
 		Matrix3 transMat = Matrix3();
 		transMat[M02] = translation.x;
@@ -233,27 +233,29 @@ namespace metalwalrus
 
 		Matrix3 translated = *this * transMat;
 		this->set(&translated.val[0]);
-		return translated;
+		return *this;
 	}
 
 	float * Matrix3::glMatrix() const
 	{
+		
 		float glMat[16];
 		glMat[0] = val[M00];
 		glMat[1] = val[M10];
-		glMat[2] = val[M20];
-		glMat[4] = 0;
-		glMat[5] = val[M01];
-		glMat[6] = val[M11];
+		glMat[2] = 0;
+		glMat[3] = val[M20];
+		glMat[4] = val[M01];
+		glMat[5] = val[M11];
+		glMat[6] = 0;
 		glMat[7] = val[M21];
 		glMat[8] = 0;
-		glMat[9] = val[M02];
-		glMat[10] = val[M12];
-		glMat[11] = val[M22];
-		glMat[12] = 0;
-		glMat[13] = 0;
+		glMat[9] = 0;
+		glMat[10] = 1;
+		glMat[11] = 0;
+		glMat[12] = val[M02];
+		glMat[13] = val[M12];
 		glMat[14] = 0;
-		glMat[15] = 1;
+		glMat[15] = val[M22];
 		return glMat;
 	}
 

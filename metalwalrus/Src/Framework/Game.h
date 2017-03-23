@@ -11,6 +11,7 @@ class Game
 	int width;
 	int height;
 
+	void drawFrameBuffer();
 public:
 	Game(char *windowTitle, int w, int h);
 	~Game();
@@ -22,6 +23,8 @@ public:
 	int getWidth() { return width; }
 	int getHeight() { return height; }
 };
+
+
 
 }
 #endif

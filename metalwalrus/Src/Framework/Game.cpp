@@ -11,6 +11,7 @@ using namespace std;
 #include "Graphics/Texture2D.h"
 #include "Graphics/TextureRegion.h"
 #include "Graphics/FrameBuffer.h"
+#include "Math/Matrix3.h"
 #include "Util/Debug.h"
 #include "Util/IOUtil.h"
 
@@ -82,6 +83,10 @@ namespace metalwalrus
 
 		glPushMatrix();
 
+		Matrix3 transMat = Matrix3();
+		transMat.translation(30, 0).translation(0, 50).rotate(10).scale(1.5, 2);
+		glLoadMatrixf(transMat.glMatrix());
+
 		glBegin(GL_TRIANGLES);                      // Drawing Using Triangles
 		glVertex3f(25, 50, 0);              // Top
 		glVertex3f(0, 0, 0);              // Bottom Left
@@ -94,7 +99,13 @@ namespace metalwalrus
 
 		frameBuffer->unbind();
 		
+		drawFrameBuffer();
 
+		glMatrixMode(GL_MODELVIEW);
+	}
+
+	void Game::drawFrameBuffer()
+	{
 		glClearColor(0, 0, 0, 0);
 		glClear(GL_COLOR_BUFFER_BIT);
 
@@ -104,20 +115,8 @@ namespace metalwalrus
 
 		glPushMatrix();
 
-		
-
 		vertData->draw(1);
 
-		/*glBegin(GL_QUADS);
-		glTexCoord2f(0, 0);	glVertex2f(0, 0);
-		glTexCoord2f(0, 1);	glVertex2f(0, 200);
-		glTexCoord2f(1, 1);	glVertex2f(250, 200);
-		glTexCoord2f(1, 0);	glVertex2f(250, 0);
-		glEnd();*/
-
 		glPopMatrix();
-		
-
-		glMatrixMode(GL_MODELVIEW);
 	}
 }
