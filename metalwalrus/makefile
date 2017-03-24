@@ -1,7 +1,7 @@
 IDIR = include
 SDIR = Src
 CC = g++
-CFLAGS = -I$(IDIR) -Wall -std=c++11
+CFLAGS = -I$(IDIR) -Wall -std=c++11 -g
 
 ODIR = obj
 LDIR = lib

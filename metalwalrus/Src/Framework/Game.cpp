@@ -86,7 +86,9 @@ namespace metalwalrus
 
 		glPushMatrix();
 			Matrix3 transMat = Matrix3();
-			transMat.translation(30, 0).translation(0, 50).rotate(10).scale(1.5, 2);
+                        
+                        float* glMat = transMat.glMatrix();
+                        
 			glLoadMatrixf(transMat.glMatrix());
 
 			glBegin(GL_TRIANGLES);

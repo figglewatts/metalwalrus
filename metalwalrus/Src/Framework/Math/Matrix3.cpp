@@ -238,25 +238,24 @@ namespace metalwalrus
 
 	float * Matrix3::glMatrix() const
 	{
-		
-		float glMat[16];
-		glMat[0] = val[M00];
-		glMat[1] = val[M10];
-		glMat[2] = 0;
-		glMat[3] = val[M20];
-		glMat[4] = val[M01];
-		glMat[5] = val[M11];
-		glMat[6] = 0;
-		glMat[7] = val[M21];
-		glMat[8] = 0;
-		glMat[9] = 0;
-		glMat[10] = 1;
-		glMat[11] = 0;
-		glMat[12] = val[M02];
-		glMat[13] = val[M12];
-		glMat[14] = 0;
-		glMat[15] = val[M22];
-		return glMat;
+            std::vector<float> glMat(16);
+            glMat[0] = val[M00];
+            glMat[1] = val[M10];
+            glMat[2] = 0;
+            glMat[3] = val[M20];
+            glMat[4] = val[M01];
+            glMat[5] = val[M11];
+            glMat[6] = 0;
+            glMat[7] = val[M21];
+            glMat[8] = 0;
+            glMat[9] = 0;
+            glMat[10] = 1;
+            glMat[11] = 0;
+            glMat[12] = val[M02];
+            glMat[13] = val[M12];
+            glMat[14] = 0;
+            glMat[15] = val[M22];
+            return glMat.data();
 	}
 
 	Matrix3 operator*(const float scalar, const Matrix3& other)

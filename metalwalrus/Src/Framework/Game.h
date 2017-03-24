@@ -2,7 +2,7 @@
 #define GAME_H
 #pragma once
 
-#include "Graphics\GLContext.h"
+#include "Graphics/GLContext.h"
 
 namespace metalwalrus
 {

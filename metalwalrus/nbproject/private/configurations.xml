@@ -8,6 +8,10 @@
       </df>
       <df name="bin">
       </df>
+      <df name="build">
+        <df name="assets">
+        </df>
+      </df>
       <df name="cmake-build-debug">
         <df name="CMakeFiles">
           <df name="3.6.3">
@@ -73,10 +77,13 @@
           <df name="Graphics">
             <in>FrameBuffer.cpp</in>
             <in>FrameBuffer.h</in>
+            <in>GLContext.cpp</in>
+            <in>GLContext.h</in>
             <in>Texture2D.cpp</in>
             <in>Texture2D.h</in>
             <in>TextureRegion.cpp</in>
             <in>TextureRegion.h</in>
+            <in>Vertex.h</in>
             <in>VertexData.cpp</in>
             <in>VertexData.h</in>
           </df>
@@ -98,6 +105,8 @@
           </df>
           <in>Game.cpp</in>
           <in>Game.h</in>
+          <in>Settings.cpp</in>
+          <in>Settings.h</in>
         </df>
         <in>main.cpp</in>
       </df>
@@ -128,8 +137,13 @@
         <gdb_interceptlist>
           <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
         </gdb_interceptlist>
+        <gdb_signals>
+        </gdb_signals>
         <gdb_options>
           <DebugOptions>
+            <option name="debug_command" value="/usr/bin/gdb metalwalrus"/>
+            <option name="debug_dir"
+                    value="/home/sam/Documents/git-repos/metalwalrus/metalwalrus/build"/>
           </DebugOptions>
         </gdb_options>
         <gdb_buildfirst gdb_buildfirst_overriden="false" gdb_buildfirst_old="false"/>
