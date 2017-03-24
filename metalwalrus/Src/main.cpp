@@ -13,31 +13,35 @@ using namespace metalwalrus;
 
 Game *game;
 GLContext *context;
-double t = 0;
-double targetDeltaTime = 1 / 60.0; // target fps: 60
-double lag = 0;
-clock_t prevTime = clock();
+
+clock_t t = 0.0;
+float dt = 1 / 60.0;
+clock_t currTime = clock();
+
+double lastLoopTime = 0;
+double timeAccumulatedMs = 0;
+
+void displayFunc()
+{
+	double now = glutGet(GLUT_ELAPSED_TIME);
+	double timeElapsedMs = ((now - lastLoopTime) * 1000) / CLOCKS_PER_SEC;
+	timeAccumulatedMs += timeElapsedMs;
+
+}
 
 void display()
 {
-	// semi-fixed timestep
-	clock_t currTime = clock();
-	clock_t elapsedTime = currTime - prevTime;
-	prevTime = currTime;
-
-	double frameTime = ((double)elapsedTime) / CLOCKS_PER_SEC;
-	lag += frameTime;
-
-	// process input here
-
-	while (lag >= targetDeltaTime)
+	clock_t timeThisIteration = 0;
+	clock_t startTime = clock();
+	
+	while (t >= dt)
 	{
-		// if the frame time is too large then use the target
-		double deltaTime = min(frameTime, targetDeltaTime);
-		game->Update(deltaTime);
-		lag -= deltaTime;
-		t += deltaTime;
+		game->Update(dt);
+		t -= dt;
+		timeThisIteration += dt;
 	}
+
+	// animation??
 
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
@@ -51,8 +55,12 @@ void display()
 	glLoadIdentity();
 	glPopMatrix();
 
+	// handle input here
+
+	t += clock() - startTime;
+
 	check_gl_error();
-	
+
 	glutSwapBuffers();
 }
 
@@ -107,6 +115,8 @@ int main(int argc, char **argv)
 	glutCreateWindow(game->getTitle());
 
 	glewInit();
+
+	lastLoopTime = glutGet(GLUT_ELAPSED_TIME);
 
 	//resolutionIndependentViewport(game->getWidth(), game->getHeight());
 
