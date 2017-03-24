@@ -22,6 +22,8 @@ namespace metalwalrus
 	Texture2D *tex;
 	TextureRegion *texRegion;
 	FrameBuffer *frameBuffer;
+	
+	float degrees = 0;
 
 	VertData2D vertices[4];
 	GLubyte indices[] =
@@ -70,7 +72,8 @@ namespace metalwalrus
 
 	void Game::Update(double delta)
 	{
-
+	    degrees += delta * 1000;
+	    if (degrees > 360) degrees = 0;
 	}
 
 	void Game::Draw()
@@ -85,9 +88,10 @@ namespace metalwalrus
 		glPopMatrix();
 
 		glPushMatrix();
-			Matrix3 transMat = Matrix3();
+			Matrix3 resultMat = Matrix3();
+			resultMat.translation(40, 40).rotate(degrees);
                         
-            std::vector<float> glMat = transMat.glMatrix();
+			std::vector<float> glMat = resultMat.glMatrix();
             
 			glLoadMatrixf(&glMat[0]);
 

@@ -255,7 +255,7 @@ namespace metalwalrus
             glMat[13] = val[M12];
             glMat[14] = 0;
             glMat[15] = val[M22];
-			return glMat;
+            return glMat;
 	}
 
 	Matrix3 operator*(const float scalar, const Matrix3& other)

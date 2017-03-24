@@ -14,9 +14,11 @@
             <file>file:/home/sam/Documents/git-repos/metalwalrus/metalwalrus/Src/Framework/Game.h</file>
             <file>file:/home/sam/Documents/git-repos/metalwalrus/metalwalrus/Src/Framework/Graphics/FrameBuffer.cpp</file>
             <file>file:/home/sam/Documents/git-repos/metalwalrus/metalwalrus/Src/Framework/Graphics/FrameBuffer.h</file>
+            <file>file:/home/sam/Documents/git-repos/metalwalrus/metalwalrus/Src/Framework/Math/Matrix3.cpp</file>
             <file>file:/home/sam/Documents/git-repos/metalwalrus/metalwalrus/Src/Framework/Game.cpp</file>
             <file>file:/home/sam/Documents/git-repos/metalwalrus/metalwalrus/Src/Framework/Graphics/GLContext.h</file>
             <file>file:/home/sam/Documents/git-repos/metalwalrus/metalwalrus/Src/Framework/Graphics/Texture2D.cpp</file>
+            <file>file:/home/sam/Documents/git-repos/metalwalrus/metalwalrus/makefile</file>
         </group>
     </open-files>
 </project-private>
