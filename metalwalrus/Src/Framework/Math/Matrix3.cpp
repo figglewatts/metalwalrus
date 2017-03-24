@@ -236,7 +236,7 @@ namespace metalwalrus
 		return *this;
 	}
 
-	float * Matrix3::glMatrix() const
+	std::vector<float> Matrix3::glMatrix() const
 	{
             std::vector<float> glMat(16);
             glMat[0] = val[M00];
@@ -255,7 +255,7 @@ namespace metalwalrus
             glMat[13] = val[M12];
             glMat[14] = 0;
             glMat[15] = val[M22];
-            return glMat.data();
+			return glMat;
 	}
 
 	Matrix3 operator*(const float scalar, const Matrix3& other)

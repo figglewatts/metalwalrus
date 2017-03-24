@@ -87,9 +87,9 @@ namespace metalwalrus
 		glPushMatrix();
 			Matrix3 transMat = Matrix3();
                         
-                        float* glMat = transMat.glMatrix();
-                        
-			glLoadMatrixf(transMat.glMatrix());
+            std::vector<float> glMat = transMat.glMatrix();
+            
+			glLoadMatrixf(&glMat[0]);
 
 			glBegin(GL_TRIANGLES);
 			glVertex3f(25, 50, 0);

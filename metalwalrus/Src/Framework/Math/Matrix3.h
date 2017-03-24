@@ -56,7 +56,7 @@ namespace metalwalrus
 		Matrix3& translation(float x, float y);
 		Matrix3& translation(Vector2 translation);
 
-		float* glMatrix() const;
+		std::vector<float> glMatrix() const;
 	};
 
 }
