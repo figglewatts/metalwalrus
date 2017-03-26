@@ -14,31 +14,24 @@ using namespace metalwalrus;
 Game *game;
 GLContext *context;
 
-clock_t t = 0.0;
-float dt = 1 / 60.0;
-clock_t currTime = clock();
-
-double lastLoopTime = 0;
-double timeAccumulatedMs = 0;
-
-void displayFunc()
-{
-	double now = glutGet(GLUT_ELAPSED_TIME);
-	double timeElapsedMs = ((now - lastLoopTime) * 1000) / CLOCKS_PER_SEC;
-	timeAccumulatedMs += timeElapsedMs;
-
-}
+double t = 0;
+const double dt = 1 / 60.0;
+double currentTime = (double)clock() / (double)CLOCKS_PER_SEC;
+double accumulator = 0.0;
 
 void display()
 {
-	clock_t timeThisIteration = 0;
-	clock_t startTime = clock();
-	
-	while (t >= dt)
+	double newTime = (double)clock() / (double)CLOCKS_PER_SEC;
+	double frameTime = newTime - currentTime;
+	currentTime = newTime;
+
+	accumulator += frameTime;
+
+	while (accumulator >= dt)
 	{
 		game->Update(dt);
-		t -= dt;
-		timeThisIteration += dt;
+		accumulator -= dt;
+		t += dt;
 	}
 
 	// animation??
@@ -56,8 +49,6 @@ void display()
 	glPopMatrix();
 
 	// handle input here
-
-	t += clock() - startTime;
 
 	check_gl_error();
 
@@ -115,8 +106,6 @@ int main(int argc, char **argv)
 	glutCreateWindow(game->getTitle());
 
 	glewInit();
-
-	lastLoopTime = glutGet(GLUT_ELAPSED_TIME);
 
 	//resolutionIndependentViewport(game->getWidth(), game->getHeight());
 
