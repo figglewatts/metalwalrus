@@ -15,7 +15,7 @@ Game *game;
 GLContext *context;
 
 double t = 0;
-const double dt = 1 / 60.0;
+const double dt = 0.0001;
 double currentTime = (double)clock() / (double)CLOCKS_PER_SEC;
 double accumulator = 0.0;
 
@@ -23,13 +23,12 @@ void display()
 {
 	double newTime = (double)clock() / (double)CLOCKS_PER_SEC;
 	double frameTime = newTime - currentTime;
-	currentTime = newTime;
 
 	accumulator += frameTime;
 
 	while (accumulator >= dt)
 	{
-		game->Update(dt);
+		game->Update(frameTime);
 		accumulator -= dt;
 		t += dt;
 	}
@@ -47,6 +46,8 @@ void display()
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	glPopMatrix();
+	
+	currentTime = newTime;
 
 	// handle input here
 
