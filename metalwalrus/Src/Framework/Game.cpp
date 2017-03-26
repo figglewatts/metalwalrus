@@ -72,7 +72,7 @@ namespace metalwalrus
 
 	void Game::Update(double delta)
 	{
-	    degrees += 100 * delta;
+	    degrees += 1;
 	    if (degrees > 360) degrees = 0;
 	}
 

@@ -14,23 +14,21 @@ using namespace metalwalrus;
 Game *game;
 GLContext *context;
 
-double t = 0;
-const double dt = 0.0001;
-double currentTime = (double)clock() / (double)CLOCKS_PER_SEC;
-double accumulator = 0.0;
+const int TICKS_PER_SECOND = 50;
+const int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
+const int MAX_FRAMESKIP = 10;
+
+time_t nextGameTick = clock();
+int loops = 0;
 
 void display()
 {
-	double newTime = (double)clock() / (double)CLOCKS_PER_SEC;
-	double frameTime = newTime - currentTime;
-
-	accumulator += frameTime;
-
-	while (accumulator >= dt)
+	loops = 0;
+	while (clock() > nextGameTick && loops < MAX_FRAMESKIP)
 	{
-		game->Update(frameTime);
-		accumulator -= dt;
-		t += dt;
+		game->Update(0);
+		nextGameTick += SKIP_TICKS;
+		loops++;
 	}
 
 	// animation??
@@ -46,8 +44,7 @@ void display()
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	glPopMatrix();
-	
-	currentTime = newTime;
+
 
 	// handle input here
 
