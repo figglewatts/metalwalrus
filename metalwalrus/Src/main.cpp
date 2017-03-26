@@ -23,6 +23,8 @@ int loops = 0;
 
 time_t current;
 
+double dt;
+
 void display()
 {
 	current = clock();
@@ -30,7 +32,9 @@ void display()
 	{
 		while (current > nextGameTick) 
 		{		
-			game->Update(0);
+		    dt = ((double)current - (double)nextGameTick) / CLOCKS_PER_SEC;
+		    
+			game->Update(dt);
 
 			nextGameTick += SKIP_TICKS;
 		}
