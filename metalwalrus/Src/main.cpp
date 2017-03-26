@@ -1,7 +1,6 @@
 #include <GL/glew.h>
 #include <GL/freeglut.h>
 
-#include <ctime>
 #include <algorithm>
 using namespace std;
 
@@ -14,27 +13,10 @@ using namespace metalwalrus;
 Game *game;
 GLContext *context;
 
-const int TARGET_FPS = 60;
-const int SCREEN_TICKS_PER_FRAME = CLOCKS_PER_SEC / TARGET_FPS;
-clock_t startTick = 0;
-clock_t endTick = 0;
-clock_t diffTicks = 0;
-double dt = 0;
-double idealDt = 1 / (double)TARGET_FPS; // 60fps
-int countedFrames = 0;
+double dt = 1000 / 60; // 60fps in ms
 
 void display()
 {
-	startTick = clock();
-	
-	if (diffTicks <= 0) dt = idealDt;
-	else dt = diffTicks / CLOCKS_PER_SEC;
-
-	float avgFPS = countedFrames / dt;
-	if (avgFPS > 2000000) avgFPS = 0;
-
-	game->Update(dt);
-
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 	float scaleX = (float)Settings::WIDTH / (float)Settings::VIRTUAL_WIDTH;
@@ -47,58 +29,20 @@ void display()
 	glLoadIdentity();
 	glPopMatrix();
 
-	endTick = clock();
-
-	++countedFrames;
-
-	// if frame finished early
-	diffTicks = endTick - startTick;
-	if (diffTicks < SCREEN_TICKS_PER_FRAME)
-	{
-		float remainingMs = (SCREEN_TICKS_PER_FRAME - diffTicks);
-		Sleep(remainingMs);
-	}
-	
-	
-	/*current = clock();
-	if (current > nextGameTick)
-	{
-		while (current > nextGameTick) 
-		{		
-		    dt = ((double)current - (double)nextGameTick) / CLOCKS_PER_SEC;
-		    
-			game->Update(dt);
-
-			nextGameTick += SKIP_TICKS;
-		}
-
-		glMatrixMode(GL_MODELVIEW);
-		glPushMatrix();
-		float scaleX = (float)Settings::WIDTH / (float)Settings::VIRTUAL_WIDTH;
-		float scaleY = (float)Settings::HEIGHT / (float)Settings::VIRTUAL_HEIGHT;
-		glScalef(scaleX, scaleY, 0);
-
-		game->Draw();
-
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
-		glPopMatrix();
-	}
-	else
-	{
-		
-	}
-	*/
-	// animation??
-
-	
-
-
-	// handle input here
-
 	check_gl_error();
 
 	glutSwapBuffers();
+}
+
+void update(int data)
+{
+	glutTimerFunc(dt, update, -1);
+	
+	// process input
+
+	game->Update(dt);
+
+	glutPostRedisplay();
 }
 
 void resolutionIndependentViewport(int w, int h)
@@ -159,7 +103,7 @@ int main(int argc, char **argv)
 
 	glutDisplayFunc(display);
 	glutReshapeFunc(changeSize);
-	glutIdleFunc(display);
+	glutTimerFunc(dt, update, -1);
 
 	glutMainLoop();
 
