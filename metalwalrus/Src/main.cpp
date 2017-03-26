@@ -14,20 +14,53 @@ using namespace metalwalrus;
 Game *game;
 GLContext *context;
 
-const int TICKS_PER_SECOND = 50;
-const int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
-const int MAX_FRAMESKIP = 10;
-
-time_t nextGameTick = clock();
-int loops = 0;
-
-time_t current;
-
-double dt;
+const int TARGET_FPS = 60;
+const int SCREEN_TICKS_PER_FRAME = CLOCKS_PER_SEC / TARGET_FPS;
+clock_t startTick = 0;
+clock_t endTick = 0;
+clock_t diffTicks = 0;
+double dt = 0;
+double idealDt = 1 / (double)TARGET_FPS; // 60fps
+int countedFrames = 0;
 
 void display()
 {
-	current = clock();
+	startTick = clock();
+	
+	if (diffTicks <= 0) dt = idealDt;
+	else dt = diffTicks / CLOCKS_PER_SEC;
+
+	float avgFPS = countedFrames / dt;
+	if (avgFPS > 2000000) avgFPS = 0;
+
+	game->Update(dt);
+
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	float scaleX = (float)Settings::WIDTH / (float)Settings::VIRTUAL_WIDTH;
+	float scaleY = (float)Settings::HEIGHT / (float)Settings::VIRTUAL_HEIGHT;
+	glScalef(scaleX, scaleY, 0);
+
+	game->Draw();
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glPopMatrix();
+
+	endTick = clock();
+
+	++countedFrames;
+
+	// if frame finished early
+	diffTicks = endTick - startTick;
+	if (diffTicks < SCREEN_TICKS_PER_FRAME)
+	{
+		float remainingMs = (SCREEN_TICKS_PER_FRAME - diffTicks);
+		Sleep(remainingMs);
+	}
+	
+	
+	/*current = clock();
 	if (current > nextGameTick)
 	{
 		while (current > nextGameTick) 
@@ -55,7 +88,7 @@ void display()
 	{
 		
 	}
-
+	*/
 	// animation??
 
 	
