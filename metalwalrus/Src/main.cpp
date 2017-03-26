@@ -21,29 +21,40 @@ const int MAX_FRAMESKIP = 10;
 time_t nextGameTick = clock();
 int loops = 0;
 
+time_t current;
+
 void display()
 {
-	loops = 0;
-	while (clock() > nextGameTick && loops < MAX_FRAMESKIP)
+	current = clock();
+	if (current > nextGameTick)
 	{
-		game->Update(0);
-		nextGameTick += SKIP_TICKS;
-		loops++;
+		while (current > nextGameTick) 
+		{		
+			game->Update(0);
+
+			nextGameTick += SKIP_TICKS;
+		}
+
+		glMatrixMode(GL_MODELVIEW);
+		glPushMatrix();
+		float scaleX = (float)Settings::WIDTH / (float)Settings::VIRTUAL_WIDTH;
+		float scaleY = (float)Settings::HEIGHT / (float)Settings::VIRTUAL_HEIGHT;
+		glScalef(scaleX, scaleY, 0);
+
+		game->Draw();
+
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
+		glPopMatrix();
+	}
+	else
+	{
+		
 	}
 
 	// animation??
 
-	glMatrixMode(GL_MODELVIEW);
-	glPushMatrix();
-	float scaleX = (float)Settings::WIDTH / (float)Settings::VIRTUAL_WIDTH;
-	float scaleY = (float)Settings::HEIGHT / (float)Settings::VIRTUAL_HEIGHT;
-	glScalef(scaleX, scaleY, 0);
-
-	game->Draw();
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	glPopMatrix();
+	
 
 
 	// handle input here
