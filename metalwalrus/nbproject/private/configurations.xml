@@ -8,6 +8,10 @@
       </df>
       <df name="bin">
       </df>
+      <df name="build">
+        <df name="assets">
+        </df>
+      </df>
       <df name="cmake-build-debug">
         <df name="CMakeFiles">
           <df name="3.6.3">

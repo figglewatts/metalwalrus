@@ -7,6 +7,8 @@
 
 #include "SpriteBatch.h"
 
+#include <stdexcept>
+
 namespace metalwalrus
 {
 	SpriteBatch::SpriteBatch() : SpriteBatch(1000) { }
@@ -29,11 +31,17 @@ namespace metalwalrus
 		
 		this->batchMesh = VertexData::create(this->vertices.data(), 
 				length, indices.data(), length);
+		
+		this->transformMat = Matrix3();
 	}
 	
 	SpriteBatch::SpriteBatch(const SpriteBatch& orig) 
 	{
-		// self explan.
+		this->tintCol = orig.tintCol;
+		this->size = orig.size;
+		this->vertices = orig.vertices;
+		*this->batchMesh = *orig.batchMesh;
+		this->transformMat = orig.transformMat;
 	}
 	
 	SpriteBatch::~SpriteBatch() 
@@ -43,21 +51,25 @@ namespace metalwalrus
 	
 	SpriteBatch SpriteBatch::operator=(const SpriteBatch& orig)
 	{
-		this->tintCol = orig.tintCol;
-		this->size = orig.size;
-		this->vertices = orig.vertices;
-		*this->batchMesh = *orig.batchMesh;
+		if (this != &orig)
+		{
+			this->tintCol = orig.tintCol;
+			this->size = orig.size;
+			this->vertices = orig.vertices;
+			*this->batchMesh = *orig.batchMesh;
+			this->transformMat = orig.transformMat;
+		}
 	}
 	
 	void SpriteBatch::flush() 
 	{
-		if (index == 0) return;
+		if (index == 0 || lastTexture == nullptr) return;
 		
 		renderCalls++;
 		
 		int spritesInBatch = index / 16; // 4 vertices: X,Y,U,V for each
 		int count = spritesInBatch * 4; // vertex count
-		if (lastTexture != nullptr) lastTexture->bind();
+		lastTexture->bind();
 		
 		batchMesh->bind();
 		
@@ -67,5 +79,38 @@ namespace metalwalrus
 		lastTexture->unbind();
 		
 		index = 0;
+	}
+	
+	void SpriteBatch::switchTexture(Texture2D *tex)
+	{
+		this->flush();
+		lastTexture = tex;
+		invTexWidth = 1.0 / tex->get_width();
+		invTexHeight = 1.0 / tex->get_height();
+	}
+	
+	void SpriteBatch::begin()
+	{
+		// TODO: custom exceptions
+		if (drawing) 
+			throw std::runtime_error("A previous batch has not yet ended!");
+		
+		drawing = true;
+	}
+	
+	void SpriteBatch::end()
+	{
+		// TODO: custom exceptions
+		if (!drawing)
+			throw std::runtime_error("A batch has not been started!");
+		
+		if (index > 0)
+			this->flush();
+		
+		this->lastTexture = nullptr;
+		
+		drawing = false;
+		
+		// TODO: blending
 	}
 }
