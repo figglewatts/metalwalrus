@@ -9,16 +9,24 @@
 #define SPRITEBATCH_H
 #pragma once
 
+#include <vector>
+
 #include "Color.h"
 #include "Vertex.h"
+#include "Texture2D.h"
+#include "VertexData.h"
 
 namespace metalwalrus
 {
     class SpriteBatch {
 	Color tintCol;
 	int size;
-	VertData2D vertices[];
-	VertexData batchMesh;
+	std::vector<VertData2D> vertices;
+	VertexData *batchMesh;
+	
+	bool drawing = false;
+	int index = 0;
+	Texture2D *lastTexture = nullptr;
 	
 	void flush();
 	void switchTexture(Texture2D tex);
@@ -26,7 +34,10 @@ namespace metalwalrus
 	int renderCalls = 0;
 	
 	SpriteBatch();
+	SpriteBatch(int size);
 	SpriteBatch(const SpriteBatch& orig);
+	
+	~SpriteBatch();
 
 	SpriteBatch operator=(const SpriteBatch& orig);
 	

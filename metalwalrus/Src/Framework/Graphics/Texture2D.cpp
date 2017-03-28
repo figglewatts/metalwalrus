@@ -93,6 +93,25 @@ namespace metalwalrus
 		}
 		return *this;
 	}
+	
+	bool Texture2D::operator==(const Texture2D& other)
+	{
+		return this->width == other.width
+				&& this->height == other.height
+				&& this->format == other.format
+				&& *this->data == *other.data
+				&& this->type == other.type
+				&& this->minFilter == other.minFilter
+				&& this->magFilter == other.magFilter
+				&& this->sWrap == other.sWrap
+				&& this->tWrap == other.tWrap
+				&& this->glHandle == other.glHandle;
+	}
+	
+	bool Texture2D::operator!=(const Texture2D& other)
+	{
+		return !(*this == other);
+	}
 
 	Texture2D::Texture2D(const Texture2D & other)
 	{

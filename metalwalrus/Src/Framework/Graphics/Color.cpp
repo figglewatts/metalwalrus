@@ -11,6 +11,14 @@
 
 namespace metalwalrus
 {
+	Color::Color()
+	{
+		this->r = 1;
+		this->g = 1;
+		this->b = 1;
+		this->a = 1;
+	}
+	
 	Color::Color(float r, float g, float b, float a)
 	{
 		float absR = std::abs(r);
@@ -41,6 +49,24 @@ namespace metalwalrus
 			this->a = orig.a;
 		}
 		return *this;
+	}
+	
+	// multiplicative color combination
+	Color Color::operator*(const Color& other)
+	{
+		return Color(this->r * other.r,
+				this->g * other.g,
+				this->b * other.b,
+				this->a * other.a);
+	}
+	
+	// additive color combination
+	Color Color::operator+(const Color& other)
+	{
+		return Color(this->r + other.r,
+				this->g + other.g,
+				this->b + other.b,
+				this->a + other.a);
 	}
 	
 	const Color Color::WHITE = Color(1, 1, 1);

@@ -6,7 +6,7 @@
 
 namespace metalwalrus
 {
-	VertexData::VertexData(VertData2D vertices[], unsigned vertNum, GLubyte indices[], unsigned indNum)
+	VertexData::VertexData(VertData2D vertices[], unsigned vertNum, GLuint indices[], unsigned indNum)
 	{
 		this->vertices.assign(vertices, vertices + vertNum);
 		this->indices.assign(indices, indices + indNum);
@@ -37,7 +37,7 @@ namespace metalwalrus
 		this->load();
 	}
 
-	VertexData *VertexData::create(VertData2D vertices[], unsigned vertNum, GLubyte indices[], unsigned indNum)
+	VertexData *VertexData::create(VertData2D vertices[], unsigned vertNum, GLuint indices[], unsigned indNum)
 	{
 		return new VertexData(vertices, vertNum, indices, indNum);
 	}
@@ -102,29 +102,11 @@ namespace metalwalrus
 
 		bindIndices();
 
-		glDrawElements(GL_QUADS, count * 4, GL_UNSIGNED_BYTE, 0);
-
+		glDrawElements(GL_QUADS, count * 4, GL_UNSIGNED_INT, 0);
 		
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 		glDisableClientState(GL_VERTEX_ARRAY);
 		
-		/*
-		this->bind();
-
-		// set position in the vertex array
-		glEnableClientState(GL_VERTEX_ARRAY);
-		glVertexPointer(2, GL_FLOAT, 0, 0);
-
-		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-		glTexCoordPointer(2, GL_FLOAT, 0, 0);
-
-
-		glDrawElements(GL_QUADS, count * 4, GL_UNSIGNED_BYTE, 0);
-
 		this->unbind();
-
-		glDisableClientState(GL_INDEX_ARRAY);
-		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-		glDisableClientState(GL_VERTEX_ARRAY);*/
 	}
 }

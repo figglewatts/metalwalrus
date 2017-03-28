@@ -36,6 +36,8 @@ namespace metalwalrus
 
 	public:
 		Texture2D operator=(Texture2D& other);
+		bool operator==(const Texture2D& other);
+		bool operator!=(const Texture2D& other);
 
 		Texture2D(const Texture2D& other); // copy constructor
 

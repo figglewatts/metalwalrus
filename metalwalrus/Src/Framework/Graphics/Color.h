@@ -17,10 +17,13 @@ namespace metalwalrus
 	float b = 1;
 	float a = 1;    
     public:
+	Color();
 	Color(float r, float g, float b, float a = 1);
 	Color(const Color& orig);
 
 	Color operator=(const Color& orig);
+	Color operator*(const Color& other);
+	Color operator+(const Color& other);
 
 	inline float get_r() const { return r; }
 	inline float get_g() const { return g; }

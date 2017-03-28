@@ -15,11 +15,11 @@ namespace metalwalrus
 		GLuint vertHandle = 0;
 		GLuint indHandle = 0;
 		std::vector<VertData2D> vertices;
-		std::vector<GLubyte> indices;
+		std::vector<GLuint> indices;
 		void bindVertices();
 		void bindIndices();
 
-		VertexData(VertData2D vertices[], unsigned vertNum, GLubyte indices[], unsigned indNum);
+		VertexData(VertData2D vertices[], unsigned vertNum, GLuint indices[], unsigned indNum);
 
 	public:
 		~VertexData();
@@ -28,7 +28,7 @@ namespace metalwalrus
 
 		VertexData(const VertexData& other); // copy constructor
 
-		static VertexData *create(VertData2D vertices[], unsigned vertNum, GLubyte indices[], unsigned indNum);
+		static VertexData *create(VertData2D vertices[], unsigned vertNum, GLuint indices[], unsigned indNum);
 
 		void load();
 

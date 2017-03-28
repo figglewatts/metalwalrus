@@ -65,7 +65,11 @@
           <buildCommand>${MAKE} -f makefile</buildCommand>
           <cleanCommand>${MAKE} -f makefile clean</cleanCommand>
           <executablePath>build/metalwalrus</executablePath>
+          <cTool>
+            <standard>10</standard>
+          </cTool>
           <ccTool>
+            <standard>8</standard>
             <incDir>
               <pElem>include</pElem>
               <pElem>.</pElem>

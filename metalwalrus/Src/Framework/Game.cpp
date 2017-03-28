@@ -26,7 +26,7 @@ namespace metalwalrus
 	float degrees = 0;
 
 	VertData2D vertices[4];
-	GLubyte indices[] =
+	GLuint indices[] =
 	{
 		0, 1, 2, 3
 	};
