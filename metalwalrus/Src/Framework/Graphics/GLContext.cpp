@@ -18,6 +18,11 @@ namespace metalwalrus
 		glClearColor(r, g, b, 1);
 		glClear(GL_COLOR_BUFFER_BIT);
 	}
+	
+	void GLContext::clear(Color c)
+	{
+		clear(c.get_r(), c.get_g(), c.get_b());
+	}
 
 	void GLContext::viewport(int x, int y, int w, int h)
 	{

@@ -17,97 +17,98 @@ double dt = 1000 / 60; // 60fps in ms
 
 void display()
 {
-	glMatrixMode(GL_MODELVIEW);
-	glPushMatrix();
-	float scaleX = (float)Settings::WIDTH / (float)Settings::VIRTUAL_WIDTH;
-	float scaleY = (float)Settings::HEIGHT / (float)Settings::VIRTUAL_HEIGHT;
-	glScalef(scaleX, scaleY, 0);
+    glMatrixMode(GL_MODELVIEW);
+    glPushMatrix();
+    float scaleX = (float) Settings::WIDTH / (float) Settings::VIRTUAL_WIDTH;
+    float scaleY = (float) Settings::HEIGHT / (float) Settings::VIRTUAL_HEIGHT;
+    glScalef(scaleX, scaleY, 0);
 
-	game->Draw();
+    game->Draw();
 
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	glPopMatrix();
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    glPopMatrix();
 
-	check_gl_error();
+    check_gl_error();
 
-	glutSwapBuffers();
+    glutSwapBuffers();
 }
 
 void update(int data)
 {
-	glutTimerFunc(dt, update, -1);
-	
-	// process input
+    glutTimerFunc(dt, update, -1);
 
-	game->Update(dt);
+    // process input
 
-	glutPostRedisplay();
+    game->Update(dt);
+
+    glutPostRedisplay();
 }
 
 void resolutionIndependentViewport(int w, int h)
 {
-	context->clear(0, 0, 0);
+    context->clear(0, 0, 0);
 
-	float targetAspect = (float)Settings::TARGET_WIDTH / (float)Settings::TARGET_HEIGHT;
-	
-	int width = w;
-	int height = (int)(width / targetAspect + 0.5F);
+    float targetAspect = 
+        (float) Settings::TARGET_WIDTH / (float) Settings::TARGET_HEIGHT;
 
-	if (height > h)
-	{
-		height = h;
-		width = (int)(height * targetAspect + 0.5F);
-	}
+    int width = w;
+    int height = (int) (width / targetAspect + 0.5F);
 
-	int xPos = (w / 2) - (width / 2);
-	int yPos = (h / 2) - (height / 2);
+    if (height > h)
+    {
+        height = h;
+        width = (int) (height * targetAspect + 0.5F);
+    }
 
-	context->viewport(xPos, yPos, width, height);
+    int xPos = (w / 2) - (width / 2);
+    int yPos = (h / 2) - (height / 2);
+
+    context->viewport(xPos, yPos, width, height);
 }
 
 void changeSize(int w, int h)
 {
-	Settings::WIDTH = w;
-	Settings::HEIGHT = h;
+    Settings::WIDTH = w;
+    Settings::HEIGHT = h;
 
-	resolutionIndependentViewport(w, h);
+    resolutionIndependentViewport(w, h);
 
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
 
-	gluOrtho2D(0, Settings::TARGET_WIDTH, 0, Settings::TARGET_HEIGHT);
+    gluOrtho2D(0, Settings::TARGET_WIDTH, 0, Settings::TARGET_HEIGHT);
 
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
 }
 
 int main(int argc, char **argv)
 {
-	Debug::redirect("log.txt");
-	
-	context = new GLContext();
-	game = new Game("Sam's Game", Settings::TARGET_WIDTH, Settings::TARGET_HEIGHT, context);
-	
-	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
-	glutInitWindowPosition(-1, -1);
-	glutInitWindowSize(game->getWidth(), game->getHeight());
-	glutCreateWindow(game->getTitle());
+    Debug::redirect("log.txt");
 
-	glewInit();
+    context = new GLContext();
+    game = new Game("Sam's Game", Settings::TARGET_WIDTH, Settings::TARGET_HEIGHT, context);
 
-	//resolutionIndependentViewport(game->getWidth(), game->getHeight());
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
+    glutInitWindowPosition(-1, -1);
+    glutInitWindowSize(game->getWidth(), game->getHeight());
+    glutCreateWindow(game->getTitle());
 
-	game->Start();
+    glewInit();
 
-	glutDisplayFunc(display);
-	glutReshapeFunc(changeSize);
-	glutTimerFunc(dt, update, -1);
+    //resolutionIndependentViewport(game->getWidth(), game->getHeight());
 
-	glutMainLoop();
+    game->Start();
 
-	delete game;
-	delete context;
-	return 1;
+    glutDisplayFunc(display);
+    glutReshapeFunc(changeSize);
+    glutTimerFunc(dt, update, -1);
+
+    glutMainLoop();
+
+    delete game;
+    delete context;
+    return 1;
 }

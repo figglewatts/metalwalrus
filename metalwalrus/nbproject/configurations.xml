@@ -8,8 +8,12 @@
       <df name="Src">
         <df name="Framework">
           <df name="Graphics">
+            <in>Color.cpp</in>
+            <in>Color.h</in>
             <in>FrameBuffer.cpp</in>
             <in>GLContext.cpp</in>
+            <in>SpriteBatch.cpp</in>
+            <in>SpriteBatch.h</in>
             <in>Texture2D.cpp</in>
             <in>TextureRegion.cpp</in>
             <in>VertexData.cpp</in>
@@ -77,6 +81,10 @@
         <ccTool flags="0">
         </ccTool>
       </item>
+      <item path="Src/Framework/Graphics/Color.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Src/Framework/Graphics/Color.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Src/Framework/Graphics/FrameBuffer.cpp"
             ex="false"
             tool="1"
@@ -90,6 +98,16 @@
             flavor2="8">
         <ccTool flags="0">
         </ccTool>
+      </item>
+      <item path="Src/Framework/Graphics/SpriteBatch.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Src/Framework/Graphics/SpriteBatch.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="Src/Framework/Graphics/Texture2D.cpp"
             ex="false"

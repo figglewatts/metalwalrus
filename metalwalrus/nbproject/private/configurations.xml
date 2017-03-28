@@ -75,10 +75,14 @@
       <df name="Src">
         <df name="Framework">
           <df name="Graphics">
+            <in>Color.cpp</in>
+            <in>Color.h</in>
             <in>FrameBuffer.cpp</in>
             <in>FrameBuffer.h</in>
             <in>GLContext.cpp</in>
             <in>GLContext.h</in>
+            <in>SpriteBatch.cpp</in>
+            <in>SpriteBatch.h</in>
             <in>Texture2D.cpp</in>
             <in>Texture2D.h</in>
             <in>TextureRegion.cpp</in>
