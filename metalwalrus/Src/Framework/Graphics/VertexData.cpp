@@ -8,8 +8,17 @@ namespace metalwalrus
 {
 	VertexData::VertexData(VertData2D vertices[], unsigned vertNum, GLuint indices[], unsigned indNum)
 	{
-		this->vertices.assign(vertices, vertices + vertNum);
-		this->indices.assign(indices, indices + indNum);
+		this->vertices = new std::vector<VertData2D>();
+		this->indices = new std::vector<GLuint>();
+		this->vertices->assign(vertices, vertices + vertNum);
+		this->indices->assign(indices, indices + indNum);
+		this->load();
+	}
+	
+	VertexData::VertexData(std::vector<VertData2D>* vertices, std::vector<GLuint>* indices)
+	{
+		this->vertices = vertices;
+		this->indices = indices;
 		this->load();
 	}
 
@@ -17,14 +26,16 @@ namespace metalwalrus
 	{
 		glDeleteBuffers(1, &vertHandle);
 		glDeleteBuffers(1, &indHandle);
+		delete vertices;
+		delete indices;
 	}
 
 	VertexData VertexData::operator=(VertexData & other)
 	{
 		if (this != &other)
 		{
-			this->vertices = other.vertices;
-			this->indices = other.indices;
+			*this->vertices = *other.vertices;
+			*this->indices = *other.indices;
 			this->load();
 		}
 		return *this;
@@ -32,14 +43,21 @@ namespace metalwalrus
 
 	VertexData::VertexData(const VertexData & other)
 	{
-		this->vertices = other.vertices;
-		this->indices = other.indices;
+		this->vertices = new std::vector<VertData2D>();
+		this->indices = new std::vector<GLuint>();
+		*this->vertices = *other.vertices;
+		*this->indices = *other.indices;
 		this->load();
 	}
 
 	VertexData *VertexData::create(VertData2D vertices[], unsigned vertNum, GLuint indices[], unsigned indNum)
 	{
 		return new VertexData(vertices, vertNum, indices, indNum);
+	}
+	
+	VertexData *VertexData::create(std::vector<VertData2D>* vertices, std::vector<GLuint>* indices)
+	{
+		return new VertexData(vertices, indices);
 	}
 
 	// tell OpenGL about the VertexBuffer
@@ -54,13 +72,14 @@ namespace metalwalrus
 		// Create VBO
 		glGenBuffers(1, &vertHandle);
 		bindVertices();
-		glBufferData(GL_ARRAY_BUFFER, 4 * sizeof(VertData2D), vertices.data(), GL_STATIC_DRAW);
+		size_t vertSize = sizeof(VertData2D) * vertices->capacity();
+		glBufferData(GL_ARRAY_BUFFER, vertSize, vertices->data(), GL_DYNAMIC_DRAW);
 
 		// Create IBO
 		glGenBuffers(1, &indHandle);
 		bindIndices();
-		size_t indSize = sizeof(indices[0]) * indices.size();
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indSize, indices.data(), GL_STATIC_DRAW);
+		size_t indSize = sizeof(GLuint) * indices->capacity();
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indSize, indices->data(), GL_DYNAMIC_DRAW);
 
 		unbind();
 	}
@@ -108,5 +127,17 @@ namespace metalwalrus
 		glDisableClientState(GL_VERTEX_ARRAY);
 		
 		this->unbind();
+	}
+	
+	void VertexData::updateContents()
+	{
+		bindVertices();
+		size_t vertSize = sizeof(VertData2D) * vertices->capacity();
+		glBufferSubData(GL_ARRAY_BUFFER, 0, vertSize, vertices->data());
+		
+		bindIndices();
+		size_t indSize = sizeof(GLuint) * indices->capacity();
+		glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, indSize, indices->data());
+		unbind();
 	}
 }

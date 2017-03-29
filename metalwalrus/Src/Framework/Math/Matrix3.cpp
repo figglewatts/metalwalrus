@@ -262,6 +262,4 @@ namespace metalwalrus
 	{
 		return other * scalar;
 	}
-
-
 }

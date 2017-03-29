@@ -11,6 +11,7 @@ using namespace std;
 #include "Graphics/Texture2D.h"
 #include "Graphics/TextureRegion.h"
 #include "Graphics/FrameBuffer.h"
+#include "Graphics/SpriteBatch.h"
 #include "Math/Matrix3.h"
 #include "Util/Debug.h"
 #include "Util/IOUtil.h"
@@ -20,8 +21,14 @@ using namespace std;
 namespace metalwalrus
 {
 	Texture2D *tex;
+	Texture2D *tex2;
 	TextureRegion *texRegion;
 	FrameBuffer *frameBuffer;
+	SpriteBatch *batch;
+	
+	std::vector<VertData2D> *pVert;
+	std::vector<GLuint> *pInd;
+	VertexData *dynVertData;
 	
 	float degrees = 0;
 
@@ -54,6 +61,7 @@ namespace metalwalrus
 	void Game::Start()
 	{
 		tex = Texture2D::create("assets/spritesheet.png");
+		tex2 = Texture2D::create("assets/test.png");
 		texRegion = new TextureRegion(tex, 8, 0, 16, 16);
 		
 		vertices[0].pos = Vector2(0, 0);
@@ -68,6 +76,32 @@ namespace metalwalrus
 
 		vertData = VertexData::create(vertices, 4, indices, 4);
 		frameBuffer = new FrameBuffer(Settings::VIRTUAL_WIDTH, Settings::VIRTUAL_HEIGHT);
+		
+		batch = new SpriteBatch();
+		
+		pVert = new std::vector<VertData2D>(100);
+		pInd = new std::vector<GLuint>(100);
+		
+		// load first
+		dynVertData = VertexData::create(pVert, pInd);
+		
+		// then populate
+		pVert->at(0).pos = Vector2(0, 0);
+		pVert->at(1).pos = Vector2(0, 50);
+		pVert->at(2).pos = Vector2(50, 50);
+		pVert->at(3).pos = Vector2(50, 0);
+		
+		pVert->at(0).texCoord = Vector2(0, 0);
+		pVert->at(1).texCoord = Vector2(0, 1);
+		pVert->at(2).texCoord = Vector2(1, 1);
+		pVert->at(3).texCoord = Vector2(1, 0);
+		
+		pInd->at(0) = 0;
+		pInd->at(1) = 1;
+		pInd->at(2) = 2;
+		pInd->at(3) = 3;
+		
+		dynVertData->updateContents();
 	}
 
 	void Game::Update(double delta)
@@ -82,9 +116,21 @@ namespace metalwalrus
 		frameBuffer->bind();
 
 		context->clear(1, 0, 0);
-
+		
+		batch->begin();
+		batch->draw(*tex, 150, 150, 100, 50, 1.0, 1.0, 30.0);
+		
+		batch->draw(*tex2, 100, 100, 50, 50);
+		
+		batch->end();
+		
+		/*dynVertData->bind();
+		dynVertData->draw(1);
+		dynVertData->unbind();
+		 */
+		
 		glPushMatrix();
-			texRegion->draw();
+			//texRegion->draw();
 		glPopMatrix();
 
 		glPushMatrix();

@@ -1,5 +1,7 @@
 #include "Vector2.h"
 
+#include "Matrix3.h"
+
 #include <math.h>
 
 namespace metalwalrus
@@ -38,6 +40,21 @@ namespace metalwalrus
 	Vector2 Vector2::operator*(float scalar) const
 	{
 		return Vector2(this->x * scalar, this->y * scalar);
+	}
+	
+	Vector2 Vector2::operator*(const Matrix3& other)
+	{
+		float newX = x * other[other.M00] + y * other[other.M01];
+		float newY = x * other[other.M10] + y * other[other.M11];
+		return Vector2(newX, newY);
+	}
+	
+	Vector2 Vector2::operator*=(const Matrix3& other)
+	{
+		Vector2 result = *this * other;
+		x = result.x;
+		y = result.y;
+		return *this;
 	}
 
 	Vector2 Vector2::operator/(float scalar) const
