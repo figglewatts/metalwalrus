@@ -28,7 +28,7 @@ namespace metalwalrus
 	Matrix3 transformMat;
 	
 	bool drawing = false;
-	int index = 0;
+	unsigned int index = 0;
 	Texture2D *lastTexture = nullptr;
 	float invTexWidth = 0;
 	float invTexHeight = 0;

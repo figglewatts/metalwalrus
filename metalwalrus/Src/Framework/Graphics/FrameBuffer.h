@@ -30,6 +30,7 @@ namespace metalwalrus
 
 		inline GLuint get_width() const { return width; }
 		inline GLuint get_height() const { return height; }
+		inline GLuint get_handle() const { return frameBufferHandle; }
 	};
 }
 #endif

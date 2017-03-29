@@ -12,6 +12,7 @@ using namespace std;
 #include "Graphics/TextureRegion.h"
 #include "Graphics/FrameBuffer.h"
 #include "Graphics/SpriteBatch.h"
+#include "Graphics/Color.h"
 #include "Math/Matrix3.h"
 #include "Util/Debug.h"
 #include "Util/IOUtil.h"
@@ -60,6 +61,11 @@ namespace metalwalrus
 
 	void Game::Start()
 	{
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glDisable(GL_DITHER);
+		glDisable(GL_LIGHTING);   
+		glDisable(GL_DEPTH_TEST);
+		
 		tex = Texture2D::create("assets/spritesheet.png");
 		tex2 = Texture2D::create("assets/test.png");
 		texRegion = new TextureRegion(tex, 8, 0, 16, 16);
@@ -114,13 +120,17 @@ namespace metalwalrus
 	{
 		glLoadIdentity();
 		frameBuffer->bind();
-
-		context->clear(1, 0, 0);
+		
+		// background color of scene
+		context->clear(Color::BLUE);
 		
 		batch->begin();
-		batch->draw(*tex, 150, 150, 100, 50, 1.0, 1.0, 30.0);
+		batch->draw(*tex, 150, 150, 64, 32, 1.0, 1.0, 30.0);
+		batch->draw(*tex, 75, 150, 64, 32, 1.0, 1.0, 30.0);
 		
-		batch->draw(*tex2, 100, 100, 50, 50);
+		batch->draw(*tex2, 130, 150, 32, 32);
+		batch->draw(*tex2, 10, 150, 32, 32);
+		batch->draw(*tex2, 50, 50, 32, 32);
 		
 		batch->end();
 		
@@ -158,10 +168,8 @@ namespace metalwalrus
 
 	void Game::drawFrameBuffer()
 	{
-		glClearColor(0, 0, 0, 0);
-		glClear(GL_COLOR_BUFFER_BIT);
-
-		glEnable(GL_TEXTURE_2D);
+		// the color of the black bars around the screen
+		context->clear(Color::BLACK);
 
 		glBindTexture(GL_TEXTURE_2D, frameBuffer->get_color());
 

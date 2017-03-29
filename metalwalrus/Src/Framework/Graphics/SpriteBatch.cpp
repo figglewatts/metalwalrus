@@ -8,6 +8,7 @@
 #include "SpriteBatch.h"
 
 #include <stdexcept>
+#include <GL/glew.h>
 
 namespace metalwalrus
 {
@@ -64,6 +65,9 @@ namespace metalwalrus
 	{
 		if (index == 0 || lastTexture == nullptr) return;
 		
+		glEnable(GL_BLEND);
+		glEnable(GL_DEPTH_TEST);
+		
 		renderCalls++;
 		
 		this->batchMesh->updateContents();
@@ -74,10 +78,11 @@ namespace metalwalrus
 		
 		batchMesh->bind();
 		
-		batchMesh->draw(count);
+		batchMesh->draw(spritesInBatch);
 		
 		batchMesh->unbind();
 		lastTexture->unbind();
+		this->vertices.clear();
 		
 		index = 0;
 	}
@@ -96,6 +101,8 @@ namespace metalwalrus
 		if (drawing) 
 			throw std::runtime_error("A previous batch has not yet ended!");
 		
+		glDepthMask(false);
+		
 		drawing = true;
 	}
 	
@@ -110,9 +117,11 @@ namespace metalwalrus
 		
 		this->lastTexture = nullptr;
 		
-		drawing = false;
+		glDepthMask(true);
+		glDisable(GL_DEPTH_TEST);
+		glDisable(GL_BLEND);
 		
-		// TODO: blending
+		drawing = false;
 	}
 	
 	void SpriteBatch::draw(Texture2D& tex, float xPos, float yPos, 
@@ -126,31 +135,24 @@ namespace metalwalrus
 			this->flush();
 		
 		float u = 0;
-		float v = 0;
+		float v = 1;
 		float u2 = 1;
-		float v2 = 1;
-		float x = -(width / 2);
-		float y = -(height / 2);
-		float x2 = x + width;
-		float y2 = y + height;
+		float v2 = 0;
+		float x2 = xPos + width;
+		float y2 = yPos + height;
 		
 		Matrix3 transMat = Matrix3();
-		if (rotation != 0)
-		{
-			transMat.rotate(rotation);
-		}
 		if (scaleX != 1 || scaleY != 1)
 		{
 			transMat.scale(scaleX, scaleY);
 		}
-		transMat.translation(xPos - x, yPos - y);
 		
 		VertData2D vert0;
-		vert0.pos = Vector2(x, y) * transMat;
+		vert0.pos = Vector2(xPos, yPos) * transMat;
 		vert0.texCoord = Vector2(u, v);
 		
 		VertData2D vert1;
-		vert1.pos = Vector2(x2, y) * transMat;
+		vert1.pos = Vector2(x2, yPos) * transMat;
 		vert1.texCoord = Vector2(u2, v);
 		
 		VertData2D vert2;
@@ -158,7 +160,7 @@ namespace metalwalrus
 		vert2.texCoord = Vector2(u2, v2);
 		
 		VertData2D vert3;
-		vert3.pos = Vector2(x, y2) * transMat;
+		vert3.pos = Vector2(xPos, y2) * transMat;
 		vert3.texCoord = Vector2(u, v2);
 		
 		vertices[index] = vert0;

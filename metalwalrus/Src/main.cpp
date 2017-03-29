@@ -91,7 +91,7 @@ int main(int argc, char **argv)
     game = new Game("Sam's Game", Settings::TARGET_WIDTH, Settings::TARGET_HEIGHT, context);
 
     glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
+    glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA | GLUT_ALPHA);
     glutInitWindowPosition(-1, -1);
     glutInitWindowSize(game->getWidth(), game->getHeight());
     glutCreateWindow(game->getTitle());
