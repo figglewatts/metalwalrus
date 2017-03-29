@@ -2,6 +2,10 @@
 
 #include <GL/glew.h>
 
+// for random
+#include <cstdlib>
+#include <ctime>
+
 #include <iostream>
 #include <vector>
 using namespace std;
@@ -27,10 +31,6 @@ namespace metalwalrus
 	FrameBuffer *frameBuffer;
 	SpriteBatch *batch;
 	
-	std::vector<VertData2D> *pVert;
-	std::vector<GLuint> *pInd;
-	VertexData *dynVertData;
-	
 	float degrees = 0;
 
 	VertData2D vertices[4];
@@ -40,6 +40,10 @@ namespace metalwalrus
 	};
 
 	VertexData *vertData;
+	
+	const int NUM_SPRITES = 10000;
+	
+	Vector2 positions[NUM_SPRITES] = {};
 
 	Game::Game(char *windowTitle, int w, int h, GLContext *context)
 	{
@@ -62,18 +66,15 @@ namespace metalwalrus
 	void Game::Start()
 	{
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		glDisable(GL_DITHER);
-		glDisable(GL_LIGHTING);   
-		glDisable(GL_DEPTH_TEST);
 		
 		tex = Texture2D::create("assets/spritesheet.png");
 		tex2 = Texture2D::create("assets/test.png");
 		texRegion = new TextureRegion(tex, 8, 0, 16, 16);
 		
 		vertices[0].pos = Vector2(0, 0);
-		vertices[1].pos = Vector2(0, 480);
-		vertices[2].pos = Vector2(512, 480);
-		vertices[3].pos = Vector2(512, 0);
+		vertices[1].pos = Vector2(0, Settings::TARGET_HEIGHT);
+		vertices[2].pos = Vector2(Settings::TARGET_WIDTH, Settings::TARGET_HEIGHT);
+		vertices[3].pos = Vector2(Settings::TARGET_WIDTH, 0);
 
 		vertices[0].texCoord = Vector2(0, 0);
 		vertices[1].texCoord = Vector2(0, 1);
@@ -85,29 +86,11 @@ namespace metalwalrus
 		
 		batch = new SpriteBatch();
 		
-		pVert = new std::vector<VertData2D>(100);
-		pInd = new std::vector<GLuint>(100);
-		
-		// load first
-		dynVertData = VertexData::create(pVert, pInd);
-		
-		// then populate
-		pVert->at(0).pos = Vector2(0, 0);
-		pVert->at(1).pos = Vector2(0, 50);
-		pVert->at(2).pos = Vector2(50, 50);
-		pVert->at(3).pos = Vector2(50, 0);
-		
-		pVert->at(0).texCoord = Vector2(0, 0);
-		pVert->at(1).texCoord = Vector2(0, 1);
-		pVert->at(2).texCoord = Vector2(1, 1);
-		pVert->at(3).texCoord = Vector2(1, 0);
-		
-		pInd->at(0) = 0;
-		pInd->at(1) = 1;
-		pInd->at(2) = 2;
-		pInd->at(3) = 3;
-		
-		dynVertData->updateContents();
+		srand(time(NULL));
+		for (int i = 0; i < NUM_SPRITES; i++)
+		{
+			positions[i] = Vector2(rand() % 256, rand() % 240);
+		}
 	}
 
 	void Game::Update(double delta)
@@ -125,43 +108,13 @@ namespace metalwalrus
 		context->clear(Color::BLUE);
 		
 		batch->begin();
-		batch->drawtexsize(*tex, 150, 75, 64, 32, 1.5, 1.0, 0);
-		batch->drawtexsize(*tex, 75, 150, 64, 32, 1.0, 1.5, degrees);
 		
-		batch->drawtex(*tex2, 0, 0);
-		batch->drawtexsize(*tex2, 10, 150, 32, 32);
-		batch->drawtexsize(*tex2, 50, 50, 32, 32);
-		
-		batch->drawregsize(*texRegion, 50, 0, 32, 32, 1.5, 0.5, degrees);
-		batch->drawreg(*texRegion, 100, 100, 1.0, 1.0, degrees);
-		
-		batch->drawtex(*tex, 200, 100);
-		
+		for (int i = 0; i < NUM_SPRITES; i++)
+		{
+			batch->drawtex(*tex2, positions[i].x, positions[i].y, 1.0, 1.0, 0);
+		}
+
 		batch->end();
-		
-		/*dynVertData->bind();
-		dynVertData->draw(1);
-		dynVertData->unbind();
-		 */
-		
-		glPushMatrix();
-			//texRegion->draw();
-		glPopMatrix();
-
-		glPushMatrix();
-			Matrix3 resultMat = Matrix3();
-			resultMat.translation(40, 40).rotate(degrees);
-                        
-			std::vector<float> glMat = resultMat.glMatrix();
-            
-			glLoadMatrixf(&glMat[0]);
-
-			glBegin(GL_TRIANGLES);
-			glVertex3f(25, 50, 0);
-			glVertex3f(0, 0, 0);
-			glVertex3f(50, 0, 0);
-			glEnd();
-		glPopMatrix();
 
 		frameBuffer->unbind();
 		

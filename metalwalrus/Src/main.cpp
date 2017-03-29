@@ -1,7 +1,9 @@
 #include <GL/glew.h>
 #include <GL/freeglut.h>
 
+#include <ctime>
 #include <algorithm>
+#include <iostream>
 using namespace std;
 
 #include "Framework/Util/Debug.h"
@@ -14,6 +16,12 @@ Game *game;
 GLContext *context;
 
 double dt = 1000 / 60; // 60fps in ms
+long current = 0;
+long last = 0;
+double timeDelta = 0;
+double cumuFramerate = 0;
+int measurements = 0;
+double avgFramerate = 0;
 
 void display()
 {
@@ -36,7 +44,16 @@ void display()
 
 void update(int data)
 {
-    glutTimerFunc(dt, update, -1);
+    last = current;
+	current = clock();
+	timeDelta = ((double)current - (double)last) / CLOCKS_PER_SEC;
+	cumuFramerate += 1.0 / timeDelta;
+	measurements++;
+	avgFramerate = cumuFramerate / (double)measurements;
+	
+	cout << "Framerate: " << avgFramerate << endl;
+	
+	glutTimerFunc(dt, update, -1);
 
     // process input
 
