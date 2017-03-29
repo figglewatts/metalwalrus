@@ -125,12 +125,17 @@ namespace metalwalrus
 		context->clear(Color::BLUE);
 		
 		batch->begin();
-		batch->draw(*tex, 150, 150, 64, 32, 1.0, 1.0, 30.0);
-		batch->draw(*tex, 75, 150, 64, 32, 1.0, 1.0, 30.0);
+		batch->drawtexsize(*tex, 150, 75, 64, 32, 1.5, 1.0, 0);
+		batch->drawtexsize(*tex, 75, 150, 64, 32, 1.0, 1.5, degrees);
 		
-		batch->draw(*tex2, 130, 150, 32, 32);
-		batch->draw(*tex2, 10, 150, 32, 32);
-		batch->draw(*tex2, 50, 50, 32, 32);
+		batch->drawtex(*tex2, 0, 0);
+		batch->drawtexsize(*tex2, 10, 150, 32, 32);
+		batch->drawtexsize(*tex2, 50, 50, 32, 32);
+		
+		batch->drawregsize(*texRegion, 50, 0, 32, 32, 1.5, 0.5, degrees);
+		batch->drawreg(*texRegion, 100, 100, 1.0, 1.0, degrees);
+		
+		batch->drawtex(*tex, 200, 100);
 		
 		batch->end();
 		

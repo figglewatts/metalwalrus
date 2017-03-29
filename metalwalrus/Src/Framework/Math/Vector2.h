@@ -35,6 +35,7 @@ namespace metalwalrus
 
 	float dist() const;
 	float sqrdist() const;
+	Vector2& transform(Matrix3& mat);
     };
 
     Vector2 operator*(float scalar, const Vector2& other);

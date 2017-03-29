@@ -81,6 +81,16 @@ namespace metalwalrus
 	{
 		return (this->x * this->x) + (this->y * this->y);
 	}
+	
+	Vector2& Vector2::transform(Matrix3& mat)
+	{
+		Vector2 transVec = *this * mat;
+		transVec.x += mat[mat.M02];
+		transVec.y += mat[mat.M12];
+		this->x = transVec.x;
+		this->y = transVec.y;
+		return *this;
+	}
 
 	Vector2 operator*(float scalar, const Vector2 & other)
 	{

@@ -17,7 +17,6 @@ namespace metalwalrus
 	SpriteBatch::SpriteBatch(int size)
 	{
 		int length = size * 4; // 4 vertices per sprite
-		this->tintCol = Color();
 		this->size = size;
 		this->vertices.resize(length); // 4 vertices per sprite
 		
@@ -37,7 +36,6 @@ namespace metalwalrus
 	
 	SpriteBatch::SpriteBatch(const SpriteBatch& orig) 
 	{
-		this->tintCol = orig.tintCol;
 		this->size = orig.size;
 		this->vertices = orig.vertices;
 		*this->batchMesh = *orig.batchMesh;
@@ -53,7 +51,6 @@ namespace metalwalrus
 	{
 		if (this != &orig)
 		{
-			this->tintCol = orig.tintCol;
 			this->size = orig.size;
 			this->vertices = orig.vertices;
 			*this->batchMesh = *orig.batchMesh;
@@ -124,7 +121,14 @@ namespace metalwalrus
 		drawing = false;
 	}
 	
-	void SpriteBatch::draw(Texture2D& tex, float xPos, float yPos, 
+	void SpriteBatch::drawtex(Texture2D& tex, float x, float y,
+	    float scaleX, float scaleY, float rotation)
+	{
+		drawtexsize(tex, x, y, tex.get_width(), tex.get_height(), 
+				scaleX, scaleY, rotation);
+	}
+	
+	void SpriteBatch::drawtexsize(Texture2D& tex, float xPos, float yPos, 
 			float width, float height,
 			float scaleX, float scaleY, 
 			float rotation)
@@ -138,29 +142,36 @@ namespace metalwalrus
 		float v = 1;
 		float u2 = 1;
 		float v2 = 0;
-		float x2 = xPos + width;
-		float y2 = yPos + height;
+		float x = -(width / 2);
+		float y = -(height / 2);
+		float x2 = x + width;
+		float y2 = y + height;
 		
 		Matrix3 transMat = Matrix3();
-		if (scaleX != 1 || scaleY != 1)
+		transMat.translation(xPos - x, yPos - y);
+		if (rotation != 0.0)
+		{
+			transMat.rotate(rotation);
+		}
+		if (scaleX != 1.0 || scaleY != 1.0)
 		{
 			transMat.scale(scaleX, scaleY);
 		}
 		
 		VertData2D vert0;
-		vert0.pos = Vector2(xPos, yPos) * transMat;
+		vert0.pos = Vector2(x, y).transform(transMat);
 		vert0.texCoord = Vector2(u, v);
 		
 		VertData2D vert1;
-		vert1.pos = Vector2(x2, yPos) * transMat;
+		vert1.pos = Vector2(x2, y).transform(transMat);
 		vert1.texCoord = Vector2(u2, v);
 		
 		VertData2D vert2;
-		vert2.pos = Vector2(x2, y2) * transMat;
+		vert2.pos = Vector2(x2, y2).transform(transMat);
 		vert2.texCoord = Vector2(u2, v2);
 		
 		VertData2D vert3;
-		vert3.pos = Vector2(xPos, y2) * transMat;
+		vert3.pos = Vector2(x, y2).transform(transMat);
 		vert3.texCoord = Vector2(u, v2);
 		
 		vertices[index] = vert0;
@@ -168,6 +179,66 @@ namespace metalwalrus
 		vertices[index+2] = vert2;
 		vertices[index+3] = vert3;
 		
+		index += 4;
+	}
+	
+	void SpriteBatch::drawreg(TextureRegion& texRegion, float x, float y, 
+	    float scaleX, float scaleY, float rotation)
+	{
+		drawregsize(texRegion, x, y, texRegion.get_width(), 
+				texRegion.get_height(), scaleX, scaleY, rotation);
+	}
+	
+	void SpriteBatch::drawregsize(TextureRegion& texRegion, float xPos, 
+			float yPos, float width, float height, float scaleX, 
+			float scaleY, float rotation)
+	{
+		if (texRegion.get_texture() != lastTexture)
+			this->switchTexture(texRegion.get_texture());
+		else if (index >= vertices.capacity())
+			this->flush();
+
+		float u = texRegion.get_u();
+		float v = texRegion.get_v();
+		float u2 = texRegion.get_u2();
+		float v2 = texRegion.get_v2();
+		float x = -(width / 2);
+		float y = -(height / 2);
+		float x2 = x + width;
+		float y2 = y + height;
+
+		Matrix3 transMat = Matrix3();
+		transMat.translation(xPos - x, yPos - y);
+		if (rotation != 0.0)
+		{
+			transMat.rotate(rotation);
+		}
+		if (scaleX != 1.0 || scaleY != 1.0)
+		{
+			transMat.scale(scaleX, scaleY);
+		}
+
+		VertData2D vert0;
+		vert0.pos = Vector2(x, y).transform(transMat);
+		vert0.texCoord = Vector2(u, v);
+
+		VertData2D vert1;
+		vert1.pos = Vector2(x2, y).transform(transMat);
+		vert1.texCoord = Vector2(u2, v);
+
+		VertData2D vert2;
+		vert2.pos = Vector2(x2, y2).transform(transMat);
+		vert2.texCoord = Vector2(u2, v2);
+
+		VertData2D vert3;
+		vert3.pos = Vector2(x, y2).transform(transMat);
+		vert3.texCoord = Vector2(u, v2);
+
+		vertices[index] = vert0;
+		vertices[index + 1] = vert1;
+		vertices[index + 2] = vert2;
+		vertices[index + 3] = vert3;
+
 		index += 4;
 	}
 }
