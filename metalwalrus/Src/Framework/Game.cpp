@@ -41,7 +41,7 @@ namespace metalwalrus
 
 	VertexData *vertData;
 	
-	const int NUM_SPRITES = 10000;
+	const int NUM_SPRITES = 5000;
 	
 	Vector2 positions[NUM_SPRITES] = {};
 
@@ -111,7 +111,7 @@ namespace metalwalrus
 		
 		for (int i = 0; i < NUM_SPRITES; i++)
 		{
-			batch->drawtex(*tex2, positions[i].x, positions[i].y, 1.0, 1.0, 0);
+			batch->drawtex(*tex2, positions[i].x, positions[i].y, 1.0, 1.0, degrees);
 		}
 
 		batch->end();

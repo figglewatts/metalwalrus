@@ -10,6 +10,8 @@
 #include <stdexcept>
 #include <GL/glew.h>
 
+#include "../Util/MathUtil.h"
+
 namespace metalwalrus
 {
 	SpriteBatch::SpriteBatch() : SpriteBatch(1000) { }
@@ -18,7 +20,7 @@ namespace metalwalrus
 	{
 		int length = size * 4; // 4 vertices per sprite
 		this->size = size;
-		this->vertices.resize(length); // 4 vertices per sprite
+		this->vertices.resize(length, VertData2D()); // 4 vertices per sprite
 		
 		std::vector<GLuint>* indices = new std::vector<GLuint>(length);
 		for (int i = 0; i < length; i += 4)
@@ -56,6 +58,7 @@ namespace metalwalrus
 			*this->batchMesh = *orig.batchMesh;
 			this->transformMat = orig.transformMat;
 		}
+		return *this;
 	}
 	
 	void SpriteBatch::flush() 
@@ -79,7 +82,7 @@ namespace metalwalrus
 		
 		batchMesh->unbind();
 		lastTexture->unbind();
-		this->vertices.clear();
+		//this->vertices.clear();
 		
 		index = 0;
 	}
@@ -147,16 +150,25 @@ namespace metalwalrus
 		float x2 = x + width;
 		float y2 = y + height;
 		
-		Matrix3 transMat = Matrix3();
-		transMat.translation(xPos - x, yPos - y);
+		float vals[9] = { 1, 0, 0, 0, 1, 0, 0, 0, 1 };
+		vals[6] = xPos - x;
+		vals[7] = yPos - y;
+		
 		if (rotation != 0.0)
 		{
-			transMat.rotate(rotation);
+			float cosine = cosf(utilities::MathUtil::degToRad(rotation));
+			float sine = sinf(utilities::MathUtil::degToRad(rotation));
+			vals[0] = cosine;
+			vals[3] = -sine;
+			vals[1] = sine;
+			vals[4] = cosine;
 		}
 		if (scaleX != 1.0 || scaleY != 1.0)
 		{
-			transMat.scale(scaleX, scaleY);
+			vals[0] *= scaleX;
+			vals[4] *= scaleY;
 		}
+		Matrix3 transMat = Matrix3(vals);
 		
 		VertData2D vert0;
 		vert0.pos = Vector2(x, y).transform(transMat);
@@ -207,16 +219,25 @@ namespace metalwalrus
 		float x2 = x + width;
 		float y2 = y + height;
 
-		Matrix3 transMat = Matrix3();
-		transMat.translation(xPos - x, yPos - y);
+		float vals[9] = { 1, 0, 0, 0, 1, 0, 0, 0, 1 };
+		vals[6] = xPos - x;
+		vals[7] = yPos - y;
+
 		if (rotation != 0.0)
 		{
-			transMat.rotate(rotation);
+			float cosine = cosf(utilities::MathUtil::degToRad(rotation));
+			float sine = sinf(utilities::MathUtil::degToRad(rotation));
+			vals[0] = cosine;
+			vals[3] = -sine;
+			vals[1] = sine;
+			vals[4] = cosine;
 		}
 		if (scaleX != 1.0 || scaleY != 1.0)
 		{
-			transMat.scale(scaleX, scaleY);
+			vals[0] *= scaleX;
+			vals[4] *= scaleY;
 		}
+		Matrix3 transMat = Matrix3(vals);
 
 		VertData2D vert0;
 		vert0.pos = Vector2(x, y).transform(transMat);

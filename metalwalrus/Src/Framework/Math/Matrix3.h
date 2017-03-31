@@ -38,7 +38,7 @@ namespace metalwalrus
 	Matrix3 operator+(const Matrix3& other) const;
 	Matrix3 operator-() const;
 	Matrix3 operator-(const Matrix3& other) const;
-	Matrix3 operator*(const Matrix3& other) const;
+	inline Matrix3 operator*(const Matrix3& other) const;
 	Matrix3 operator*(const float scalar) const;
 	friend Matrix3 operator*(const float scalar, const Matrix3& other);
 
@@ -54,7 +54,7 @@ namespace metalwalrus
 	Matrix3& scale(float x, float y);
 	Matrix3& scale(Vector2 scale);
 	Matrix3& translation(float x, float y);
-	Matrix3& translation(Vector2 translation);
+	Matrix3& translation(Vector2& translation);
 
 	std::vector<float> glMatrix() const;
     };

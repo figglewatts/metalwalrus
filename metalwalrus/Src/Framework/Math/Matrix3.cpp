@@ -225,7 +225,7 @@ namespace metalwalrus
 		return translation(Vector2(x, y));
 	}
 
-	Matrix3& Matrix3::translation(Vector2 translation)
+	Matrix3& Matrix3::translation(Vector2& translation)
 	{
 		Matrix3 transMat = Matrix3();
 		transMat[M02] = translation.x;
