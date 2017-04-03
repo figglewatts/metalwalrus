@@ -241,19 +241,19 @@ namespace metalwalrus
 
 		VertData2D vert0;
 		vert0.pos = Vector2(x, y).transform(transMat);
-		vert0.texCoord = Vector2(u, v);
+		vert0.texCoord = Vector2(u, v2);
 
 		VertData2D vert1;
 		vert1.pos = Vector2(x2, y).transform(transMat);
-		vert1.texCoord = Vector2(u2, v);
+		vert1.texCoord = Vector2(u2, v2);
 
 		VertData2D vert2;
 		vert2.pos = Vector2(x2, y2).transform(transMat);
-		vert2.texCoord = Vector2(u2, v2);
+		vert2.texCoord = Vector2(u2, v);
 
 		VertData2D vert3;
 		vert3.pos = Vector2(x, y2).transform(transMat);
-		vert3.texCoord = Vector2(u, v2);
+		vert3.texCoord = Vector2(u, v);
 
 		vertices[index] = vert0;
 		vertices[index + 1] = vert1;

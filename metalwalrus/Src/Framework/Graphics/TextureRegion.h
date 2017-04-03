@@ -25,6 +25,7 @@ namespace metalwalrus
 		void setRegion(int x, int y, int w, int h);
 		void setRegion(float u, float v, float u2, float v2);
 		void scroll(int xAmount, int yAmount);
+		void changePos(int x, int y);
 
 		void draw();
 

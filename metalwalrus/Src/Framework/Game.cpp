@@ -1,10 +1,7 @@
 #include "Game.h"
 
 #include <GL/glew.h>
-
-// for random
-#include <cstdlib>
-#include <ctime>
+#include <GL/glut.h>
 
 #include <iostream>
 #include <vector>
@@ -17,6 +14,8 @@ using namespace std;
 #include "Graphics/FrameBuffer.h"
 #include "Graphics/SpriteBatch.h"
 #include "Graphics/Color.h"
+#include "Graphics/FontSheet.h"
+#include "Input/InputHandler.h"
 #include "Math/Matrix3.h"
 #include "Util/Debug.h"
 #include "Util/IOUtil.h"
@@ -30,6 +29,9 @@ namespace metalwalrus
 	TextureRegion *texRegion;
 	FrameBuffer *frameBuffer;
 	SpriteBatch *batch;
+
+	Texture2D *fontTex;
+	FontSheet *fontSheet;
 	
 	float degrees = 0;
 
@@ -40,10 +42,6 @@ namespace metalwalrus
 	};
 
 	VertexData *vertData;
-	
-	const int NUM_SPRITES = 5000;
-	
-	Vector2 positions[NUM_SPRITES] = {};
 
 	Game::Game(char *windowTitle, int w, int h, GLContext *context)
 	{
@@ -65,10 +63,19 @@ namespace metalwalrus
 
 	void Game::Start()
 	{
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		InputHandler::addInput("left", true, { GLUT_KEY_LEFT });
+		InputHandler::addInput("up", true, { GLUT_KEY_UP });
+		InputHandler::addInput("down", true, { GLUT_KEY_DOWN });
+		InputHandler::addInput("right", true, { GLUT_KEY_RIGHT });
+		InputHandler::addInput("A", false, { 'z' });
+		InputHandler::addInput("B", false, { 'x' });
+		InputHandler::addInput("esc", false, { 27 }); // escape key
+		InputHandler::addInput("f5", true, { GLUT_KEY_F5 }); // debug key
 		
 		tex = Texture2D::create("assets/spritesheet.png");
 		tex2 = Texture2D::create("assets/test.png");
+		fontTex = Texture2D::create("assets/font.png");
+		fontSheet = new FontSheet(fontTex, 8, 8, 0, 4);
 		texRegion = new TextureRegion(tex, 8, 0, 16, 16);
 		
 		vertices[0].pos = Vector2(0, 0);
@@ -85,18 +92,16 @@ namespace metalwalrus
 		frameBuffer = new FrameBuffer(Settings::VIRTUAL_WIDTH, Settings::VIRTUAL_HEIGHT);
 		
 		batch = new SpriteBatch();
-		
-		srand(time(NULL));
-		for (int i = 0; i < NUM_SPRITES; i++)
-		{
-			positions[i] = Vector2(rand() % 256, rand() % 240);
-		}
 	}
 
 	void Game::Update(double delta)
 	{
-	    degrees += 1;
+	    if (InputHandler::checkButton("left", ButtonState::HELD))
+			degrees += 1;
+		if (InputHandler::checkButton("right", ButtonState::HELD))
+			degrees -= 1;
 	    if (degrees > 360) degrees = 0;
+		else if (degrees < 0) degrees = 360;
 	}
 
 	void Game::Draw()
@@ -108,12 +113,9 @@ namespace metalwalrus
 		context->clear(Color::BLUE);
 		
 		batch->begin();
-		
-		for (int i = 0; i < NUM_SPRITES; i++)
-		{
-			batch->drawtex(*tex2, positions[i].x, positions[i].y, 1.0, 1.0, degrees);
-		}
 
+		fontSheet->drawText(*batch, "Degrees: " + std::to_string(degrees), 0, 232);
+		
 		batch->end();
 
 		frameBuffer->unbind();

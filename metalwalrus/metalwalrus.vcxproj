@@ -19,6 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Framework\Input\InputHandler.cpp" />
+    <ClCompile Include="src\Framework\Graphics\FontSheet.cpp" />
+    <ClCompile Include="src\Framework\Graphics\SpriteSheet.cpp" />
     <ClCompile Include="src\Framework\Graphics\Color.cpp" />
     <ClCompile Include="Src\Framework\Graphics\GLContext.cpp" />
     <ClCompile Include="Src\Framework\Graphics\FrameBuffer.cpp" />
@@ -38,6 +41,9 @@
     <ClCompile Include="Src\Framework\Graphics\VertexData.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Framework\Input\InputHandler.h" />
+    <ClInclude Include="src\Framework\Graphics\FontSheet.h" />
+    <ClInclude Include="src\Framework\Graphics\SpriteSheet.h" />
     <ClInclude Include="src\Framework\Graphics\Color.h" />
     <ClInclude Include="Src\Framework\Graphics\GLContext.h" />
     <ClInclude Include="src\Framework\Graphics\SpriteBatch.h" />

@@ -78,6 +78,11 @@ namespace metalwalrus
 		}
 	}
 
+	void TextureRegion::changePos(int x, int y)
+	{
+		this->setRegion(x, y, width, height);
+	}
+
 	void TextureRegion::draw()
 	{
 		this->texture->draw(u, v, u2, v2);

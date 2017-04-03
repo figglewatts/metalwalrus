@@ -8,6 +8,7 @@ using namespace std;
 
 #include "Framework/Util/Debug.h"
 #include "Framework/Util/GLError.h"
+#include "Framework/Input/InputHandler.h"
 #include "Framework/Game.h"
 #include "Framework/Settings.h"
 using namespace metalwalrus;
@@ -55,7 +56,7 @@ void update(int data)
 	
 	glutTimerFunc(dt, update, -1);
 
-    // process input
+    InputHandler::handleInput();
 
     game->Update(dt);
 
@@ -100,6 +101,26 @@ void changeSize(int w, int h)
     glLoadIdentity();
 }
 
+void handleInputDown(unsigned char key, int mouseX, int mouseY)
+{
+	InputHandler::updateKeys(key, true);
+}
+
+void handleInputDown(int key, int mouseX, int mouseY)
+{
+	InputHandler::updateSpecials(key, true);
+}
+
+void handleInputUp(unsigned char key, int mouseX, int mouseY)
+{
+	InputHandler::updateKeys(key, false);
+}
+
+void handleInputUp(int key, int mouseX, int mouseY)
+{
+	InputHandler::updateSpecials(key, false);
+}
+
 int main(int argc, char **argv)
 {
     Debug::redirect("log.txt");
@@ -115,13 +136,18 @@ int main(int argc, char **argv)
 
     glewInit();
 
-    //resolutionIndependentViewport(game->getWidth(), game->getHeight());
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     game->Start();
 
     glutDisplayFunc(display);
     glutReshapeFunc(changeSize);
     glutTimerFunc(dt, update, -1);
+
+	glutKeyboardFunc(handleInputDown);
+	glutSpecialFunc(handleInputDown);
+	glutKeyboardUpFunc(handleInputUp);
+	glutSpecialUpFunc(handleInputUp);
 
     glutMainLoop();
 
