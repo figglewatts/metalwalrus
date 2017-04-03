@@ -7,6 +7,11 @@
 namespace metalwalrus
 {
 	std::ofstream Debug::logFile;
+	double Debug::frameTime = 0;
+	int Debug::lastDrawCalls = 0;
+	int Debug::drawCalls = 0;
+	double Debug::fps = 0;
+	bool Debug::debugMode = 0;
 	
 	void Debug::log(const char *message, LogType type)
 	{

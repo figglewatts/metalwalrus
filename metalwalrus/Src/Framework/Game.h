@@ -3,6 +3,7 @@
 #pragma once
 
 #include "Graphics/GLContext.h"
+#include "Graphics/SpriteBatch.h"
 
 namespace metalwalrus
 {
@@ -15,6 +16,7 @@ class Game
 	GLContext *context;
 
 	void drawFrameBuffer();
+	void drawDebug(SpriteBatch& batch);
 public:
 	Game(char *windowTitle, int w, int h, GLContext *context);
 	~Game();

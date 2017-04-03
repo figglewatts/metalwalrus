@@ -24,24 +24,18 @@ using namespace std;
 
 namespace metalwalrus
 {
-	Texture2D *tex;
-	Texture2D *tex2;
-	TextureRegion *texRegion;
-	FrameBuffer *frameBuffer;
 	SpriteBatch *batch;
-
+	
 	Texture2D *fontTex;
 	FontSheet *fontSheet;
-	
-	float degrees = 0;
 
-	VertData2D vertices[4];
+	FrameBuffer *screenBuffer;
+	VertData2D screenFboVertices[4];
 	GLuint indices[] =
 	{
 		0, 1, 2, 3
 	};
-
-	VertexData *vertData;
+	VertexData *screenVbo;
 
 	Game::Game(char *windowTitle, int w, int h, GLContext *context)
 	{
@@ -55,14 +49,16 @@ namespace metalwalrus
 
 	Game::~Game()
 	{
-		delete tex;
-		delete texRegion;
-		delete vertData;
-		delete frameBuffer;
+		delete fontTex;
+		delete fontSheet;
+		delete screenVbo;
+		delete screenBuffer;
+		delete batch;
 	}
 
 	void Game::Start()
 	{
+		// initialize inputs
 		InputHandler::addInput("left", true, { GLUT_KEY_LEFT });
 		InputHandler::addInput("up", true, { GLUT_KEY_UP });
 		InputHandler::addInput("down", true, { GLUT_KEY_DOWN });
@@ -72,53 +68,47 @@ namespace metalwalrus
 		InputHandler::addInput("esc", false, { 27 }); // escape key
 		InputHandler::addInput("f5", true, { GLUT_KEY_F5 }); // debug key
 		
-		tex = Texture2D::create("assets/spritesheet.png");
-		tex2 = Texture2D::create("assets/test.png");
+		// load fonts
 		fontTex = Texture2D::create("assets/font.png");
-		fontSheet = new FontSheet(fontTex, 8, 8, 0, 4);
-		texRegion = new TextureRegion(tex, 8, 0, 16, 16);
+		fontSheet = new FontSheet(fontTex, 8, 8, 0, 0);
 		
-		vertices[0].pos = Vector2(0, 0);
-		vertices[1].pos = Vector2(0, Settings::TARGET_HEIGHT);
-		vertices[2].pos = Vector2(Settings::TARGET_WIDTH, Settings::TARGET_HEIGHT);
-		vertices[3].pos = Vector2(Settings::TARGET_WIDTH, 0);
+		// create screen FBO
+		screenFboVertices[0].pos = Vector2(0, 0);
+		screenFboVertices[1].pos = Vector2(0, Settings::TARGET_HEIGHT);
+		screenFboVertices[2].pos = Vector2(Settings::TARGET_WIDTH, Settings::TARGET_HEIGHT);
+		screenFboVertices[3].pos = Vector2(Settings::TARGET_WIDTH, 0);
 
-		vertices[0].texCoord = Vector2(0, 0);
-		vertices[1].texCoord = Vector2(0, 1);
-		vertices[2].texCoord = Vector2(1, 1);
-		vertices[3].texCoord = Vector2(1, 0);
+		screenFboVertices[0].texCoord = Vector2(0, 0);
+		screenFboVertices[1].texCoord = Vector2(0, 1);
+		screenFboVertices[2].texCoord = Vector2(1, 1);
+		screenFboVertices[3].texCoord = Vector2(1, 0);
 
-		vertData = VertexData::create(vertices, 4, indices, 4);
-		frameBuffer = new FrameBuffer(Settings::VIRTUAL_WIDTH, Settings::VIRTUAL_HEIGHT);
+		screenVbo = VertexData::create(screenFboVertices, 4, indices, 4);
+		screenBuffer = new FrameBuffer(Settings::VIRTUAL_WIDTH, Settings::VIRTUAL_HEIGHT);
 		
+		// create main SpriteBatch
 		batch = new SpriteBatch();
 	}
 
 	void Game::Update(double delta)
 	{
-	    if (InputHandler::checkButton("left", ButtonState::HELD))
-			degrees += 1;
-		if (InputHandler::checkButton("right", ButtonState::HELD))
-			degrees -= 1;
-	    if (degrees > 360) degrees = 0;
-		else if (degrees < 0) degrees = 360;
+	    // toggle debug mode
+		if (InputHandler::checkButton("f5", ButtonState::DOWN))
+			Debug::debugMode = !Debug::debugMode;
 	}
 
 	void Game::Draw()
 	{
 		glLoadIdentity();
-		frameBuffer->bind();
-		
-		// background color of scene
-		context->clear(Color::BLUE);
-		
-		batch->begin();
+		screenBuffer->bind();
+			context->clear(Color::BLUE); // background color of scene
+			batch->begin();
 
-		fontSheet->drawText(*batch, "Degrees: " + std::to_string(degrees), 0, 232);
+				if (Debug::debugMode)
+					drawDebug(*batch);
 		
-		batch->end();
-
-		frameBuffer->unbind();
+			batch->end();
+		screenBuffer->unbind();
 		
 		drawFrameBuffer();
 
@@ -131,8 +121,16 @@ namespace metalwalrus
 		// the color of the black bars around the screen
 		context->clear(Color::BLACK);
 
-		glBindTexture(GL_TEXTURE_2D, frameBuffer->get_color());
+		glBindTexture(GL_TEXTURE_2D, screenBuffer->get_color());
 
-		vertData->draw(1);
+		screenVbo->draw(1);
+	}
+
+	void Game::drawDebug(SpriteBatch& batch)
+	{
+		string debugString = "FT:  " + std::to_string(Debug::frameTime) + "\n"
+			+ "DC:  " + std::to_string(Debug::get_drawCalls()) + "\n"
+			+ "FPS: " + std::to_string(Debug::fps);
+		fontSheet->drawText(batch, debugString, 0, 232);
 	}
 }

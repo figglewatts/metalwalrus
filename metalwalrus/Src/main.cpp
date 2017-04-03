@@ -48,6 +48,8 @@ void update(int data)
     last = current;
 	current = clock();
 	timeDelta = ((double)current - (double)last) / CLOCKS_PER_SEC;
+	Debug::frameTime = timeDelta;
+	Debug::fps = 1.0 / timeDelta;
 	cumuFramerate += 1.0 / timeDelta;
 	measurements++;
 	avgFramerate = cumuFramerate / (double)measurements;

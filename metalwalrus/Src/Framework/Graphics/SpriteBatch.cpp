@@ -10,6 +10,7 @@
 #include <stdexcept>
 #include <GL/glew.h>
 
+#include "../Util/Debug.h"
 #include "../Util/MathUtil.h"
 
 namespace metalwalrus
@@ -102,6 +103,8 @@ namespace metalwalrus
 			throw std::runtime_error("A previous batch has not yet ended!");
 		
 		glDepthMask(false);
+
+		renderCalls = 0;
 		
 		drawing = true;
 	}
@@ -120,6 +123,8 @@ namespace metalwalrus
 		glDepthMask(true);
 		glDisable(GL_DEPTH_TEST);
 		glDisable(GL_BLEND);
+
+		Debug::set_drawCalls(renderCalls);
 		
 		drawing = false;
 	}
