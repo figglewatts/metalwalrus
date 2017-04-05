@@ -220,20 +220,33 @@ namespace metalwalrus
 		return *this;
 	}
 
-	Matrix3& Matrix3::translation(float x, float y)
+	Matrix3& Matrix3::translate(float x, float y)
 	{
-		return translation(Vector2(x, y));
+		return translate(Vector2(x, y));
 	}
 
-	Matrix3& Matrix3::translation(Vector2& translation)
+	Matrix3& Matrix3::translate(Vector2& translate)
 	{
 		Matrix3 transMat = Matrix3();
-		transMat[M02] = translation.x;
-		transMat[M12] = translation.y;
+		transMat[M02] = translate.x;
+		transMat[M12] = translate.y;
 
 		Matrix3 translated = *this * transMat;
 		this->set(&translated.val[0]);
 		return *this;
+	}
+
+	Matrix3 Matrix3::translation(float x, float y)
+	{
+		Matrix3 transMat = Matrix3();
+		transMat[M02] = x;
+		transMat[M12] = y;
+		return transMat;
+	}
+
+	Matrix3 Matrix3::translation(Vector2 v)
+	{
+		return translation(v.x, v.y);
 	}
 
 	std::vector<float> Matrix3::glMatrix() const

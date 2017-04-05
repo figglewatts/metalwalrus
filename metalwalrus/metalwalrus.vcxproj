@@ -19,6 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\game\MetalWalrus.cpp" />
+    <ClCompile Include="src\Framework\Scene\Scene.cpp" />
+    <ClCompile Include="src\Framework\Physics\BroadPhase.cpp" />
+    <ClCompile Include="src\Framework\Game\GameObject.cpp" />
+    <ClCompile Include="src\Framework\Game\SolidObject.cpp" />
+    <ClCompile Include="src\Framework\Graphics\Camera.cpp" />
     <ClCompile Include="src\Framework\Input\InputHandler.cpp" />
     <ClCompile Include="src\Framework\Graphics\FontSheet.cpp" />
     <ClCompile Include="src\Framework\Graphics\SpriteSheet.cpp" />
@@ -26,6 +32,7 @@
     <ClCompile Include="Src\Framework\Graphics\GLContext.cpp" />
     <ClCompile Include="Src\Framework\Graphics\FrameBuffer.cpp" />
     <ClCompile Include="src\Framework\Graphics\SpriteBatch.cpp" />
+    <ClCompile Include="src\Framework\Physics\AABB.cpp" />
     <ClCompile Include="Src\Framework\Settings.cpp" />
     <ClCompile Include="Src\Framework\Util\GLError.cpp" />
     <ClCompile Include="lib\lodepng.cpp" />
@@ -41,6 +48,12 @@
     <ClCompile Include="Src\Framework\Graphics\VertexData.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\game\MetalWalrus.h" />
+    <ClInclude Include="src\Framework\Scene\Scene.h" />
+    <ClInclude Include="src\Framework\Physics\BroadPhase.h" />
+    <ClInclude Include="src\Framework\Game\GameObject.h" />
+    <ClInclude Include="src\Framework\Game\SolidObject.h" />
+    <ClInclude Include="src\Framework\Graphics\Camera.h" />
     <ClInclude Include="src\Framework\Input\InputHandler.h" />
     <ClInclude Include="src\Framework\Graphics\FontSheet.h" />
     <ClInclude Include="src\Framework\Graphics\SpriteSheet.h" />
@@ -48,6 +61,8 @@
     <ClInclude Include="Src\Framework\Graphics\GLContext.h" />
     <ClInclude Include="src\Framework\Graphics\SpriteBatch.h" />
     <ClInclude Include="Src\Framework\Graphics\Vertex.h" />
+    <ClInclude Include="src\Framework\Physics\AABB.h" />
+    <ClInclude Include="src\Framework\Physics\IRigidbody.h" />
     <ClInclude Include="Src\Framework\Settings.h" />
     <ClInclude Include="Src\Framework\Graphics\FrameBuffer.h" />
     <ClInclude Include="Src\Framework\Util\GLError.h" />

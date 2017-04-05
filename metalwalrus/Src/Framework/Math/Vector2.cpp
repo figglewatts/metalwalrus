@@ -27,6 +27,13 @@ namespace metalwalrus
 		return Vector2(this->x + other.x, this->y + other.y);
 	}
 
+	Vector2 & Vector2::operator+=(const Vector2 & other)
+	{
+		x += other.x;
+		y += other.y;
+		return *this;
+	}
+
 	Vector2 Vector2::operator-() const
 	{
 		return Vector2(-this->x, -this->y);
@@ -35,6 +42,13 @@ namespace metalwalrus
 	Vector2 Vector2::operator-(const Vector2 & other) const
 	{
 		return *this + (-other);
+	}
+
+	Vector2 & Vector2::operator-=(const Vector2 & other)
+	{
+		x -= other.x;
+		y -= other.y;
+		return *this;
 	}
 
 	Vector2 Vector2::operator*(float scalar) const

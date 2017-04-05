@@ -11,9 +11,10 @@ using namespace std;
 #include "Framework/Input/InputHandler.h"
 #include "Framework/Game.h"
 #include "Framework/Settings.h"
+#include "game/MetalWalrus.h"
 using namespace metalwalrus;
 
-Game *game;
+MetalWalrus *game;
 GLContext *context;
 
 double dt = 1000 / 60; // 60fps in ms
@@ -32,7 +33,7 @@ void display()
     float scaleY = (float) Settings::HEIGHT / (float) Settings::VIRTUAL_HEIGHT;
     glScalef(scaleX, scaleY, 0);
 
-    game->Draw();
+    game->draw();
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -60,7 +61,7 @@ void update(int data)
 
     InputHandler::handleInput();
 
-    game->Update(dt);
+    game->update(dt);
 
     glutPostRedisplay();
 }
@@ -128,7 +129,7 @@ int main(int argc, char **argv)
     Debug::redirect("log.txt");
 
     context = new GLContext();
-    game = new Game("Sam's Game", Settings::TARGET_WIDTH, Settings::TARGET_HEIGHT, context);
+    game = new MetalWalrus("Sam's Game", Settings::TARGET_WIDTH, Settings::TARGET_HEIGHT, context);
 
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA | GLUT_ALPHA);
@@ -140,7 +141,7 @@ int main(int argc, char **argv)
 
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    game->Start();
+    game->start();
 
     glutDisplayFunc(display);
     glutReshapeFunc(changeSize);

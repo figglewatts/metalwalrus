@@ -20,8 +20,10 @@ namespace metalwalrus
 	Vector2(float x, float y);
 
 	Vector2 operator+(const Vector2& other) const;
+	Vector2& operator+=(const Vector2& other);
 	Vector2 operator-() const;
 	Vector2 operator-(const Vector2& other) const;
+	Vector2& operator-=(const Vector2& other);
 	Vector2 operator*(float scalar) const;
 	friend Vector2 operator*(float scalar, const Vector2& other);
 	Vector2 operator*(const Matrix3& other);

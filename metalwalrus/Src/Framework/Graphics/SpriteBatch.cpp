@@ -79,6 +79,9 @@ namespace metalwalrus
 		
 		batchMesh->bind();
 		
+		glLoadIdentity();
+		glLoadMatrixf(transformMat.glMatrix().data());
+
 		batchMesh->draw(spritesInBatch);
 		
 		batchMesh->unbind();
@@ -98,6 +101,8 @@ namespace metalwalrus
 	
 	void SpriteBatch::begin()
 	{
+		glPushMatrix();
+		
 		// TODO: custom exceptions
 		if (drawing) 
 			throw std::runtime_error("A previous batch has not yet ended!");
@@ -123,6 +128,7 @@ namespace metalwalrus
 		glDepthMask(true);
 		glDisable(GL_DEPTH_TEST);
 		glDisable(GL_BLEND);
+		glPopMatrix();
 
 		Debug::set_drawCalls(renderCalls);
 		
@@ -266,5 +272,12 @@ namespace metalwalrus
 		vertices[index + 3] = vert3;
 
 		index += 4;
+	}
+
+	void SpriteBatch::setTransformMat(Matrix3 m)
+	{
+		if (index > 0)
+			flush();
+		this->transformMat = m;
 	}
 }

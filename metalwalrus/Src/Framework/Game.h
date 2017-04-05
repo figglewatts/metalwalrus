@@ -4,32 +4,40 @@
 
 #include "Graphics/GLContext.h"
 #include "Graphics/SpriteBatch.h"
+#include "Settings.h"
 
 namespace metalwalrus
 {
 
-class Game
-{
-	char *windowTitle;
-	int width;
-	int height;
-	GLContext *context;
+	class Game
+	{
+	protected:
+		char *windowTitle;
+		int width;
+		int height;
+		GLContext *context;
 
-	void drawFrameBuffer();
-	void drawDebug(SpriteBatch& batch);
-public:
-	Game(char *windowTitle, int w, int h, GLContext *context);
-	~Game();
-	void Start();
-	void Update(double delta);
-	void Draw();
+	public:
+		Game(char *windowTitle, int w, int h, GLContext *context)
+		{
+			this->windowTitle = windowTitle;
+			this->width = w;
+			this->height = h;
+			Settings::WIDTH = w;
+			Settings::HEIGHT = h;
+		}
 
-	char *getTitle() { return windowTitle; }
-	int getWidth() { return width; }
-	int getHeight() { return height; }
-};
+		virtual ~Game() { };
+		virtual void start() = 0;
+		virtual void update(double delta) = 0;
+		virtual void draw() = 0;
+
+		char *getTitle() { return windowTitle; }
+		int getWidth() { return width; }
+		int getHeight() { return height; }
+	};
 
 
 
 }
-#endif
+#endif // GAME_H

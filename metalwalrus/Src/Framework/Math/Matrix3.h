@@ -53,8 +53,11 @@ namespace metalwalrus
 	Matrix3& rotateRad(float radians);
 	Matrix3& scale(float x, float y);
 	Matrix3& scale(Vector2 scale);
-	Matrix3& translation(float x, float y);
-	Matrix3& translation(Vector2& translation);
+	Matrix3& translate(float x, float y);
+	Matrix3& translate(Vector2& translation);
+
+	static Matrix3 translation(float x, float y);
+	static Matrix3 translation(Vector2 v);
 
 	std::vector<float> glMatrix() const;
     };
