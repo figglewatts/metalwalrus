@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Framework\Util\JSONUtil.cpp" />
+    <ClCompile Include="src\game\Entities\Player.cpp" />
     <ClCompile Include="src\game\MetalWalrus.cpp" />
     <ClCompile Include="src\Framework\Scene\Scene.cpp" />
     <ClCompile Include="src\Framework\Physics\BroadPhase.cpp" />
@@ -51,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Framework\Util\JSONUtil.h" />
+    <ClInclude Include="src\game\Entities\Player.h" />
     <ClInclude Include="src\game\MetalWalrus.h" />
     <ClInclude Include="src\Framework\Scene\Scene.h" />
     <ClInclude Include="src\Framework\Physics\BroadPhase.h" />

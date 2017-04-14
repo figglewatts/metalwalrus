@@ -51,7 +51,10 @@ namespace metalwalrus
 	{
 		float invTexWidth = 1.0F / texture->get_width();
 		float invTexHeight = 1.0F / texture->get_height();
-		this->setRegion(x * invTexWidth, y * invTexHeight, (x + w) * invTexWidth, (y + h) * invTexHeight);
+		this->setRegion((x) * invTexWidth, 
+			(y) * invTexHeight, 
+			((x + w)) * invTexWidth, 
+			((y + h)) * invTexHeight);
 	}
 
 	void TextureRegion::setRegion(float u, float v, float u2, float v2)

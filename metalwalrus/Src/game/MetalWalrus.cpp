@@ -21,6 +21,8 @@ using namespace std;
 #include "../Framework/Util/Debug.h"
 #include "../Framework/Util/JSONUtil.h"
 
+#include "Entities/Player.h"
+
 namespace metalwalrus
 {
 	SpriteBatch *batch;
@@ -41,6 +43,8 @@ namespace metalwalrus
 	};
 	VertexData *screenVbo;
 
+	Player *player;
+
 	MetalWalrus::~MetalWalrus()
 	{
 		delete fontTex;
@@ -51,6 +55,7 @@ namespace metalwalrus
 		delete camera;
 		delete fromJson;
 		delete tileMap;
+		delete player;
 	}
 
 	void MetalWalrus::start()
@@ -90,6 +95,10 @@ namespace metalwalrus
 		camera = new Camera();
 
 		tileMap = utilities::JSONUtil::tiled_tilemap("assets/data/level/level1.json", camera);
+
+		player = new Player(Vector2(150, 230), 12, 20, Vector2(11, 0));
+		player->updateCollisionEnvironment(tileMap);
+		player->start();
 	}
 
 	void MetalWalrus::update(double delta)
@@ -98,16 +107,10 @@ namespace metalwalrus
 		if (InputHandler::checkButton("f5", ButtonState::DOWN))
 			Debug::debugMode = !Debug::debugMode;
 
-		Vector2 camMove = Vector2();
-		if (InputHandler::checkButton("up", ButtonState::HELD))
-			camMove.y = 1;
-		else if (InputHandler::checkButton("down", ButtonState::HELD))
-			camMove.y = -1;
-		if (InputHandler::checkButton("left", ButtonState::HELD))
-			camMove.x = -1;
-		else if (InputHandler::checkButton("right", ButtonState::HELD))
-			camMove.x = 1;
-		camera->translate(camMove);
+		player->update(delta);
+
+		Vector2 playerCenter = player->get_center();
+		camera->centerOn(Vector2(playerCenter.x, playerCenter.y));
 	}
 
 	void MetalWalrus::draw()
@@ -121,6 +124,8 @@ namespace metalwalrus
 
 		// draw world
 		tileMap->draw(*batch, 16, 17);
+
+		player->draw(*batch);
 
 		// screen coords
 		batch->setTransformMat(Matrix3());

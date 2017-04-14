@@ -2,7 +2,7 @@
 
 namespace metalwalrus
 {
-	GameObject::GameObject(Vector2 position, int width, int height)
+	GameObject::GameObject(Vector2 position, float width, float height)
 	{
 		this->position = position;
 		this->width = width;
@@ -25,5 +25,20 @@ namespace metalwalrus
 			this->height = other.height;
 		}
 		return *this;
+	}
+
+	void GameObject::moveBy(Vector2 v)
+	{
+		this->position += v;
+	}
+
+	void GameObject::moveTo(Vector2 v)
+	{
+		this->position = v;
+	}
+
+	Vector2 GameObject::get_center()
+	{
+		return Vector2(position.x + (width / 2), position.y + (height / 2));
 	}
 }

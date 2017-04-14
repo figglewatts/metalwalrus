@@ -24,9 +24,14 @@ namespace metalwalrus
 		AABB& operator+=(Vector2 v);
 		AABB& operator-=(Vector2 v);
 
-		inline Vector2 get_min() { return min; }
-		inline Vector2 get_max() { return max; }
-		inline Vector2 get_origin() { return origin; }
+		inline Vector2 get_min() const { return min; }
+		inline Vector2 get_max() const { return max; }
+		inline Vector2 get_origin() const { return origin; }
+
+		inline float get_left() const { return min.x; }
+		inline float get_right() const { return max.x; }
+		inline float get_top() const { return max.y; }
+		inline float get_bottom() const { return min.y; }
 
 		bool intersects(AABB& other);
 		float getXDepth(AABB& other);

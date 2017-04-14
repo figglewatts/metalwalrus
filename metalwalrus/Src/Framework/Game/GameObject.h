@@ -3,6 +3,7 @@
 #pragma once
 
 #include "../Math/Vector2.h"
+#include "../Graphics/SpriteBatch.h"
 
 namespace metalwalrus
 {
@@ -10,9 +11,9 @@ namespace metalwalrus
 	{
 	protected:
 		Vector2 position;
-		int width, height;
+		float width, height;
 	public:
-		GameObject(Vector2 position, int width, int height);
+		GameObject(Vector2 position, float width, float height);
 		GameObject(const GameObject& other);
 		virtual ~GameObject() { };
 
@@ -20,9 +21,13 @@ namespace metalwalrus
 
 		virtual void start() = 0;
 		virtual void update(double delta) = 0;
-		virtual void draw() = 0;
+		virtual void draw(SpriteBatch& batch) = 0;
 
 		inline virtual Vector2 get_position() final { return position; }
+
+		virtual void moveBy(Vector2 v);
+		virtual void moveTo(Vector2 v);
+		virtual Vector2 get_center() final;
 	};
 }
 

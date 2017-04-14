@@ -1,5 +1,5 @@
-#ifndef PHYSICSOBJECT_H
-#define PHYSICSOBJECT_H
+#ifndef SOLIDOBJECT_H
+#define SOLIDOBJECT_H
 #pragma once
 
 #include "GameObject.h"
@@ -10,18 +10,24 @@ namespace metalwalrus
 {
 	class SolidObject : public GameObject
 	{
+	protected:	
 		AABB boundingBox;
+		Vector2 boundingBoxOffset;
+
+		void recomputeBoundingBox();
 	public:
-		SolidObject(Vector2 position, int width, int height,
-			bool usePhysics);
+		SolidObject(Vector2 position, float width, float height, Vector2 offset = Vector2());
 		SolidObject(const SolidObject& other);
 
 		SolidObject& operator=(const SolidObject& other);
 
-		virtual void start() = 0;
-		virtual void update(double delta) = 0;
-		virtual void draw() = 0;
+		virtual void start() override = 0;
+		virtual void update(double delta) override = 0;
+		virtual void draw(SpriteBatch& batch) override = 0;
+
+		virtual void moveBy(Vector2 v) override;
+		virtual void moveTo(Vector2 v) override;
 	};
 }
 
-#endif // PHYSICSOBJECT_H
+#endif // SOLIDOBJECT_H
