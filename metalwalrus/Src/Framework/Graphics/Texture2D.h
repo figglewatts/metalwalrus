@@ -29,7 +29,7 @@ namespace metalwalrus
 			GLint format = GL_RGBA, GLenum type = GL_UNSIGNED_BYTE,
 			GLint minFilter = GL_NEAREST, GLint magFilter = GL_NEAREST,
 			GLint sWrap = GL_CLAMP, GLint tWrap = GL_CLAMP);
-		Texture2D(char *filePath,
+		Texture2D(std::string filePath,
 			GLint format = GL_RGBA, GLenum type = GL_UNSIGNED_BYTE,
 			GLint minFilter = GL_NEAREST, GLint magFilter = GL_NEAREST,
 			GLint sWrap = GL_CLAMP, GLint tWrap = GL_CLAMP);
@@ -42,7 +42,7 @@ namespace metalwalrus
 		Texture2D(const Texture2D& other); // copy constructor
 
 		static Texture2D *create(GLuint width, GLuint height);
-		static Texture2D *create(char *filePath);
+		static Texture2D *create(std::string filePath);
 		static Texture2D *create(std::vector<unsigned char> *data, GLuint width, GLuint height);
 
 		void draw(float u = 0, float v = 0, float u2 = 1, float v2 = 1);

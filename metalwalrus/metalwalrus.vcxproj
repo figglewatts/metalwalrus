@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Framework\Util\JSONUtil.cpp" />
     <ClCompile Include="src\game\MetalWalrus.cpp" />
     <ClCompile Include="src\Framework\Scene\Scene.cpp" />
     <ClCompile Include="src\Framework\Physics\BroadPhase.cpp" />
@@ -46,8 +47,10 @@
     <ClCompile Include="Src\Framework\Graphics\Texture2D.cpp" />
     <ClCompile Include="src\Framework\Graphics\TextureRegion.cpp" />
     <ClCompile Include="Src\Framework\Graphics\VertexData.cpp" />
+    <ClCompile Include="src\Framework\Graphics\TileMap.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Framework\Util\JSONUtil.h" />
     <ClInclude Include="src\game\MetalWalrus.h" />
     <ClInclude Include="src\Framework\Scene\Scene.h" />
     <ClInclude Include="src\Framework\Physics\BroadPhase.h" />
@@ -76,6 +79,7 @@
     <ClInclude Include="src\Framework\Graphics\TextureRegion.h" />
     <ClInclude Include="Src\Framework\Util\MathUtil.h" />
     <ClInclude Include="Src\Framework\Graphics\VertexData.h" />
+    <ClInclude Include="src\Framework\Graphics\TileMap.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{BC71CF58-3950-4419-8D2A-03A201012C6D}</ProjectGuid>

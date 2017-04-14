@@ -6,7 +6,7 @@ namespace metalwalrus
 {
 	void Camera::updateTransform()
 	{
-		transform = Matrix3::translation(position);
+		transform = Matrix3::translation(-position);
 	}
 
 	Camera::Camera()

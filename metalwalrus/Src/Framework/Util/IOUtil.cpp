@@ -7,7 +7,7 @@ namespace metalwalrus
 {
 	namespace utilities
 	{
-		std::vector<unsigned char> * IOUtil::loadTexture(char *filePath, unsigned int &texWidth, unsigned int &texHeight)
+		std::vector<unsigned char> * IOUtil::loadTexture(std::string filePath, unsigned int &texWidth, unsigned int &texHeight)
 		{
 			std::vector<unsigned char> *imgBuffer = new std::vector<unsigned char>();
 			unsigned error = lodepng::decode(*imgBuffer, texWidth, texHeight, filePath);

@@ -19,6 +19,12 @@ namespace metalwalrus
 		this->spriteHeight = spriteHeight;
 	}
 
+	SpriteSheet::SpriteSheet(Texture2D * tex, unsigned spriteWidth, unsigned spriteHeight, picojson::value spriteProperties)
+		: SpriteSheet(tex, spriteWidth, spriteHeight)
+	{
+		this->spriteProperties = spriteProperties;
+	}
+
 	SpriteSheet::SpriteSheet(const SpriteSheet & other)
 		: texRegion(other.texRegion)
 	{

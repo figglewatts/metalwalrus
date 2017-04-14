@@ -35,7 +35,7 @@ namespace metalwalrus
 		this->load();
 	}
 	
-	Texture2D::Texture2D(char *filePath,
+	Texture2D::Texture2D(std::string filePath,
 		GLint format, GLenum type,
 		GLint minFilter, GLint magFilter,
 		GLint sWrap, GLint tWrap)
@@ -133,7 +133,7 @@ namespace metalwalrus
 		return new Texture2D(width, height);
 	}
 
-	Texture2D *Texture2D::create(char *filePath)
+	Texture2D *Texture2D::create(std::string filePath)
 	{
 		return new Texture2D(filePath);
 	}

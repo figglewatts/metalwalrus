@@ -11,7 +11,7 @@ namespace metalwalrus
 		class IOUtil {
 			IOUtil();
 		public:
-			static std::vector<unsigned char> *loadTexture(char *filePath, unsigned int &texWidth, unsigned int &texHeight);
+			static std::vector<unsigned char> *loadTexture(std::string filePath, unsigned int &texWidth, unsigned int &texHeight);
 		
 
 		};

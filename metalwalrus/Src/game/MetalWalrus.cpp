@@ -16,8 +16,10 @@ using namespace std;
 #include "../Framework/Graphics/Color.h"
 #include "../Framework/Graphics/FontSheet.h"
 #include "../Framework/Graphics/Camera.h"
+#include "../Framework/Graphics/TileMap.h"
 #include "../Framework/Input/InputHandler.h"
 #include "../Framework/Util/Debug.h"
+#include "../Framework/Util/JSONUtil.h"
 
 namespace metalwalrus
 {
@@ -25,6 +27,9 @@ namespace metalwalrus
 
 	Texture2D *fontTex;
 	FontSheet *fontSheet;
+
+	SpriteSheet *fromJson;
+	TileMap *tileMap;
 
 	Camera *camera;
 
@@ -44,6 +49,8 @@ namespace metalwalrus
 		delete screenBuffer;
 		delete batch;
 		delete camera;
+		delete fromJson;
+		delete tileMap;
 	}
 
 	void MetalWalrus::start()
@@ -58,7 +65,7 @@ namespace metalwalrus
 		InputHandler::addInput("esc", false, { 27 }); // escape key
 		InputHandler::addInput("f5", true, { GLUT_KEY_F5 }); // debug key
 
-															 // load fonts
+		// load fonts
 		fontTex = Texture2D::create("assets/font.png");
 		fontSheet = new FontSheet(fontTex, 8, 8, 0, 0);
 
@@ -81,7 +88,8 @@ namespace metalwalrus
 
 		// create camera
 		camera = new Camera();
-		camera->translate(50, 0);
+
+		tileMap = utilities::JSONUtil::tiled_tilemap("assets/data/level/level1.json", camera);
 	}
 
 	void MetalWalrus::update(double delta)
@@ -92,13 +100,13 @@ namespace metalwalrus
 
 		Vector2 camMove = Vector2();
 		if (InputHandler::checkButton("up", ButtonState::HELD))
-			camMove.y = -1;
-		else if (InputHandler::checkButton("down", ButtonState::HELD))
 			camMove.y = 1;
+		else if (InputHandler::checkButton("down", ButtonState::HELD))
+			camMove.y = -1;
 		if (InputHandler::checkButton("left", ButtonState::HELD))
-			camMove.x = 1;
-		else if (InputHandler::checkButton("right", ButtonState::HELD))
 			camMove.x = -1;
+		else if (InputHandler::checkButton("right", ButtonState::HELD))
+			camMove.x = 1;
 		camera->translate(camMove);
 	}
 
@@ -106,13 +114,13 @@ namespace metalwalrus
 	{
 		glLoadIdentity();
 		screenBuffer->bind();
-		context->clear(Color::BLUE); // background color of scene
+		context->clear(Color(0.38, 0.827, 0.890)); // background color of scene
 		batch->begin();
 		// set to world coords
 		batch->setTransformMat(camera->getTransform());
 
 		// draw world
-		batch->drawtex(*fontTex, 50, 50);
+		tileMap->draw(*batch, 16, 17);
 
 		// screen coords
 		batch->setTransformMat(Matrix3());
