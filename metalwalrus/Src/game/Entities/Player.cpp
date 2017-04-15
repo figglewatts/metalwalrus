@@ -8,7 +8,7 @@ namespace metalwalrus
 	const float Player::walkSpeed = 1.5;
 	
 	const float Player::jumpSpeed = 4;
-	const int Player::jumpFrames = 10;
+	const int Player::jumpFrames = 11;
 	const int Player::jumpAfterPlatformFrames = 7;
 	const float Player::jumpInAirTolerance = 2;
 

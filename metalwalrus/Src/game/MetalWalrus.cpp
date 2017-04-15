@@ -94,7 +94,7 @@ namespace metalwalrus
 		// create camera
 		camera = new Camera();
 
-		tileMap = utilities::JSONUtil::tiled_tilemap("assets/data/level/level1.json", camera);
+		tileMap = utilities::JSONUtil::tiled_tilemap("assets/data/level/playground.json", camera);
 
 		player = new Player(Vector2(150, 230), 12, 20, Vector2(11, 0));
 		player->updateCollisionEnvironment(tileMap);

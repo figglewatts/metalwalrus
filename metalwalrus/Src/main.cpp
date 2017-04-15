@@ -129,7 +129,7 @@ int main(int argc, char **argv)
     Debug::redirect("log.txt");
 
     context = new GLContext();
-    game = new MetalWalrus("Sam's Game", Settings::TARGET_WIDTH, Settings::TARGET_HEIGHT, context);
+    game = new MetalWalrus("Metal Walrus", Settings::TARGET_WIDTH, Settings::TARGET_HEIGHT, context);
 
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA | GLUT_ALPHA);
