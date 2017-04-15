@@ -73,11 +73,6 @@ namespace metalwalrus
 				jumping = false;
 			frameTimer++;
 		}
-		if (!jumping && velocity.y > gravity / 10
-			&& InputHandler::checkButton("up", ButtonState::UP))
-		{
-			velocity.y = gravity / 10;
-		}
 		if (InputHandler::checkButton("up", ButtonState::UP))
 		{
 			frameTimer = 0;

@@ -51,7 +51,7 @@ namespace metalwalrus
 	{
 		float invTexWidth = 1.0F / texture->get_width();
 		float invTexHeight = 1.0F / texture->get_height();
-		this->setRegion((x) * invTexWidth, 
+		this->setRegion((x * invTexWidth), 
 			(y) * invTexHeight, 
 			((x + w)) * invTexWidth, 
 			((y + h)) * invTexHeight);
@@ -61,10 +61,13 @@ namespace metalwalrus
 	{
 		this->width = (u2 - u) * texture->get_width();
 		this->height = (v2 - v) * texture->get_height();
-		this->u = u;
-		this->v = v;
-		this->u2 = u2;
-		this->v2 = v2;
+
+		// inset the UVs by an offset so we don't get texture bleeding
+		// for non integer camera positions
+		this->u = u + (1.0/128 * 1.0 / width);
+		this->v = v - (1.0/128 * 1.0 / height);
+		this->u2 = u2 + (1.0/128 * 1.0 / width);
+		this->v2 = v2 - (1.0/128 * 1.0 / height);
 	}
 
 	void TextureRegion::scroll(int xAmount, int yAmount)
