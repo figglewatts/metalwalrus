@@ -2,14 +2,24 @@
 #define PLAYER_H
 #pragma once
 
-#include "../../Framework/Game/SolidObject.h"
-#include "../../Framework/Graphics/TileMap.h"
-#include "../../Framework/Animation/AnimatedSprite.h"
+#include "../../../Framework/Game/SolidObject.h"
+#include "../../../Framework/Graphics/TileMap.h"
+#include "../../../Framework/Animation/AnimatedSprite.h"
 
 namespace metalwalrus
 {
 	class Player : public SolidObject
 	{
+		enum class PlayerState
+		{
+			IDLE,
+			RUNNING,
+			IN_AIR,
+			DAMAGED
+		};
+
+		PlayerState currentState = PlayerState::IDLE;
+
 		TileMap *currentTilemap; // used for collision
 
 		Texture2D *walrusTex;
@@ -19,6 +29,9 @@ namespace metalwalrus
 		FrameAnimation idle;
 		FrameAnimation run;
 		FrameAnimation jump;
+		FrameAnimation idleShoot;
+		FrameAnimation runShoot;
+		FrameAnimation jumpShoot;
 
 		Vector2 oldPosition;
 
@@ -31,6 +44,8 @@ namespace metalwalrus
 		Vector2 velocity;
 		int frameTimer = 0;
 
+		float shootTimer;
+
 		// ----- PLAYER SETTINGS -----
 		const static float walkSpeed;
 
@@ -41,6 +56,9 @@ namespace metalwalrus
 
 		const static float gravity;
 		const static float terminalVelocity;
+
+		const static float timeBetweenShots;
+		const static int shootingAnimationFrames;
 		// ----- END SETTINGS -----
 
 		bool doCollision(AABB boundingBox);

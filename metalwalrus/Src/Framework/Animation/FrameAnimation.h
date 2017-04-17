@@ -66,6 +66,9 @@ namespace metalwalrus
 		int get_startFrame() const { return startFrame; }
 		float get_frameLength() const { return frameLength; }
 		int get_currentFrame() const { return currentFrame; }
+		void set_currentFrame(int frame) { currentFrame = frame; }
+		int get_currentFrameRelative() const { return currentFrame - startFrame; }
+		void set_currentFrameRelative(int frame) { currentFrame = startFrame + frame; }
 		int get_playCount() const { return playCount; }
 		std::string get_nextAnimation() const { return nextAnimation; }
 		bool has_next() const { return !nextAnimation.empty(); }

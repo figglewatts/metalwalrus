@@ -6,7 +6,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include "../Framework/Animation/AnimatedSprite.h"
+
 using namespace std;
 
 #include "../Framework/Settings.h"
@@ -22,7 +22,7 @@ using namespace std;
 #include "../Framework/Util/Debug.h"
 #include "../Framework/Util/JSONUtil.h"
 
-#include "Entities/Player.h"
+#include "Entities/Player/Player.h"
 
 namespace metalwalrus
 {
@@ -66,6 +66,7 @@ namespace metalwalrus
 		InputHandler::addInput("up", true, { GLUT_KEY_UP });
 		InputHandler::addInput("down", true, { GLUT_KEY_DOWN });
 		InputHandler::addInput("right", true, { GLUT_KEY_RIGHT });
+		InputHandler::addInput("space", false, { 32 });
 		InputHandler::addInput("A", false, { 'z' });
 		InputHandler::addInput("B", false, { 'x' });
 		InputHandler::addInput("esc", false, { 27 }); // escape key
@@ -95,7 +96,7 @@ namespace metalwalrus
 		// create camera
 		camera = new Camera();
 
-		tileMap = utilities::JSONUtil::tiled_tilemap("assets/data/level/playground.json", camera);
+		tileMap = utilities::JSONUtil::tiled_tilemap("assets/data/level/level1.json", camera);
 
 		player = new Player(Vector2(150, 230), 12, 20, Vector2(11, 0));
 		player->updateCollisionEnvironment(tileMap);

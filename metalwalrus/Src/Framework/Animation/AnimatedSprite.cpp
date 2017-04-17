@@ -49,6 +49,7 @@ namespace metalwalrus
 	void AnimatedSprite::playOneShot(std::string name)
 	{
 		this->animations[currentAnimation].resetToFirstFrame();
+		this->currentFrameCounter = 0;
 		this->currentAnimation = name;
 		this->isAnimating = true;
 		this->loop = false;
@@ -63,6 +64,7 @@ namespace metalwalrus
 	void AnimatedSprite::play(std::string name)
 	{
 		if (currentAnimation == name) return;
+		this->currentFrameCounter = 0;
 		this->animations[currentAnimation].resetToFirstFrame();
 		this->currentAnimation = name;
 		this->isAnimating = true;
@@ -74,6 +76,30 @@ namespace metalwalrus
 		if (currentAnimation == name) return;
 		this->animations[name].registerOnFinish(onLoop);
 		this->play(name);
+	}
+
+	void AnimatedSprite::playAtFrame(std::string name, int frame)
+	{
+		this->animations[name].set_currentFrameRelative(frame);
+		this->play(name);
+	}
+
+	void AnimatedSprite::playAtFrame(std::string name, int frame, std::function<void()> onLoop)
+	{
+		this->animations[name].set_currentFrameRelative(frame);
+		this->play(name, onLoop);
+	}
+
+	void AnimatedSprite::playForFrames(std::string name, int frames)
+	{
+		this->play(name);
+		currentFrameCounter = frames;
+	}
+
+	void AnimatedSprite::playForFrames(std::string name, int frames, std::function<void()> onFinish)
+	{
+		this->play(name, onFinish);
+		currentFrameCounter = frames;
 	}
 
 	void AnimatedSprite::stop()
@@ -114,9 +140,13 @@ namespace metalwalrus
 
 		current->update(delta);
 
-		if (current->is_finished())
+		if (currentFrameCounter > 0)
 		{
-			if (loop)
+			currentFrameCounter--;
+		}
+		else if (current->is_finished())
+		{
+			if (loop && !current->has_next())
 				current->resetToFirstFrame();
 			else
 			{

@@ -19,6 +19,7 @@ namespace metalwalrus
 		std::string currentAnimation;
 		std::queue<std::string> animationQueue;
 		bool loop;
+		int currentFrameCounter;
 
 	public:
 		AnimatedSprite(SpriteSheet* animationSheet);
@@ -30,6 +31,8 @@ namespace metalwalrus
 		bool get_looping() const { return loop; }
 		void set_looping(bool looping) { this->loop = looping; }
 
+		FrameAnimation get_currentAnim() const { return this->animations.at(currentAnimation); }
+
 		std::vector<std::string> get_animations();
 
 		void addAnimation(std::string name, FrameAnimation anim);
@@ -38,6 +41,10 @@ namespace metalwalrus
 		void playOneShot(std::string name, std::function<void()> onFinish);
 		void play(std::string name);
 		void play(std::string name, std::function<void()> onLoop);
+		void playAtFrame(std::string name, int frame);
+		void playAtFrame(std::string name, int frame, std::function<void()> onLoop);
+		void playForFrames(std::string name, int frames);
+		void playForFrames(std::string name, int frames, std::function<void()> onFinish);
 		void stop();
 		void pause();
 		void resume();
