@@ -61,7 +61,7 @@ void update(int data)
 
     InputHandler::handleInput();
 
-    game->update(dt);
+    game->update(timeDelta);
 
     glutPostRedisplay();
 }

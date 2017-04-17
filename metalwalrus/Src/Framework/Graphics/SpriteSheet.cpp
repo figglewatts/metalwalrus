@@ -43,6 +43,12 @@ namespace metalwalrus
 		return *this;
 	}
 
+	TextureRegion *SpriteSheet::get_sprite(int index)
+	{
+		scrollTexRegionToTile(index);
+		return &texRegion;
+	}
+
 	void SpriteSheet::drawTile(SpriteBatch& batch, int x, int y, int tileIndex)
 	{
 		scrollTexRegionToTile(tileIndex);

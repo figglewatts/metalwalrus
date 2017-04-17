@@ -29,6 +29,8 @@ namespace metalwalrus
 		inline unsigned get_spriteWidth() const { return spriteWidth; }
 		inline unsigned get_spriteHeight() const { return spriteHeight; }
 
+		TextureRegion *get_sprite(int index);
+
 		void drawTile(SpriteBatch& batch, int x, int y, int tileIndex);
 
 		template <typename T>

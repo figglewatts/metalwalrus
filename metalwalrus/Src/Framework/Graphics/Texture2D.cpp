@@ -73,7 +73,6 @@ namespace metalwalrus
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, tWrap);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magFilter);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minFilter);
-
 	}
 
 	Texture2D Texture2D::operator=(Texture2D & other)

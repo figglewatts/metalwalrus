@@ -6,6 +6,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include "../Framework/Animation/AnimatedSprite.h"
 using namespace std;
 
 #include "../Framework/Settings.h"
@@ -45,6 +46,10 @@ namespace metalwalrus
 
 	Player *player;
 
+	AnimatedSprite *animTest;
+	FrameAnimation anim1 = FrameAnimation(7, 10, 1);
+	FrameAnimation anim2 = FrameAnimation(13, 20, 0.5);
+
 	MetalWalrus::~MetalWalrus()
 	{
 		delete fontTex;
@@ -56,6 +61,7 @@ namespace metalwalrus
 		delete fromJson;
 		delete tileMap;
 		delete player;
+		delete animTest;
 	}
 
 	void MetalWalrus::start()
@@ -99,6 +105,14 @@ namespace metalwalrus
 		player = new Player(Vector2(150, 230), 12, 20, Vector2(11, 0));
 		player->updateCollisionEnvironment(tileMap);
 		player->start();
+
+		animTest = new AnimatedSprite(fontSheet);
+		animTest->addAnimation("test", anim1);
+		animTest->addAnimation("test2", anim2);
+		animTest->playOneShot("test");
+		animTest->queue("test2", [&] {
+			animTest->playOneShot("test");
+		});
 	}
 
 	void MetalWalrus::update(double delta)
@@ -111,6 +125,8 @@ namespace metalwalrus
 
 		Vector2 playerCenter = player->get_center();
 		camera->centerOn(Vector2(playerCenter.x, playerCenter.y));
+
+		animTest->update(delta);
 	}
 
 	void MetalWalrus::draw()
@@ -126,6 +142,8 @@ namespace metalwalrus
 		tileMap->draw(*batch, 16, 17);
 
 		player->draw(*batch);
+
+		batch->drawreg(*animTest->get_keyframe(), 150, 150);
 
 		// screen coords
 		batch->setTransformMat(Matrix3());
