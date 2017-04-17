@@ -4,17 +4,28 @@
 
 #include "../../Framework/Game/SolidObject.h"
 #include "../../Framework/Graphics/TileMap.h"
+#include "../../Framework/Animation/AnimatedSprite.h"
 
 namespace metalwalrus
 {
 	class Player : public SolidObject
 	{
 		TileMap *currentTilemap; // used for collision
-		Texture2D *playerTex;
+
+		Texture2D *walrusTex;
+		SpriteSheet *walrusSheet;
+
+		AnimatedSprite *walrusSprite;
+		FrameAnimation idle;
+		FrameAnimation run;
+		FrameAnimation jump;
+
 		Vector2 oldPosition;
 
 		bool fullXSpeed = false;
 		bool jumping = false;
+		bool canJump = false;
+		bool facingLeft = false;
 		bool onGround = false;
 
 		Vector2 velocity;
@@ -38,6 +49,7 @@ namespace metalwalrus
 	public:
 		Player(Vector2 position, float width, float height, Vector2 offset)
 			: SolidObject(position, width, height, offset) { }
+		~Player();
 
 		void start() override;
 		void update(double delta) override;

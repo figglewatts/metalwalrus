@@ -221,10 +221,13 @@ namespace metalwalrus
 		else if (index >= vertices.capacity())
 			this->flush();
 
-		float u = texRegion.get_u();
-		float v = texRegion.get_v();
-		float u2 = texRegion.get_u2();
-		float v2 = texRegion.get_v2();
+		bool flipX = texRegion.get_flipX();
+		bool flipY = texRegion.get_flipY();
+
+		float u = flipX ? texRegion.get_u2() : texRegion.get_u();
+		float v = flipY ? texRegion.get_v2() : texRegion.get_v();
+		float u2 = flipX ? texRegion.get_u() : texRegion.get_u2();
+		float v2 = flipY ? texRegion.get_v() : texRegion.get_v2();
 		float x = -(width / 2);
 		float y = -(height / 2);
 		float x2 = x + width;

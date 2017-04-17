@@ -12,6 +12,8 @@ namespace metalwalrus
 		float u, v;
 		float u2, v2;
 		int width, height;
+		bool flipX;
+		bool flipY;
 
 	public:
 		TextureRegion(Texture2D *tex, int x, int y, int w, int h);
@@ -36,6 +38,10 @@ namespace metalwalrus
 		inline float get_v2() const { return v2; }
 		inline float get_width() const { return width; }
 		inline float get_height() const { return height; }
+		inline bool get_flipX() const { return flipX; }
+		inline void set_flipX(bool fX) { flipX = fX; }
+		inline bool get_flipY() const { return flipY; }
+		inline void set_flipY(bool fY) { flipY = fY; }
 	};
 
 }

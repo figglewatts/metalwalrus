@@ -48,6 +48,7 @@ namespace metalwalrus
 
 	void AnimatedSprite::playOneShot(std::string name)
 	{
+		this->animations[currentAnimation].resetToFirstFrame();
 		this->currentAnimation = name;
 		this->isAnimating = true;
 		this->loop = false;
@@ -61,6 +62,8 @@ namespace metalwalrus
 
 	void AnimatedSprite::play(std::string name)
 	{
+		if (currentAnimation == name) return;
+		this->animations[currentAnimation].resetToFirstFrame();
 		this->currentAnimation = name;
 		this->isAnimating = true;
 		this->loop = true;
@@ -68,6 +71,7 @@ namespace metalwalrus
 
 	void AnimatedSprite::play(std::string name, std::function<void()> onLoop)
 	{
+		if (currentAnimation == name) return;
 		this->animations[name].registerOnFinish(onLoop);
 		this->play(name);
 	}

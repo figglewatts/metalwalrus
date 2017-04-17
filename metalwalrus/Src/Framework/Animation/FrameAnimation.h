@@ -20,7 +20,7 @@ namespace metalwalrus
 
 		void animateFrame()
 		{
-			if (this->currentFrame < (this->startFrame + this->frameCount))
+			if (this->currentFrame < (this->startFrame + this->frameCount - 1))
 				this->currentFrame++;
 			else
 			{
@@ -83,6 +83,8 @@ namespace metalwalrus
 
 		void update(double delta)
 		{
+			if (frameLength == 0) return;
+			
 			frameTimer += delta;
 
 			if (frameTimer > frameLength)

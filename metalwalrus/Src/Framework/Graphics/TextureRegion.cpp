@@ -6,6 +6,8 @@ namespace metalwalrus
 	{
 		this->texture = tex;
 		this->setRegion(x, y, w, h);
+		this->flipX = false;
+		this->flipY = false;
 	}
 
 	TextureRegion::TextureRegion(const TextureRegion & other)
@@ -18,6 +20,8 @@ namespace metalwalrus
 		this->width = other.width;
 		this->height = other.height;
 		this->texture->load();
+		this->flipX = other.flipX;
+		this->flipY = other.flipY;
 	}
 
 	TextureRegion::~TextureRegion()
@@ -37,6 +41,8 @@ namespace metalwalrus
 			this->width = other.width;
 			this->height = other.height;
 			this->texture->load();
+			this->flipX = other.flipX;
+			this->flipY = other.flipY;
 		}
 		return *this;
 	}

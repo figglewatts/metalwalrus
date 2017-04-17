@@ -47,22 +47,44 @@ namespace metalwalrus
 
 	void Player::handleInput()
 	{
+		
 		// left and right movement
 		if (InputHandler::checkButton("right", ButtonState::HELD))
+		{
 			velocity.x = walkSpeed;
-		else if (InputHandler::checkButton("right", ButtonState::UP))
+			facingLeft = false;
+			if (onGround)
+				walrusSprite->play("run");
+			
+		}
+		else if (InputHandler::checkButton("right", ButtonState::IDLE)
+			&& velocity.x >= 0)
+		{
 			velocity.x = 0;
+			if (onGround)
+				walrusSprite->play("idle");
+		}
 		if (InputHandler::checkButton("left", ButtonState::HELD))
+		{
 			velocity.x = -walkSpeed;
-		else if (InputHandler::checkButton("left", ButtonState::UP))
+			facingLeft = true;
+			if (onGround)
+				walrusSprite->play("run");
+		}
+		else if (InputHandler::checkButton("left", ButtonState::IDLE)
+			&& velocity.x <= 0)
+		{
 			velocity.x = 0;
+			if (onGround)
+				walrusSprite->play("idle");
+		}
 
 		// jumping
-		if (onGround && InputHandler::checkButton("up", ButtonState::DOWN))
+		if (canJump && InputHandler::checkButton("up", ButtonState::DOWN))
 		{
 			velocity.y = jumpSpeed;
 			jumping = true;
-			onGround = false;
+			canJump = false;
 			frameTimer = 0;
 		}
 		if (jumping && InputHandler::checkButton("up", ButtonState::HELD))
@@ -73,21 +95,38 @@ namespace metalwalrus
 				jumping = false;
 			frameTimer++;
 		}
-		if (InputHandler::checkButton("up", ButtonState::UP))
+		if (InputHandler::checkButton("up", ButtonState::IDLE))
 		{
-			frameTimer = 0;
 			jumping = false;
 		}
 	}
 
+	Player::~Player()
+	{
+		delete walrusTex;
+		delete walrusSheet;
+		delete walrusSprite;
+	}
+
 	void Player::start()
 	{
-		playerTex = Texture2D::create("assets/player.png");
+		walrusTex = Texture2D::create("assets/sprite/walrus.png");
+		walrusSheet = new SpriteSheet(walrusTex, 32, 32);
+		walrusSprite = new AnimatedSprite(walrusSheet);
+		idle = FrameAnimation(0, 0, 0);
+		run = FrameAnimation(4, 1, 0.2);
+		jump = FrameAnimation(0, 5, 0);
+		walrusSprite->addAnimation("idle", idle);
+		walrusSprite->addAnimation("run", run);
+		walrusSprite->addAnimation("jump", jump);
+		walrusSprite->play("idle");
 	}
 
 	void Player::update(double delta)
 	{
 		handleInput();
+
+		walrusSprite->update(delta);
 
 		velocity.y -= gravity;
 
@@ -100,40 +139,57 @@ namespace metalwalrus
 			moveTo(oldPosition);
 		}
 
-		// jump tolerance calculation
-		if (!jumping && !onGround &&
-			doCollision(boundingBox + Vector2(0, -jumpInAirTolerance)))
-		{
-			onGround = true;
-			frameTimer = 0;
-		}
-
 		oldPosition = position;
 		moveBy(Vector2(0, velocity.y));
 		if (doCollision(boundingBox))
 		{
-			velocity.y = 0;
+			if (velocity.y < 0)
+			{
+				onGround = true;
+				canJump = true;
+			}
 			jumping = false;
-			onGround = true;
 			frameTimer = 0;
+			velocity.y = 0;
 			moveTo(oldPosition);
 		}
 		else if (!jumping)
 		{
 			if (frameTimer > jumpAfterPlatformFrames)
 			{
-				onGround = false;
+				canJump = false;
 			}
 			else
 			{
 				frameTimer++;
 			}
+			onGround = false;
+			walrusSprite->play("jump");
 		}
+		else
+		{
+			onGround = false;
+			canJump = false;
+
+			// jump tolerance calculation
+			if (!canJump &&
+				doCollision(boundingBox + Vector2(0, -jumpInAirTolerance)))
+			{
+				canJump = true;
+				frameTimer = 0;
+			}
+
+			walrusSprite->play("jump");
+		}
+		
 	}
 
 	void Player::draw(SpriteBatch& batch)
 	{
-		batch.drawtex(*playerTex, position.x, position.y);
+		TextureRegion *walrusKeyframe = walrusSprite->get_keyframe();
+		walrusKeyframe->set_flipX(facingLeft);
+		
+		batch.drawreg(*walrusKeyframe, position.x, position.y);
 	}
 
 	void Player::updateCollisionEnvironment(TileMap *tileMap)
