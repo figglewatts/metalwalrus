@@ -9,6 +9,8 @@
 
 namespace metalwalrus
 {
+	typedef std::tuple<IState<Player>*, bool> PlayerStateTuple;
+	
 	class PlayerState : public IState<Player>
 	{
 	protected:
@@ -19,7 +21,7 @@ namespace metalwalrus
 
 		void enter(Player& p) override;
 		void exit(Player& p) override;
-		std::tuple<IState<Player>*, bool> changeState(Player &p) override;
+		PlayerStateTuple changeState(Player &p) override;
 		void update(double delta, Player& p) override;
 	};
 	
@@ -31,7 +33,7 @@ namespace metalwalrus
 
 		void enter(Player& p) override;
 		void exit(Player& p) override;
-		std::tuple<IState<Player>*, bool> changeState(Player &p) override;
+		PlayerStateTuple changeState(Player &p) override;
 		void update(double delta, Player& p) override;
 	};
 
@@ -43,7 +45,7 @@ namespace metalwalrus
 
 		void enter(Player& p) override;
 		void exit(Player& p) override;
-		std::tuple<IState<Player>*, bool> changeState(Player &p) override;
+		PlayerStateTuple changeState(Player &p) override;
 		void update(double delta, Player& p) override;
 	};
 
@@ -55,7 +57,7 @@ namespace metalwalrus
 
 		void enter(Player& p) override;
 		void exit(Player& p) override;
-		std::tuple<IState<Player>*, bool> changeState(Player &p) override;
+		PlayerStateTuple changeState(Player &p) override;
 		void update(double delta, Player& p) override;
 	};
 
@@ -67,19 +69,33 @@ namespace metalwalrus
 
 		void enter(Player &p) override;
 		void exit(Player& p) override;
-		std::tuple<IState<Player>*, bool> changeState(Player &p) override;
+		PlayerStateTuple changeState(Player &p) override;
 		void update(double delta, Player& p) override;
+	};
+
+	class PlayerJumpingState : public PlayerInAirState
+	{
+		int frameTimer;
+	public:
+		PlayerJumpingState(PushDownStateMachine<Player> *machine)
+			: PlayerInAirState(machine) { }
+
+		void enter(Player &p) override;
+		void exit(Player &p) override;
+		PlayerStateTuple changeState(Player &p) override;
+		void update(double delta, Player &p) override;
 	};
 
 	class PlayerShootingState : public PlayerState
 	{
+		int frameTimer;
 	public:
 		PlayerShootingState(PushDownStateMachine<Player> *machine)
 			: PlayerState(machine) { }
 
 		void enter(Player &p) override;
 		void exit(Player &p) override;
-		std::tuple<IState<Player>*, bool> changeState(Player &p) override;
+		PlayerStateTuple changeState(Player &p) override;
 		void update(double delta, Player& p) override;
 	};
 
@@ -91,7 +107,7 @@ namespace metalwalrus
 
 		void enter(Player &p) override;
 		void exit(Player &p) override;
-		std::tuple<IState<Player>*, bool> changeState(Player &p) override;
+		PlayerStateTuple changeState(Player &p) override;
 		void update(double delta, Player& p) override;
 	};
 }

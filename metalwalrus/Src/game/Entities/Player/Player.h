@@ -5,9 +5,19 @@
 #include "../../../Framework/Game/SolidObject.h"
 #include "../../../Framework/Graphics/TileMap.h"
 #include "../../../Framework/Animation/AnimatedSprite.h"
+#include "../../../Framework/State/PushDownStateMachine.h"
 
 namespace metalwalrus
 {
+	struct PlayerInfo
+	{
+		bool fullXSpeed;
+		bool jumping;
+		bool canJump;
+		bool facingLeft;
+		bool onGround;
+	};
+	
 	class Player : public SolidObject
 	{
 		enum class PlayerState
@@ -35,16 +45,33 @@ namespace metalwalrus
 
 		Vector2 oldPosition;
 
-		bool fullXSpeed = false;
-		bool jumping = false;
-		bool canJump = false;
-		bool facingLeft = false;
-		bool onGround = false;
+		PlayerInfo playerInfo;
+
+		PushDownStateMachine<Player> playerStateMachine;
 
 		Vector2 velocity;
 		int frameTimer = 0;
 
 		float shootTimer;
+
+		bool doCollision(AABB boundingBox);
+
+		void handleInput();
+	public:
+		Player(Vector2 position, float width, float height, Vector2 offset)
+			: SolidObject(position, width, height, offset) { }
+		~Player();
+
+		void start() override;
+		void update(double delta) override;
+		void draw(SpriteBatch& batch) override;
+
+		// methods used in modifying player state
+		PlayerInfo& get_playerInfo() { return this->playerInfo; }
+		AnimatedSprite* const get_animatedSprite() { return this->walrusSprite; }
+		Vector2& get_velocity() { return this->velocity; }
+
+		void updateCollisionEnvironment(TileMap *tileMap);
 
 		// ----- PLAYER SETTINGS -----
 		const static float walkSpeed;
@@ -60,20 +87,6 @@ namespace metalwalrus
 		const static float timeBetweenShots;
 		const static int shootingAnimationFrames;
 		// ----- END SETTINGS -----
-
-		bool doCollision(AABB boundingBox);
-
-		void handleInput();
-	public:
-		Player(Vector2 position, float width, float height, Vector2 offset)
-			: SolidObject(position, width, height, offset) { }
-		~Player();
-
-		void start() override;
-		void update(double delta) override;
-		void draw(SpriteBatch& batch) override;
-
-		void updateCollisionEnvironment(TileMap *tileMap);
 	};
 }
 

@@ -14,7 +14,7 @@ namespace metalwalrus
 
 	std::tuple<IState<Player>*, bool> PlayerDamagedState::changeState(Player& p)
 	{
-		
+		return PlayerState::changeState(p);
 	}
 
 	void PlayerDamagedState::update(double delta, Player& p)
