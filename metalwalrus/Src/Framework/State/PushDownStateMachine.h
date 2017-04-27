@@ -5,72 +5,53 @@
 #include <vector>
 
 #include "IState.h"
+#include "PushDownState.h"
+#include "IStateMachine.h"
 
 namespace metalwalrus
 {
 	template <typename StateObject>
-	class PushDownStateMachine
+	class PushDownStateMachine : public IStateMachine<StateObject>
 	{
 	protected:
 		std::vector<IState<StateObject>*> currentState;
 	public:
-		void step(StateObject& o)
+		void update(double delta, StateObject& o) override
 		{
-			auto stateTuple = currentState.back()->changeState(o);
-			IState<StateObject> *nextState = std::get<0>(stateTuple);
-
-			// should we push the next state?
-			bool push = std::get<1>(stateTuple);
-
-			// if we're not replacing states (pushing)
-			// or we need to pop a pushed state
-			if ((!push && nextState != nullptr) || (push && nextState == nullptr))
-			{
-				// pop the current state
-				currentState.back()->exit(o);
-				delete currentState.back();
-				currentState.pop_back();
-			}
-
-			if (nextState != nullptr)
-			{
-				currentState.push_back(nextState);
-			}
-			if (currentState.size() > 0 && (nextState != nullptr || push && nextState == nullptr))
-				currentState.back()->enter(o);
+			this->currentState.back()->update(delta, o);
 		}
+		void push(IState<StateObject> *state, StateObject& o)
+		{
+			this->currentState.push_back(state);
+			this->currentState.back()->enter(o);
+		}
+		void transition(IState<StateObject> *state, StateObject& o) override
+		{
+			this->pop(o);
+			this->push(state, o);
+		}
+		void pop(StateObject& o)
+		{
+			if (this->currentState.size() <= 0) return;
 
-		void update(double delta, StateObject& o)
-		{
-			for (auto it = currentState.begin(); it < currentState.end(); it++)
-				currentState.back()->update(delta, o);
+			this->currentState.back()->exit(o);
+			delete currentState.back();
+			this->currentState.pop_back();
 		}
-		void pushState(IState<StateObject> *state, StateObject& o)
+		IState<StateObject> *peek(int index)
 		{
-			currentState.push_back(state);
-			currentState.back()->enter(o);
-		}
-		IState<StateObject> *popState(StateObject& o)
-		{
-			IState<StateObject> *state = currentState.back();
-			state->exit(o);
-			currentState.pop_back();
-			return state;
-		}
-		IState<StateObject> *peekState(int index)
-		{
-			if (index < 0 || index >= currentState.size())
-				throw runtime_error("Index outside range of currentState vector");
+			if (index < 0 || index >= this->currentState.size())
+				throw runtime_error("Index outside range of states");
 
-			return currentState.at(index);
+			return this->currentState.at(index);
 		}
-		IState<StateObject> *peekState()
+		IState<StateObject> *peek()
 		{
-			return peekState(currentState.size() - 1);
+			return this->peek(this->currentState.size() - 1);
 		}
 		IState<StateObject> *peekBelow()
 		{
-			return peekState(currentState.size() - 2);
+			return this->peek(this->currentState.size() - 2);
 		}
 	};
 }

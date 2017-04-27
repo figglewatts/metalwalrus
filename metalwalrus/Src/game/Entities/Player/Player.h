@@ -11,11 +11,14 @@ namespace metalwalrus
 {
 	struct PlayerInfo
 	{
-		bool fullXSpeed;
 		bool jumping;
 		bool canJump;
 		bool facingLeft;
 		bool onGround;
+		bool moving;
+		bool shooting;
+		bool canShoot;
+		bool canMove;
 	};
 	
 	class Player : public SolidObject
@@ -50,12 +53,14 @@ namespace metalwalrus
 		PushDownStateMachine<Player> playerStateMachine;
 
 		Vector2 velocity;
-		int frameTimer = 0;
 
-		float shootTimer;
+		// FRAME TIMERS
+		int jumpFrameTimer;
+		int shootFrameTimer;
 
 		bool doCollision(AABB boundingBox);
 
+		void newHandleInput();
 		void handleInput();
 	public:
 		Player(Vector2 position, float width, float height, Vector2 offset)
@@ -84,8 +89,7 @@ namespace metalwalrus
 		const static float gravity;
 		const static float terminalVelocity;
 
-		const static float timeBetweenShots;
-		const static int shootingAnimationFrames;
+		const static int framesBetweenShots;
 		// ----- END SETTINGS -----
 	};
 }

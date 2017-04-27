@@ -8,7 +8,7 @@
 namespace metalwalrus
 {
 	const float Player::walkSpeed = 1.5;
-	
+
 	const float Player::jumpSpeed = 4;
 	const int Player::jumpFrames = 11;
 	const int Player::jumpAfterPlatformFrames = 7;
@@ -17,12 +17,11 @@ namespace metalwalrus
 	const float Player::gravity = 0.5;
 	const float Player::terminalVelocity = -4;
 
-	const float Player::timeBetweenShots = 0.5;
-	const int Player::shootingAnimationFrames = 4;
-	
+	const int Player::framesBetweenShots = 20;
+
 	bool Player::doCollision(AABB boundingBox)
 	{
-		int leftTile = boundingBox.get_left() 
+		int leftTile = boundingBox.get_left()
 			/ currentTilemap->get_sheets()[0]->get_spriteWidth();
 		int rightTile = boundingBox.get_right()
 			/ currentTilemap->get_sheets()[0]->get_spriteWidth();
@@ -43,14 +42,81 @@ namespace metalwalrus
 			for (int j = bottomTile; j <= topTile; j++)
 			{
 				Tile t = currentTilemap->get(i, j, 1);
-				if (t.is_solid()) 
-						return true;
+				if (t.is_solid())
+					return true;
 			}
 		}
 		return false;
 	}
 
-	void Player::handleInput()
+	void Player::newHandleInput()
+	{
+		if (!playerInfo.canMove) 
+			return;
+		
+		if (InputHandler::checkButton("space", ButtonState::HELD))
+		{
+			velocity.x = -walkSpeed;
+			playerInfo.facingLeft = true;
+			playerInfo.moving = true;
+		}
+
+		// left and right movement
+		if (InputHandler::checkButton("right", ButtonState::HELD))
+		{
+			velocity.x = walkSpeed;
+			playerInfo.facingLeft = false;
+			playerInfo.moving = true;
+		}
+
+		
+
+		if (InputHandler::checkButton("left", ButtonState::IDLE)
+			&& InputHandler::checkButton("right", ButtonState::IDLE))
+		{
+			velocity.x = 0;
+			playerInfo.moving = false;
+		}
+
+		// shooting
+		if (playerInfo.canShoot)
+		{
+			if (InputHandler::checkButton("shoot", ButtonState::DOWN))
+			{
+				playerInfo.shooting = true;
+
+				shootFrameTimer = framesBetweenShots;
+
+				// TODO: fire a bullet
+			}
+		}
+
+		// jumping
+		if (playerInfo.canJump)
+		{
+			if (InputHandler::checkButton("up", ButtonState::DOWN))
+			{
+				velocity.y = jumpSpeed;
+				playerInfo.jumping = true;
+				playerInfo.canJump = false;
+				jumpFrameTimer = jumpFrames;
+			}
+		}
+		if (playerInfo.jumping)
+		{
+			if (InputHandler::checkButton("up", ButtonState::HELD))
+			{
+				velocity.y = jumpSpeed;
+				jumpFrameTimer--;
+				if (jumpFrameTimer <= 0)
+				{
+					playerInfo.jumping = false;
+				}
+			}
+		}
+	}
+
+	/*void Player::handleInput()
 	{
 		
 		// left and right movement
@@ -138,7 +204,7 @@ namespace metalwalrus
 				} break;
 			}
 		}
-	}
+	}*/
 
 	Player::~Player()
 	{
@@ -166,17 +232,27 @@ namespace metalwalrus
 		walrusSprite->addAnimation("jumpShoot", jumpShoot);
 		walrusSprite->play("idle");
 
-		playerStateMachine.pushState(new PlayerOnGroundState(&playerStateMachine), *this);
+		playerInfo.canJump = false;
+		playerInfo.canMove = true;
+		playerInfo.canShoot = true;
+		playerInfo.facingLeft = false;
+		playerInfo.jumping = false;
+		playerInfo.moving = false;
+		playerInfo.onGround = false;
+		playerInfo.shooting = false;
+
+		playerStateMachine.push(new IdleState("idle", &playerStateMachine), *this);
 	}
 
 	void Player::update(double delta)
 	{
-		//handleInput();
+		newHandleInput();
 
-		walrusSprite->update(delta);
-
-		playerStateMachine.update(delta, *this);
-		playerStateMachine.step(*this);
+		// decrement shooting frame timer
+		if (shootFrameTimer > 0)
+			shootFrameTimer--;
+		else
+			playerInfo.shooting = false;
 
 		velocity.y -= gravity;
 
@@ -194,15 +270,23 @@ namespace metalwalrus
 		if (doCollision(boundingBox))
 		{
 			moveTo(oldPosition);
+
+			// if we're not moving up, then we're on the ground
 			if (velocity.y < 0 && !playerInfo.jumping)
 				playerInfo.onGround = true;
+
 			velocity.y = 0;
 			playerInfo.jumping = false;
 		}
-		else if (!playerInfo.jumping)
+		else
 		{
+			// we're not on the ground anymore
 			playerInfo.onGround = false;
 		}
+
+		walrusSprite->update(delta);
+
+		playerStateMachine.update(delta, *this);
 
 		/*
 		velocity.y -= gravity;

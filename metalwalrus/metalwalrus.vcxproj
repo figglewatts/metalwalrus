@@ -21,15 +21,11 @@
   <ItemGroup>
     <ClCompile Include="src\Framework\Animation\AnimatedSprite.cpp" />
     <ClCompile Include="src\Framework\Util\JSONUtil.cpp" />
+    <ClCompile Include="Src\game\Entities\Player\IdleState.cpp" />
+    <ClCompile Include="Src\game\Entities\Player\InAirState.cpp" />
     <ClCompile Include="src\game\Entities\Player\Player.cpp" />
-    <ClCompile Include="Src\game\Entities\Player\PlayerDamagedState.cpp" />
-    <ClCompile Include="Src\game\Entities\Player\PlayerIdleState.cpp" />
-    <ClCompile Include="Src\game\Entities\Player\PlayerInAirState.cpp" />
-    <ClCompile Include="Src\game\Entities\Player\PlayerJumpingState.cpp" />
-    <ClCompile Include="Src\game\Entities\Player\PlayerOnGroundState.cpp" />
-    <ClCompile Include="Src\game\Entities\Player\PlayerRunningState.cpp" />
-    <ClCompile Include="Src\game\Entities\Player\PlayerShootingState.cpp" />
-    <ClCompile Include="Src\game\Entities\Player\PlayerState.cpp" />
+    <ClCompile Include="Src\game\Entities\Player\RunState.cpp" />
+    <ClCompile Include="Src\game\Entities\Player\ShootState.cpp" />
     <ClCompile Include="src\game\MetalWalrus.cpp" />
     <ClCompile Include="src\Framework\Scene\Scene.cpp" />
     <ClCompile Include="src\Framework\Physics\BroadPhase.cpp" />
@@ -64,6 +60,8 @@
     <ClInclude Include="src\Framework\Animation\FrameAnimation.h" />
     <ClInclude Include="src\Framework\Math\Rectangle.h" />
     <ClInclude Include="src\Framework\State\IState.h" />
+    <ClInclude Include="Src\Framework\State\IStateMachine.h" />
+    <ClInclude Include="Src\Framework\State\PushDownState.h" />
     <ClInclude Include="src\Framework\State\PushDownStateMachine.h" />
     <ClInclude Include="src\Framework\Util\JSONUtil.h" />
     <ClInclude Include="src\game\Entities\Player\Player.h" />

@@ -108,28 +108,16 @@
     <ClCompile Include="src\game\Entities\Player\Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Src\game\Entities\Player\PlayerDamagedState.cpp">
+    <ClCompile Include="Src\game\Entities\Player\IdleState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Src\game\Entities\Player\PlayerIdleState.cpp">
+    <ClCompile Include="Src\game\Entities\Player\RunState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Src\game\Entities\Player\PlayerInAirState.cpp">
+    <ClCompile Include="Src\game\Entities\Player\InAirState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Src\game\Entities\Player\PlayerOnGroundState.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\game\Entities\Player\PlayerRunningState.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\game\Entities\Player\PlayerShootingState.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\game\Entities\Player\PlayerState.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\game\Entities\Player\PlayerJumpingState.cpp">
+    <ClCompile Include="Src\game\Entities\Player\ShootState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -243,6 +231,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Src\game\Entities\Player\States.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Framework\State\IStateMachine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Framework\State\PushDownState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

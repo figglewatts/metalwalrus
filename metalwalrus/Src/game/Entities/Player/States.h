@@ -2,112 +2,51 @@
 #define PLAYER_STATES
 #pragma once
 
-#include "../../../Framework/State/IState.h"
+#include "../../../Framework/State/PushDownState.h"
 #include "../../../Framework/State/PushDownStateMachine.h"
 
 #include "Player.h"
 
 namespace metalwalrus
 {
-	typedef std::tuple<IState<Player>*, bool> PlayerStateTuple;
-	
-	class PlayerState : public IState<Player>
-	{
-	protected:
-		PushDownStateMachine<Player>* machine;
-	public:
-		PlayerState(PushDownStateMachine<Player> *machine)
-			: machine(machine) { }
-
-		void enter(Player& p) override;
-		void exit(Player& p) override;
-		PlayerStateTuple changeState(Player &p) override;
-		void update(double delta, Player& p) override;
-	};
-	
-	class PlayerOnGroundState : public PlayerState
-	{
-	public:	
-		PlayerOnGroundState(PushDownStateMachine<Player> *machine)
-			: PlayerState(machine) { }
-
-		void enter(Player& p) override;
-		void exit(Player& p) override;
-		PlayerStateTuple changeState(Player &p) override;
-		void update(double delta, Player& p) override;
-	};
-
-	class PlayerIdleState : public PlayerOnGroundState
+	class IdleState : public PushDownState<Player>
 	{
 	public:
-		PlayerIdleState(PushDownStateMachine<Player> *machine)
-			: PlayerOnGroundState(machine) { }
-
+		IdleState(std::string name, PushDownStateMachine<Player> *machine)
+			: PushDownState(name, machine) { }
 		void enter(Player& p) override;
 		void exit(Player& p) override;
-		PlayerStateTuple changeState(Player &p) override;
 		void update(double delta, Player& p) override;
 	};
 
-	class PlayerRunningState : public PlayerOnGroundState
+	class RunState : public PushDownState<Player>
 	{
 	public:
-		PlayerRunningState(PushDownStateMachine<Player> *machine)
-			: PlayerOnGroundState(machine) { }
-
+		RunState(std::string name, PushDownStateMachine<Player> *machine)
+			: PushDownState(name, machine) { }
 		void enter(Player& p) override;
 		void exit(Player& p) override;
-		PlayerStateTuple changeState(Player &p) override;
 		void update(double delta, Player& p) override;
 	};
 
-	class PlayerInAirState : public PlayerState
+	class InAirState : public PushDownState<Player>
 	{
 	public:
-		PlayerInAirState(PushDownStateMachine<Player> *machine)
-			: PlayerState(machine) { }
-
-		void enter(Player &p) override;
+		InAirState(std::string name, PushDownStateMachine<Player> *machine)
+			: PushDownState(name, machine) { }
+		void enter(Player& p) override;
 		void exit(Player& p) override;
-		PlayerStateTuple changeState(Player &p) override;
 		void update(double delta, Player& p) override;
 	};
 
-	class PlayerJumpingState : public PlayerInAirState
+	class ShootState : public PushDownState<Player>
 	{
 		int frameTimer;
 	public:
-		PlayerJumpingState(PushDownStateMachine<Player> *machine)
-			: PlayerInAirState(machine) { }
-
-		void enter(Player &p) override;
-		void exit(Player &p) override;
-		PlayerStateTuple changeState(Player &p) override;
-		void update(double delta, Player &p) override;
-	};
-
-	class PlayerShootingState : public PlayerState
-	{
-		int frameTimer;
-	public:
-		PlayerShootingState(PushDownStateMachine<Player> *machine)
-			: PlayerState(machine) { }
-
-		void enter(Player &p) override;
-		void exit(Player &p) override;
-		PlayerStateTuple changeState(Player &p) override;
-		void update(double delta, Player& p) override;
-	};
-
-	class PlayerDamagedState : public PlayerState
-	{
-	public:
-		PlayerDamagedState(PushDownStateMachine<Player> *machine)
-			: PlayerState(machine) { }
-
-		void enter(Player &p) override;
-		void exit(Player &p) override;
-		PlayerStateTuple changeState(Player &p) override;
+		ShootState(std::string name, PushDownStateMachine<Player> *machine)
+			: PushDownState(name, machine), frameTimer(0) { }
+		void enter(Player& p) override;
+		void exit(Player& p) override;
 		void update(double delta, Player& p) override;
 	};
 }
