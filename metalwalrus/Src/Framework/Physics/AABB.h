@@ -32,6 +32,8 @@ namespace metalwalrus
 		inline float get_right() const { return max.x; }
 		inline float get_top() const { return max.y; }
 		inline float get_bottom() const { return min.y; }
+		inline float get_width() const { return max.x - min.x; }
+		inline float get_height() const { return max.y - min.y; }
 
 		bool intersects(AABB& other);
 		float getXDepth(AABB& other);

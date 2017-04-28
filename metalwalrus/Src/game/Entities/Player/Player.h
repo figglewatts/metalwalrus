@@ -19,6 +19,7 @@ namespace metalwalrus
 		bool shooting;
 		bool canShoot;
 		bool canMove;
+		bool touchedGroundLastFrame;
 	};
 	
 	class Player : public SolidObject
@@ -58,7 +59,7 @@ namespace metalwalrus
 		int jumpFrameTimer;
 		int shootFrameTimer;
 
-		bool doCollision(AABB boundingBox);
+		bool doCollision(AABB boundingBox, AABB& tbb);
 
 		void newHandleInput();
 		void handleInput();
@@ -90,6 +91,7 @@ namespace metalwalrus
 		const static float terminalVelocity;
 
 		const static int framesBetweenShots;
+		const static int framesBetweenShotAnimation;
 		// ----- END SETTINGS -----
 	};
 }

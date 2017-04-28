@@ -37,11 +37,20 @@ namespace metalwalrus
 			this->currentState.back()->exit(o);
 			delete currentState.back();
 			this->currentState.pop_back();
+
+			if (this->currentState.size() > 0)
+				this->currentState.back()->enter(o);
+		}
+		void popAndUpdate(StateObject& o)
+		{
+			this->pop(o);
+			if (this->currentState.size() > 0)
+				this->currentState.back()->update(0, o);
 		}
 		IState<StateObject> *peek(int index)
 		{
 			if (index < 0 || index >= this->currentState.size())
-				throw runtime_error("Index outside range of states");
+				throw std::runtime_error("Index outside range of states");
 
 			return this->currentState.at(index);
 		}
