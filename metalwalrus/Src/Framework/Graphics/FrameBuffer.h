@@ -2,8 +2,6 @@
 #define FRAMEBUFFER_H
 #pragma once
 
-#include <GL/glew.h>
-
 #include "Texture2D.h"
 
 namespace metalwalrus

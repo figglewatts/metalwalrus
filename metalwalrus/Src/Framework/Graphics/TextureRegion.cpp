@@ -26,7 +26,7 @@ namespace metalwalrus
 
 	TextureRegion::~TextureRegion()
 	{
-		delete texture;
+		
 	}
 
 	TextureRegion TextureRegion::operator=(const TextureRegion & other)

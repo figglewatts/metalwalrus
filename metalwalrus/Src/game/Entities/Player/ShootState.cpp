@@ -57,7 +57,10 @@ namespace metalwalrus
 
 		if (p.get_playerInfo().canShoot == false
 			&& frameTimer <= Player::framesBetweenShotAnimation - Player::framesBetweenShots)
+		{
 			p.get_playerInfo().canShoot = true;
+			frameTimer = Player::framesBetweenShotAnimation;
+		}
 		else if (frameTimer <= 0)
 		{
 			machine->popAndUpdate(p);

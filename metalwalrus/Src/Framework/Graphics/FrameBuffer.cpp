@@ -46,9 +46,9 @@ namespace metalwalrus
 	}
 
 	FrameBuffer::FrameBuffer(const FrameBuffer & other)
-    {
+	{
 		this->load(other.width, other.height);
-    }
+	}
 
 	FrameBuffer::~FrameBuffer()
 	{
@@ -58,11 +58,11 @@ namespace metalwalrus
 
 	FrameBuffer FrameBuffer::operator=(const FrameBuffer & other)
 	{
-        if (&other != this) 
-        {
+		if (&other != this)
+		{
 			this->load(other.width, other.height);
-        }
-        return *this;
+		}
+		return *this;
 	}
 
 	void FrameBuffer::bind()

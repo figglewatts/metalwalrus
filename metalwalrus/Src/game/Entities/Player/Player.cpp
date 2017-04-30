@@ -4,6 +4,7 @@
 #include "../../../Framework/Input/InputHandler.h"
 
 #include "States.h"
+#include "PlayerBullet.h"
 
 namespace metalwalrus
 {
@@ -17,7 +18,7 @@ namespace metalwalrus
 	const float Player::gravity = 0.5;
 	const float Player::terminalVelocity = -4;
 
-	const int Player::framesBetweenShots = 30;
+	const int Player::framesBetweenShots = 20;
 	const int Player::framesBetweenShotAnimation = 60;
 
 	bool Player::doCollision(AABB boundingBox, AABB& tbb)
@@ -53,10 +54,28 @@ namespace metalwalrus
 		return false;
 	}
 
-	void Player::newHandleInput()
+	void Player::shoot()
+	{
+		parentScene->registerObject(new PlayerBullet(position + Vector2(playerInfo.facingLeft ? 0 : 26, 11), 
+			playerInfo.facingLeft, bulletTex));
+	}
+
+	void Player::handleInput()
 	{
 		if (!playerInfo.canMove) 
 			return;
+
+		// shooting
+		if (playerInfo.canShoot)
+		{
+			if (InputHandler::checkButton("shoot", ButtonState::DOWN))
+			{
+				playerInfo.shooting = true;
+				playerInfo.canShoot = false;
+
+				this->shoot();
+			}
+		}
 		
 		if (InputHandler::checkButton("left", ButtonState::HELD))
 		{
@@ -80,16 +99,7 @@ namespace metalwalrus
 			playerInfo.moving = false;
 		}
 
-		// shooting
-		if (playerInfo.canShoot)
-		{
-			if (InputHandler::checkButton("space", ButtonState::DOWN))
-			{
-				playerInfo.shooting = true;
-
-				// TODO: fire a bullet
-			}
-		}
+		
 
 		// jumping
 		if (playerInfo.canJump)
@@ -103,109 +113,24 @@ namespace metalwalrus
 				jumpFrameTimer = jumpFrames;
 			}
 		}
-		if (playerInfo.jumping)
+		if (jumpFrameTimer > 0)
 		{
+			if (InputHandler::checkButton("up", ButtonState::UP))
+			{
+				jumpFrameTimer = 0;
+			}
 			if (InputHandler::checkButton("up", ButtonState::HELD))
 			{
 				velocity.y = jumpSpeed;
 				jumpFrameTimer--;
-				if (jumpFrameTimer <= 0)
-				{
-					playerInfo.jumping = false;
-				}
 			}
 		}
-	}
-
-	/*void Player::handleInput()
-	{
-		
-		// left and right movement
-		if (InputHandler::checkButton("right", ButtonState::HELD))
-		{
-			velocity.x = walkSpeed;
-			playerInfo.facingLeft = false;
-			if (playerInfo.onGround)
-			{
-				currentState = PlayerState::RUNNING;
-				walrusSprite->play("run");
-			}
-			
-		}
-		else if (InputHandler::checkButton("right", ButtonState::IDLE)
-			&& velocity.x >= 0)
-		{
-			velocity.x = 0;
-			if (playerInfo.onGround)
-			{
-				currentState = PlayerState::IDLE;
-				walrusSprite->play("idle");
-			}
-		}
-		if (InputHandler::checkButton("left", ButtonState::HELD))
-		{
-			velocity.x = -walkSpeed;
-			playerInfo.facingLeft = true;
-			if (playerInfo.onGround)
-			{
-				currentState = PlayerState::RUNNING;
-				walrusSprite->play("run");
-			}
-		}
-		else if (InputHandler::checkButton("left", ButtonState::IDLE)
-			&& velocity.x <= 0)
-		{
-			velocity.x = 0;
-			if (playerInfo.onGround)
-			{
-				currentState = PlayerState::IDLE;
-				walrusSprite->play("idle");
-			}
-		}
-
-		// jumping
-		if (playerInfo.canJump && InputHandler::checkButton("up", ButtonState::DOWN))
-		{
-			velocity.y = jumpSpeed;
-			playerInfo.jumping = true;
-			playerInfo.canJump = false;
-			frameTimer = 0;
-			currentState = PlayerState::IN_AIR;
-		}
-		if (playerInfo.jumping && InputHandler::checkButton("up", ButtonState::HELD))
-		{
-			if (frameTimer < jumpFrames)
-				velocity.y = jumpSpeed;
-			else
-				playerInfo.jumping = false;
-			frameTimer++;
-		}
-		if (InputHandler::checkButton("up", ButtonState::IDLE))
+		else
 		{
 			playerInfo.jumping = false;
 		}
-
-		if (InputHandler::checkButton("space", ButtonState::DOWN))
-		{
-			switch (currentState)
-			{
-				case PlayerState::IDLE:
-				{
-					walrusSprite->playForFrames("idleShoot", shootingAnimationFrames);
-				} break;
-				case PlayerState::RUNNING:
-				{
-					int runningFrame = 
-						walrusSprite->get_currentAnim().get_currentFrameRelative();
-					walrusSprite->playAtFrame("runShoot", runningFrame);
-				} break;
-				case PlayerState::IN_AIR:
-				{
-					walrusSprite->playForFrames("jumpShoot", shootingAnimationFrames);
-				} break;
-			}
-		}
-	}*/
+		
+	}
 
 	Player::~Player()
 	{
@@ -244,11 +169,13 @@ namespace metalwalrus
 		playerInfo.touchedGroundLastFrame = false;
 
 		playerStateMachine.push(new IdleState("idle", &playerStateMachine), *this);
+
+		bulletTex = Texture2D::create("assets/sprite/bullet.png");
 	}
 
 	void Player::update(double delta)
 	{
-		newHandleInput();
+		handleInput();
 
 		velocity.y -= gravity;
 
@@ -266,7 +193,7 @@ namespace metalwalrus
 		moveBy(Vector2(0, velocity.y));
 		if (doCollision(boundingBox, tbb))
 		{
-			moveTo(Vector2(oldPosition.x, velocity.y < 0 ? tbb.get_top() : (tbb.get_bottom() - boundingBox.get_height())));
+			moveTo(Vector2(position.x, velocity.y < 0 ? tbb.get_top() : (tbb.get_bottom() - boundingBox.get_height())));
 
 			if (velocity.y < 0)
 			{
@@ -276,78 +203,21 @@ namespace metalwalrus
 
 			velocity.y = 0;
 			playerInfo.jumping = false;
+			jumpFrameTimer = 0;
 		}
 		else
 		{
 			if (!playerInfo.touchedGroundLastFrame)
+			{
 				playerInfo.onGround = false;
-
+			}
+			playerInfo.canJump = false;
 			playerInfo.touchedGroundLastFrame = false;
 		}
-		
 
 		walrusSprite->update(delta);
 
 		playerStateMachine.update(delta, *this);
-
-		/*
-		velocity.y -= gravity;
-
-		if (velocity.y < terminalVelocity) velocity.y = terminalVelocity;
-		
-		oldPosition = position;
-		moveBy(Vector2(velocity.x, 0));
-		if (doCollision(boundingBox))
-		{
-			moveTo(oldPosition);
-		}
-
-		oldPosition = position;
-		moveBy(Vector2(0, velocity.y));
-		if (doCollision(boundingBox))
-		{
-			if (velocity.y < 0)
-			{
-				playerInfo.onGround = true;
-				playerInfo.canJump = true;
-				currentState = PlayerState::IDLE;
-			}
-			playerInfo.jumping = false;
-			frameTimer = 0;
-			velocity.y = 0;
-			moveTo(oldPosition);
-		}
-		else if (!playerInfo.jumping)
-		{
-			if (frameTimer > jumpAfterPlatformFrames)
-			{
-				playerInfo.canJump = false;
-			}
-			else
-			{
-				frameTimer++;
-			}
-			playerInfo.onGround = false;
-			currentState = PlayerState::IN_AIR;
-			walrusSprite->play("jump");
-		}
-		else
-		{
-			playerInfo.onGround = false;
-			playerInfo.canJump = false;
-
-			// jump tolerance calculation
-			if (!playerInfo.canJump &&
-				doCollision(boundingBox + Vector2(0, -jumpInAirTolerance)))
-			{
-				playerInfo.canJump = true;
-				frameTimer = 0;
-			}
-
-			currentState = PlayerState::IN_AIR;
-			walrusSprite->play("jump");
-		}
-		*/
 	}
 
 	void Player::draw(SpriteBatch& batch)

@@ -15,6 +15,8 @@
 
 namespace metalwalrus
 {
+	int SpriteBatch::totalRenderCalls;
+	
 	SpriteBatch::SpriteBatch() : SpriteBatch(1000) { }
 
 	SpriteBatch::SpriteBatch(int size)
@@ -70,6 +72,7 @@ namespace metalwalrus
 		glEnable(GL_DEPTH_TEST);
 		
 		renderCalls++;
+		totalRenderCalls++;
 		
 		this->batchMesh->updateContents();
 		
@@ -129,8 +132,6 @@ namespace metalwalrus
 		glDisable(GL_DEPTH_TEST);
 		glDisable(GL_BLEND);
 		glPopMatrix();
-
-		Debug::set_drawCalls(renderCalls);
 		
 		drawing = false;
 	}

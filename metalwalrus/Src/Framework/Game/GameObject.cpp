@@ -2,11 +2,20 @@
 
 namespace metalwalrus
 {
+	int GameObject::numGameObjects;
+	
+	void GameObject::generateID()
+	{
+		this->id = numGameObjects;
+		numGameObjects++;
+	}
+
 	GameObject::GameObject(Vector2 position, float width, float height)
 	{
 		this->position = position;
 		this->width = width;
 		this->height = height;
+		this->generateID();
 	}
 
 	GameObject::GameObject(const GameObject & other)
@@ -14,6 +23,7 @@ namespace metalwalrus
 		this->position = other.position;
 		this->width = other.width;
 		this->height = other.height;
+		this->generateID();
 	}
 
 	GameObject & GameObject::operator=(const GameObject & other)
@@ -23,6 +33,7 @@ namespace metalwalrus
 			this->position = other.position;
 			this->width = other.width;
 			this->height = other.height;
+			this->generateID();
 		}
 		return *this;
 	}

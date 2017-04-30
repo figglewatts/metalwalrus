@@ -4,8 +4,7 @@ namespace metalwalrus
 {
 	std::map<std::string, InputButton> InputHandler::inputs;
 	std::vector<ButtonState> InputHandler::states;
-	bool InputHandler::keys[256] = {};
-	bool InputHandler::specials[108] = {};
+	bool InputHandler::keys[348] = {};
 	
 	void InputHandler::updateButtonState(ButtonState* state, bool button)
 	{
@@ -27,12 +26,9 @@ namespace metalwalrus
 		}
 	}
 	
-	void InputHandler::addInput(std::string name, bool isSpecial, KeyCode code)
+	void InputHandler::addInput(std::string name, int code)
 	{
-		InputButton b;
-		b.isSpecial = isSpecial;
-		b.code = code;
-		b.stateIndex = states.size();
+		InputButton b = { code, states.size() };
 		states.push_back(ButtonState::IDLE);
 		inputs[name] = b;
 	}
@@ -44,25 +40,18 @@ namespace metalwalrus
 
 	void InputHandler::handleInput()
 	{
-		for (const auto& val : inputs)
+		for (auto it = inputs.begin();
+			it != inputs.end(); it++)
 		{
-			InputButton button = val.second;
+			InputButton button = it->second;
 			ButtonState *state = &states[button.stateIndex];
-			
-			if (button.isSpecial)
-				updateButtonState(state, specials[button.code.special]);
-			else
-				updateButtonState(state, keys[button.code.key]);
+
+			updateButtonState(state, keys[button.code]);
 		}
 	}
 
-	void InputHandler::updateKeys(char c, bool val)
+	void InputHandler::updateKeys(int key, int action)
 	{
-		keys[c] = val;
-	}
-
-	void InputHandler::updateSpecials(int i, bool val)
-	{
-		specials[i] = val;
+		keys[key] = action;
 	}
 }

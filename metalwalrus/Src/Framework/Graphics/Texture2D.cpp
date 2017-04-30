@@ -1,6 +1,7 @@
 #include "Texture2D.h"
 #include "../Util/IOUtil.h"
 #include "../Util/Debug.h"
+#include "../Util/GLError.h"
 
 namespace metalwalrus
 {

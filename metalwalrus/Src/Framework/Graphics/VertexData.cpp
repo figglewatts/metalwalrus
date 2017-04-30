@@ -1,8 +1,7 @@
 #include "VertexData.h"
 
-#include <GL/glew.h>
-
 #include <stdexcept>
+#include "../Util/GLError.h"
 
 namespace metalwalrus
 {
@@ -26,8 +25,8 @@ namespace metalwalrus
 	{
 		glDeleteBuffers(1, &vertHandle);
 		glDeleteBuffers(1, &indHandle);
-		delete vertices;
-		delete indices;
+		//delete vertices;
+		//delete indices;
 	}
 
 	VertexData VertexData::operator=(VertexData & other)

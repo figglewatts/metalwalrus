@@ -37,6 +37,7 @@ namespace metalwalrus
 
 	public:
 		int renderCalls = 0;
+		static int totalRenderCalls;
 	
 		SpriteBatch();
 		SpriteBatch(int size);

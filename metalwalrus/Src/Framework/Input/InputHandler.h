@@ -2,6 +2,8 @@
 #define INPUTHANDLER_H
 #pragma once
 
+#include <GLFW/glfw3.h>
+
 #include <map>
 #include <vector>
 
@@ -9,41 +11,32 @@ namespace metalwalrus
 {
 	enum class ButtonState
 	{
-		IDLE = 0,
-		DOWN,
-		HELD,
-		UP
-	};
-
-	union KeyCode
-	{
-		unsigned char key;
-		int special;
+		UP = GLFW_RELEASE,
+		DOWN = GLFW_PRESS,
+		HELD = GLFW_REPEAT,
+		IDLE = 3
 	};
 
 	struct InputButton
 	{
-		bool isSpecial = false;
+		int code;
 		int stateIndex;
-		KeyCode code;
 	};
 	
 	class InputHandler
 	{
 		static std::map<std::string, InputButton> inputs;
 		static std::vector<ButtonState> states;
-		static bool keys[256];
-		static bool specials[108];
+		static bool keys[348];
 
 		InputHandler(); // you can't instantiate InputHandler
 
 		static void updateButtonState(ButtonState *state, bool button);
 	public:
-		static void addInput(std::string name, bool isSpecial, KeyCode code);
+		static void addInput(std::string name, int code);
 		static bool checkButton(std::string name, ButtonState state);
 		static void handleInput();
-		static void updateKeys(char c, bool val);
-		static void updateSpecials(int i, bool val);
+		static void updateKeys(int key, int action);
 	};
 }
 

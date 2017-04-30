@@ -39,6 +39,8 @@ namespace metalwalrus
 		Texture2D *walrusTex;
 		SpriteSheet *walrusSheet;
 
+		Texture2D *bulletTex;
+
 		AnimatedSprite *walrusSprite;
 		FrameAnimation idle;
 		FrameAnimation run;
@@ -60,8 +62,7 @@ namespace metalwalrus
 		int shootFrameTimer;
 
 		bool doCollision(AABB boundingBox, AABB& tbb);
-
-		void newHandleInput();
+		void shoot();
 		void handleInput();
 	public:
 		Player(Vector2 position, float width, float height, Vector2 offset)

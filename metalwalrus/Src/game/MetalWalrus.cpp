@@ -1,11 +1,13 @@
 #include "MetalWalrus.h"
 
 #include <GL/glew.h>
-#include <GL/glut.h>
+#include <GLFW/glfw3.h>
 
 #include <iostream>
-#include <vector>
 #include <string>
+#include "../Framework/Scene/SceneManager.h"
+#include "Scenes/GameScene.h"
+#include "../Framework/Util/GLError.h"
 
 using namespace std;
 
@@ -20,21 +22,13 @@ using namespace std;
 #include "../Framework/Graphics/TileMap.h"
 #include "../Framework/Input/InputHandler.h"
 #include "../Framework/Util/Debug.h"
-#include "../Framework/Util/JSONUtil.h"
 
 #include "Entities/Player/Player.h"
 
 namespace metalwalrus
 {
-	SpriteBatch *batch;
-
 	Texture2D *fontTex;
 	FontSheet *fontSheet;
-
-	SpriteSheet *fromJson;
-	TileMap *tileMap;
-
-	Camera *camera;
 
 	FrameBuffer *screenBuffer;
 	VertData2D screenFboVertices[4];
@@ -44,7 +38,7 @@ namespace metalwalrus
 	};
 	VertexData *screenVbo;
 
-	Player *player;
+	SpriteBatch *debugBatch;
 
 	MetalWalrus::~MetalWalrus()
 	{
@@ -52,28 +46,24 @@ namespace metalwalrus
 		delete fontSheet;
 		delete screenVbo;
 		delete screenBuffer;
-		delete batch;
-		delete camera;
-		delete fromJson;
-		delete tileMap;
-		delete player;
+		delete debugBatch;
+		SceneManager::clearScenes();
 	}
 
 	void MetalWalrus::start()
 	{
 		// initialize inputs
-		InputHandler::addInput("left", true, { GLUT_KEY_LEFT });
-		InputHandler::addInput("up", true, { GLUT_KEY_UP });
-		InputHandler::addInput("down", true, { GLUT_KEY_DOWN });
-		InputHandler::addInput("right", true, { GLUT_KEY_RIGHT });
-		InputHandler::addInput("space", false, { 32 });
-		InputHandler::addInput("A", false, { 'z' });
-		InputHandler::addInput("B", false, { 'x' });
-		InputHandler::addInput("esc", false, { 27 }); // escape key
-		InputHandler::addInput("f5", true, { GLUT_KEY_F5 }); // debug key
+		InputHandler::addInput("left", GLFW_KEY_LEFT);
+		InputHandler::addInput("up", GLFW_KEY_UP);
+		InputHandler::addInput("down", GLFW_KEY_DOWN);
+		InputHandler::addInput("right", GLFW_KEY_RIGHT);
+		InputHandler::addInput("shoot", GLFW_KEY_Z);
+		InputHandler::addInput("esc", GLFW_KEY_ESCAPE);
+		InputHandler::addInput("f5", GLFW_KEY_F5);
 
 		// load fonts
 		fontTex = Texture2D::create("assets/font.png");
+
 		fontSheet = new FontSheet(fontTex, 8, 8, 0, 0);
 
 		// create screen FBO
@@ -88,19 +78,12 @@ namespace metalwalrus
 		screenFboVertices[3].texCoord = Vector2(1, 0);
 
 		screenVbo = VertexData::create(screenFboVertices, 4, indices, 4);
+
 		screenBuffer = new FrameBuffer(Settings::VIRTUAL_WIDTH, Settings::VIRTUAL_HEIGHT);
 
-		// create main SpriteBatch
-		batch = new SpriteBatch();
+		debugBatch = new SpriteBatch();
 
-		// create camera
-		camera = new Camera();
-
-		tileMap = utilities::JSONUtil::tiled_tilemap("assets/data/level/level1.json", camera);
-
-		player = new Player(Vector2(150, 230), 12, 20, Vector2(11, 0));
-		player->updateCollisionEnvironment(tileMap);
-		player->start();
+		SceneManager::addScene(new GameScene());
 	}
 
 	void MetalWalrus::update(double delta)
@@ -109,34 +92,33 @@ namespace metalwalrus
 		if (InputHandler::checkButton("f5", ButtonState::DOWN))
 			Debug::debugMode = !Debug::debugMode;
 
-		player->update(delta);
-
-		Vector2 playerCenter = player->get_center();
-		camera->centerOn(Vector2(playerCenter.x, playerCenter.y));
+		SceneManager::update(delta);
 	}
 
 	void MetalWalrus::draw()
 	{
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		
+		SpriteBatch::totalRenderCalls = 0;
+		
 		glLoadIdentity();
+
 		screenBuffer->bind();
+
 		context->clear(Color(0.38, 0.827, 0.890)); // background color of scene
-		batch->begin();
-		// set to world coords
-		batch->setTransformMat(camera->getTransform());
+		
+		SceneManager::draw();
+		
+		debugBatch->begin();
+			// screen coords
+			debugBatch->setTransformMat(Matrix3());
 
-		// draw world
-		tileMap->draw(*batch, 16, 17);
+			// draw overlays
+			if (Debug::debugMode)
+				drawDebug(*debugBatch);
+		debugBatch->end();
 
-		player->draw(*batch);
-
-		// screen coords
-		batch->setTransformMat(Matrix3());
-
-		// draw overlays
-		if (Debug::debugMode)
-			drawDebug(*batch);
-
-		batch->end();
 		screenBuffer->unbind();
 
 		drawFrameBuffer();
@@ -158,7 +140,7 @@ namespace metalwalrus
 	void MetalWalrus::drawDebug(SpriteBatch& batch)
 	{
 		string debugString = "FT:  " + std::to_string(Debug::frameTime) + "\n"
-			+ "DC:  " + std::to_string(Debug::get_drawCalls()) + "\n"
+			+ "DC:  " + std::to_string(SpriteBatch::totalRenderCalls) + "\n"
 			+ "FPS: " + std::to_string(Debug::fps);
 		fontSheet->drawText(batch, debugString, 0, 232);
 	}
