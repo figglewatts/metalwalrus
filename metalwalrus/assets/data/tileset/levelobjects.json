@@ -1,0 +1,27 @@
+{ "columns":4,
+ "image":"..\/..\/tile\/levelobjects.png",
+ "imageheight":64,
+ "imagewidth":64,
+ "margin":0,
+ "name":"levelobjects",
+ "spacing":0,
+ "tilecount":16,
+ "tileheight":16,
+ "tileproperties":
+    {
+     "0":
+        {
+         "classname":"player_spawn",
+         "facingLeft":false
+        }
+    },
+ "tilepropertytypes":
+    {
+     "0":
+        {
+         "classname":"string",
+         "facingLeft":"bool"
+        }
+    },
+ "tilewidth":16
+}

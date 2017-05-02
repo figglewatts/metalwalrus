@@ -52,27 +52,45 @@ namespace metalwalrus
 			unsigned tileHeight = tm->get_sheets()[0]->get_spriteHeight();
 
 			picojson::array layers = json->get("layers").get<picojson::array>();
-			for (auto it = layers.begin(); it != layers.end(); it++)
+			int layerNum = 0;
+			for (auto layer : layers)
 			{
-				int layerNum = tm->get_layerCount();
-				tm->addLayer();
-				picojson::array tiles = it->get("data").get<picojson::array>();
+				std::string layerName = layer.get("name").get<std::string>();
+				
+				if (layerNum > 0)
+					tm->addLayer(layerName);
+				else
+					tm->get_layer(0)->set_name(layerName);
+
+				TileLayer *layerObject = tm->get_layer(layerName);
+
+				layerObject->properties = PropertyContainer(layer.get("properties"));
+
+				picojson::array tiles = layer.get("data").get<picojson::array>();
 				unsigned i = 0;
 				for (auto tile = tiles.begin(); tile != tiles.end(); tile++)
 				{
 					unsigned x = i % width;
 					unsigned y = (height - 1) - (i / width);
 					unsigned tileID = tile->get<double>();
-					bool solid = tileID == 0 ? false 
-						: tm->get_sheets()[0]
-							->getSpriteProperty<bool>(std::string("solid"), 
-								to_string(tileID - 1));
-					tm->get(x, y ,layerNum) = 
-						Tile(tileID, 0, Vector2(x * tileWidth, y * tileWidth),
-							solid, tileWidth, tileHeight);
+
+					bool solid = false;
+					if (!layerObject->properties.getProperty<bool>("objectLayer"))
+					{
+						solid = tileID == 0 ? false 
+							: tm->get_sheetFromTileID(tileID - 1)
+								.properties.getProperty<bool>("solid", tileID - 1);
+					}
+
+
+					layerObject->get(x, y) = 
+						Tile(tileID, Vector2(x * tileWidth, y * tileWidth),
+							solid, tileWidth, tileHeight, tm);
 					
 					i++;
 				}
+
+				layerNum++;
 			}
 
 			return tm;

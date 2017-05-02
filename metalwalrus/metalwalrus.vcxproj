@@ -61,6 +61,7 @@
   <ItemGroup>
     <ClInclude Include="src\Framework\Animation\AnimatedSprite.h" />
     <ClInclude Include="src\Framework\Animation\FrameAnimation.h" />
+    <ClInclude Include="Src\Framework\Data\PropertyContainer.h" />
     <ClInclude Include="src\Framework\Math\Rectangle.h" />
     <ClInclude Include="Src\Framework\Scene\SceneManager.h" />
     <ClInclude Include="src\Framework\State\IState.h" />

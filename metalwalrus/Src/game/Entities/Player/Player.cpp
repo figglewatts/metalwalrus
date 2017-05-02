@@ -43,7 +43,7 @@ namespace metalwalrus
 		{
 			for (int j = bottomTile; j <= topTile; j++)
 			{
-				Tile t = currentTilemap->get(i, j, 1);
+				Tile t = currentTilemap->get(i, j, 0);
 				if (t.is_solid())
 				{
 					tbb = t.get_boundingBox();

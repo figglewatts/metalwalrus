@@ -12,24 +12,33 @@ namespace metalwalrus
 		texRegion.changePos(tileX * spriteWidth, tileY * spriteHeight);
 	}
 
+	void SpriteSheet::calculateNumSprites()
+	{
+		int spritesAcross = texRegion.get_texture()->get_width() / this->spriteWidth;
+		int spritesDown = texRegion.get_texture()->get_height() / this->spriteHeight;
+		this->numSprites = spritesAcross * spritesDown;
+	}
+
 	SpriteSheet::SpriteSheet(Texture2D *tex, unsigned spriteWidth, unsigned spriteHeight)
-		: texRegion(tex, 0, 0, spriteWidth, spriteHeight)
+		: texRegion(tex, 0, 0, spriteWidth, spriteHeight), properties(picojson::value())
 	{
 		this->spriteWidth = spriteWidth;
 		this->spriteHeight = spriteHeight;
+		this->calculateNumSprites();
 	}
 
 	SpriteSheet::SpriteSheet(Texture2D * tex, unsigned spriteWidth, unsigned spriteHeight, picojson::value spriteProperties)
 		: SpriteSheet(tex, spriteWidth, spriteHeight)
 	{
-		this->spriteProperties = spriteProperties;
+		this->properties.properties = spriteProperties;
 	}
 
 	SpriteSheet::SpriteSheet(const SpriteSheet & other)
-		: texRegion(other.texRegion)
+		: texRegion(other.texRegion), properties(picojson::value())
 	{
 		this->spriteWidth = other.spriteWidth;
 		this->spriteHeight = other.spriteHeight;
+		this->numSprites = other.numSprites;
 	}
 
 	SpriteSheet & SpriteSheet::operator=(const SpriteSheet & other)
@@ -39,6 +48,7 @@ namespace metalwalrus
 			this->texRegion = other.texRegion;
 			this->spriteWidth = other.spriteWidth;
 			this->spriteHeight = other.spriteHeight;
+			this->numSprites = other.numSprites;
 		}
 		return *this;
 	}

@@ -4,18 +4,7 @@ namespace metalwalrus
 {
 	void TileMap::initializeEmpty()
 	{
-		layerCount++;
-		for (unsigned y = 0; y < height; y++)
-		{
-			tilerow row;
-			for (unsigned x = 0; x < width; x++)
-			{
-				vector<Tile> tileLayers;
-				tileLayers.push_back(Tile());
-				row.push_back(tileLayers);
-			}
-			tiles.push_back(row);
-		}
+		this->addLayer("0");
 	}
 
 	TileMap::TileMap(unsigned width, unsigned height, Camera * cam)
@@ -23,7 +12,6 @@ namespace metalwalrus
 		this->width = width;
 		this->height = height;
 		this->camera = cam;
-		this->layerCount = 0;
 		this->initializeEmpty();
 	}
 
@@ -34,59 +22,55 @@ namespace metalwalrus
 		this->width = width;
 		this->height = height;
 		this->camera = cam;
-		this->layerCount = 0;
 		this->initializeEmpty();
 	}
 
 	TileMap::TileMap(const TileMap& other)
 	{
-		this->tiles = other.tiles;
+		this->layers = other.layers;
 		this->tileSheets = other.tileSheets;
 		this->width = other.width;
 		this->height = other.height;
 		this->camera = other.camera;
-		this->layerCount = other.layerCount;
+		this->initialTileIDs = other.initialTileIDs;
+		this->cumulativeTileID = other.cumulativeTileID;
 	}
 
 	TileMap & TileMap::operator=(const TileMap& other)
 	{
 		if (this != &other)
 		{
-			this->tiles = other.tiles;
+			this->layers = other.layers;
 			this->tileSheets = other.tileSheets;
 			this->width = other.width;
 			this->height = other.height;
 			this->camera = other.camera;
-			this->layerCount = other.layerCount;
+			this->initialTileIDs = other.initialTileIDs;
+			this->cumulativeTileID = other.cumulativeTileID;
 		}
 		return *this;
 	}
 
+	Tile & TileMap::get(unsigned x, unsigned y, std::string name)
+	{
+		return get_layer(name)->get(x, y);
+	}
+
 	Tile & TileMap::get(unsigned x, unsigned y, unsigned layer)
 	{
-		return tiles[y][x][layer];
+		return get_layer(layer)->get(x, y);
 	}
 
-	void TileMap::append(Tile t, unsigned x, unsigned y)
+	void TileMap::addLayer(std::string name)
 	{
-		tiles[y][x].push_back(t);
-	}
-
-	void TileMap::addLayer()
-	{
-		for (int y = 0; y < height; y++)
-		{
-			for (int x = 0; x < width; x++)
-			{
-				append(Tile(), x, y);
-			}
-		}
-		layerCount++;
+		layers.push_back(TileLayer(name, this->width, this->height, this));
 	}
 
 	void TileMap::addTileSheet(SpriteSheet *sheet)
 	{
 		this->tileSheets.push_back(sheet);
+		this->initialTileIDs[sheet] = cumulativeTileID;
+		cumulativeTileID += sheet->get_numSprites();
 	}
 
 	void TileMap::draw(SpriteBatch& batch, unsigned squaresDown, unsigned squaresAcross)
@@ -97,11 +81,15 @@ namespace metalwalrus
 		Vector2 firstSquare = Vector2(
 			(cameraPos.x) / tileWidth,
 			(cameraPos.y) / tileHeight);
-		for (unsigned y = 0; y < squaresDown; y++)
+
+		for (auto layer : layers)
 		{
-			for (unsigned x = 0; x < squaresAcross; x++)
+			if (layer.properties.hasProperty("objectLayer") && layer.properties.getProperty<bool>("objectLayer")) 
+				continue;
+			
+			for (unsigned y = 0; y < squaresDown; y++)
 			{
-				for (unsigned l = 0; l < layerCount; l++)
+				for (unsigned x = 0; x < squaresAcross; x++)
 				{
 					unsigned tileXIndex = firstSquare.x + x;
 					unsigned tileYIndex = firstSquare.y + y;
@@ -109,51 +97,87 @@ namespace metalwalrus
 					if (tileXIndex >= width || tileYIndex >= height
 						|| tileXIndex < 0 || tileYIndex < 0) continue;
 
-					Tile t = tiles[tileYIndex][tileXIndex][l];
+					Tile t = layer.get(tileXIndex, tileYIndex);
 
 					if (t.get_tileID() == 0) continue;
 
-					tileSheets[t.get_sheetIndex()]->drawTile(batch, 
+					tileSheets[t.get_sheetIndex()]->drawTile(batch,
 						tileXIndex * tileWidth, tileYIndex * tileHeight,
-						t.get_tileID()-1); // -1 due to 0 being blank tile
+						t.get_sheetID() - 1); // -1 due to 0 being blank tile
 				}
 			}
 		}
 	}
 
+	TileLayer* TileMap::get_layer(std::string name)
+	{
+		for (int i = 0; i < layers.size(); i++)
+		{
+			if (layers[i].get_name() == name)
+				return &layers[i];
+		}
+		throw std::runtime_error("Layer did not exist!");
+	}
+
+	TileLayer* TileMap::get_layer(unsigned layer)
+	{
+		return &layers[layer];
+	}
+
+	SpriteSheet & TileMap::get_sheetFromTileID(unsigned tileID)
+	{
+		return *tileSheets[get_sheetIndexFromTileID(tileID)];
+	}
+
+	int TileMap::get_sheetIndexFromTileID(unsigned tileID)
+	{
+		for (int i = 0; i < tileSheets.size(); i++)
+		{
+			if (tileID < initialTileIDs[tileSheets[i]] + tileSheets[i]->get_numSprites())
+				return i;
+		}
+		throw std::runtime_error("Could not get tilesheet from tileID");
+	}
+
 
 	// -------------- TILE METHODS -----------------------
 
-	Tile::Tile()
+	Tile::Tile(TileMap* map)
 	{
 		this->tileID = 0;
+		this->sheetID = 0;
 		this->sheetIndex = 0;
 		this->position = Vector2();
 		this->solid = false;
 		this->boundingBox = AABB();
+		this->tileMap = map;
 	}
 
-	Tile::Tile(Vector2 pos, unsigned width, unsigned height)
-		: Tile(0, 0, pos, false, width, height)
+	Tile::Tile(Vector2 pos, unsigned width, unsigned height, TileMap* map)
+		: Tile(0, pos, false, width, height, map)
 	{ }
 
-	Tile::Tile(unsigned tileID, unsigned sheetIndex, Vector2 pos, bool solid, 
-		unsigned width, unsigned height)
+	Tile::Tile(unsigned tileID, Vector2 pos, bool solid, 
+		unsigned width, unsigned height, TileMap* map)
 	{
 		this->tileID = tileID;
-		this->sheetIndex = sheetIndex;
+		this->sheetIndex = map->get_sheetIndexFromTileID(tileID);
+		this->sheetID = this->tileID -  map->get_sheetInitialTileID(map->get_sheets()[this->sheetIndex]);
 		this->position = pos;
 		this->solid = solid;
 		this->boundingBox = AABB(position, Vector2(pos.x + width, pos.y + height));
+		this->tileMap = map;
 	}
 
 	Tile::Tile(const Tile& other)
 	{
 		this->tileID = other.tileID;
 		this->sheetIndex = other.sheetIndex;
+		this->sheetID = other.sheetID;
 		this->position = other.position;
 		this->solid = other.solid;
 		this->boundingBox = other.boundingBox;
+		this->tileMap = other.tileMap;
 	}
 
 	Tile & Tile::operator=(const Tile& other)
@@ -162,10 +186,59 @@ namespace metalwalrus
 		{
 			this->tileID = other.tileID;
 			this->sheetIndex = other.sheetIndex;
+			this->sheetID = other.sheetID;
 			this->position = other.position;
 			this->solid = other.solid;
 			this->boundingBox = other.boundingBox;
+			this->tileMap = other.tileMap;
 		}
 		return *this;
+	}
+
+	// ------------------ TILELAYER METHODS -------------------
+
+	TileLayer::TileLayer(std::string name, unsigned width, unsigned height, TileMap *map)
+		: properties(picojson::value())
+	{
+		tilelayer layer;
+		for (unsigned y = 0; y < height; y++)
+		{
+			tilerow row;
+			for (unsigned x = 0; x < width; x++)
+			{
+				row.push_back(Tile(map));
+			}
+			layer.push_back(row);
+		}
+		this->layer = layer;
+
+		this->name = name;
+		this->tileMap = map;
+	}
+
+	TileLayer::TileLayer(const TileLayer & other)
+		: properties(picojson::value())
+	{
+		this->layer = other.layer;
+		this->name = other.name;
+		this->tileMap = other.tileMap;
+		this->properties = other.properties;
+	}
+
+	TileLayer & TileLayer::operator=(const TileLayer & other)
+	{
+		if (this != &other)
+		{
+			this->layer = other.layer;
+			this->name = other.name;
+			this->tileMap = other.tileMap;
+			this->properties = other.properties;
+		}
+		return *this;
+	}
+
+	Tile & TileLayer::get(unsigned x, unsigned y)
+	{
+		return this->layer[y][x];
 	}
 }

@@ -6,6 +6,7 @@
 
 #include "SpriteBatch.h"
 #include "TextureRegion.h"
+#include "../Data/PropertyContainer.h"
 
 namespace metalwalrus
 {
@@ -15,10 +16,13 @@ namespace metalwalrus
 		TextureRegion texRegion;
 		unsigned spriteWidth = 0;
 		unsigned spriteHeight = 0;
-		picojson::value spriteProperties;
+		unsigned numSprites = 0;
 
 		void scrollTexRegionToTile(int tileIndex);
+		void calculateNumSprites();
 	public:
+		PropertyContainer properties;
+
 		SpriteSheet(Texture2D *tex, unsigned spriteWidth, unsigned spriteHeight);
 		SpriteSheet(Texture2D *tex, unsigned spriteWidth, unsigned spriteHeight,
 			picojson::value spriteProperties);
@@ -28,17 +32,11 @@ namespace metalwalrus
 
 		inline unsigned get_spriteWidth() const { return spriteWidth; }
 		inline unsigned get_spriteHeight() const { return spriteHeight; }
+		inline unsigned get_numSprites() const { return numSprites; }
 
 		TextureRegion *get_sprite(int index);
 
 		void drawTile(SpriteBatch& batch, int x, int y, int tileIndex);
-
-		template <typename T>
-		T getSpriteProperty(std::string& name, std::string& tileIndex)
-		{
-			return spriteProperties.get(tileIndex).get(name).get<T>();
-			
-		}
 	};
 }
 
