@@ -7,11 +7,17 @@
 namespace metalwalrus
 {
 	class PlayerSpawn : public WorldObject
-	{
+	{	
 		bool facingLeft;
 	public:
-		PlayerSpawn(Vector2 position, picojson::value properties)
-			: WorldObject(position, "player_spawn")
+		static const std::string staticClassname;
+
+		PlayerSpawn(Vector2 position, picojson::value properties);
+		~PlayerSpawn() { }
+
+		void start() override;
+		void update(double delta) override;
+		void draw(SpriteBatch& batch) override;
 	};
 }
 

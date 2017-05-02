@@ -29,6 +29,8 @@
     <ClCompile Include="Src\game\Entities\Player\PlayerBullet.cpp" />
     <ClCompile Include="Src\game\Entities\Player\RunState.cpp" />
     <ClCompile Include="Src\game\Entities\Player\ShootState.cpp" />
+    <ClCompile Include="Src\game\Entities\World\PlayerSpawn.cpp" />
+    <ClCompile Include="Src\game\Entities\World\WorldObjectFactory.cpp" />
     <ClCompile Include="src\game\MetalWalrus.cpp" />
     <ClCompile Include="src\Framework\Physics\BroadPhase.cpp" />
     <ClCompile Include="src\Framework\Game\GameObject.cpp" />

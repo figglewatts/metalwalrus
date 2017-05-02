@@ -74,17 +74,18 @@ namespace metalwalrus
 					unsigned y = (height - 1) - (i / width);
 					unsigned tileID = tile->get<double>();
 
+					Vector2 tilePos = Vector2(x * tileWidth, y * tileHeight);
+
 					bool solid = false;
 					if (!layerObject->properties.getProperty<bool>("objectLayer"))
 					{
 						solid = tileID == 0 ? false 
-							: tm->get_sheetFromTileID(tileID - 1)
-								.properties.getProperty<bool>("solid", tileID - 1);
+							: tm->get_sheetFromTileID(tileID - 1).properties
+								.getProperty<bool>("solid", tileID - 1);
 					}
 
-
 					layerObject->get(x, y) = 
-						Tile(tileID, Vector2(x * tileWidth, y * tileWidth),
+						Tile(tileID, tilePos,
 							solid, tileWidth, tileHeight, tm);
 					
 					i++;

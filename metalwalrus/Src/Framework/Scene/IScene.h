@@ -25,6 +25,7 @@ namespace metalwalrus
 		void registerObject(GameObject *obj);
 		void destroyObject(GameObject *obj);
 		void destroyAllObjects();
+		GameObject *getWithID(int id);
 	};
 }
 

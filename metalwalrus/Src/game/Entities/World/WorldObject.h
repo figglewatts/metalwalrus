@@ -25,7 +25,7 @@ namespace metalwalrus
 		inline const picojson::value& get_properties() const { return properties; }
 	};
 
-	WorldObject::~WorldObject() { }
+	inline WorldObject::~WorldObject() { }
 }
 
 #endif // WORLDOBJECT_H

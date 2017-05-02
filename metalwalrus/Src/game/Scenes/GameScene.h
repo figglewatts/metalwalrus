@@ -12,17 +12,19 @@ namespace metalwalrus
 {
 	class GameScene : public IScene
 	{
-		TileMap *tileMap;
 		Camera *camera;
 		SpriteBatch *batch;
 
-		Player *player;
+		void loadMapObjects();
 	public:
 		~GameScene();
 
 		void start() override;
 		void update(double delta) override;
 		void draw() override;
+
+		static TileMap *loadedMap;
+		static int playerID;
 	};
 }
 

@@ -83,7 +83,8 @@ namespace metalwalrus
 
 		debugBatch = new SpriteBatch();
 
-		SceneManager::addScene(new GameScene());
+		GameScene *gameScene = new GameScene();
+		SceneManager::addScene(gameScene);
 	}
 
 	void MetalWalrus::update(double delta)

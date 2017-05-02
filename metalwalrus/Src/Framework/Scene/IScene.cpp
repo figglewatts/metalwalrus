@@ -10,6 +10,7 @@ namespace metalwalrus
 	{
 		objects.push_back(obj);
 		obj->set_parentScene(this);
+		obj->start();
 	}
 
 	void IScene::destroyObject(GameObject* obj)
@@ -23,5 +24,15 @@ namespace metalwalrus
 		for (auto o : objects)
 			delete o;
 		objects.clear();
+	}
+
+	GameObject *IScene::getWithID(int id)
+	{
+		for (int i = 0; i < objects.size(); i++)
+		{
+			if (objects[i]->get_ID() == id)
+				return objects[i];
+		}
+		return nullptr;
 	}
 }

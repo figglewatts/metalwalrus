@@ -31,6 +31,11 @@ namespace metalwalrus
 		{
 			return properties.get(std::to_string(tileID)).get(name).get<T>();
 		}
+
+		picojson::value getTileProperties(unsigned tileID)
+		{
+			return properties.get(std::to_string(tileID));
+		}
 	};
 }
 
