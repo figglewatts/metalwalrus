@@ -74,6 +74,7 @@
     <ClInclude Include="Src\game\Entities\Player\States.h" />
     <ClInclude Include="Src\game\Entities\World\PlayerSpawn.h" />
     <ClInclude Include="Src\game\Entities\World\WorldObject.h" />
+    <ClInclude Include="Src\game\Entities\World\WorldObjectFactory.h" />
     <ClInclude Include="src\game\MetalWalrus.h" />
     <ClInclude Include="src\Framework\Scene\IScene.h" />
     <ClInclude Include="src\Framework\Physics\BroadPhase.h" />

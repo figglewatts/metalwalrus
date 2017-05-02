@@ -15,14 +15,17 @@ namespace metalwalrus
 		picojson::value properties;
 
 	public:
-		WorldObject(Vector2 position, unsigned width, unsigned height, 
+		WorldObject(Vector2 position, 
 			const std::string& classname, const picojson::value& properties)
-			: GameObject(position, width, height)
+			: GameObject(position, 0, 0)
 			, classname(classname), properties(properties) { }
+		virtual ~WorldObject() = 0;
 
 		inline const std::string& get_classname() const { return classname; }
 		inline const picojson::value& get_properties() const { return properties; }
 	};
+
+	WorldObject::~WorldObject() { }
 }
 
 #endif // WORLDOBJECT_H

@@ -19,7 +19,7 @@ namespace metalwalrus
 	const float Player::terminalVelocity = -4;
 
 	const int Player::framesBetweenShots = 20;
-	const int Player::framesBetweenShotAnimation = 60;
+	const int Player::framesBetweenShotAnimation = 40;
 
 	bool Player::doCollision(AABB boundingBox, AABB& tbb)
 	{
@@ -99,8 +99,6 @@ namespace metalwalrus
 			playerInfo.moving = false;
 		}
 
-		
-
 		// jumping
 		if (playerInfo.canJump)
 		{
@@ -129,7 +127,6 @@ namespace metalwalrus
 		{
 			playerInfo.jumping = false;
 		}
-		
 	}
 
 	Player::~Player()

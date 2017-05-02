@@ -8,7 +8,10 @@ namespace metalwalrus
 {
 	class PlayerSpawn : public WorldObject
 	{
-		
+		bool facingLeft;
+	public:
+		PlayerSpawn(Vector2 position, picojson::value properties)
+			: WorldObject(position, "player_spawn")
 	};
 }
 

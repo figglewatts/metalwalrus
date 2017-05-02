@@ -1,0 +1,5 @@
+#ifndef WORLDOBJECTFACTORY_H
+#define WORLDOBJECTFACTORY_H
+#pragma once
+
+#endif // WORLDOBJECTFACTORY_H

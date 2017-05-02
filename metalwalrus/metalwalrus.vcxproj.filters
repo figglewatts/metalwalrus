@@ -266,5 +266,8 @@
     <ClInclude Include="Src\game\Entities\World\WorldObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Src\game\Entities\World\WorldObjectFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
