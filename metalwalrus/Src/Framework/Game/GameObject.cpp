@@ -10,11 +10,12 @@ namespace metalwalrus
 		numGameObjects++;
 	}
 
-	GameObject::GameObject(Vector2 position, float width, float height)
+	GameObject::GameObject(Vector2 position, float width, float height, std::string tag)
 	{
 		this->position = position;
 		this->width = width;
 		this->height = height;
+		this->tag = tag;
 		this->generateID();
 	}
 
@@ -23,6 +24,8 @@ namespace metalwalrus
 		this->position = other.position;
 		this->width = other.width;
 		this->height = other.height;
+		this->parentScene = other.parentScene;
+		this->tag = other.tag;
 		this->generateID();
 	}
 
@@ -33,6 +36,8 @@ namespace metalwalrus
 			this->position = other.position;
 			this->width = other.width;
 			this->height = other.height;
+			this->parentScene = other.parentScene;
+			this->tag = other.tag;
 			this->generateID();
 		}
 		return *this;

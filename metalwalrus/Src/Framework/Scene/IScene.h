@@ -26,6 +26,7 @@ namespace metalwalrus
 		void destroyObject(GameObject *obj);
 		void destroyAllObjects();
 		GameObject *getWithID(int id);
+		std::vector<GameObject*> getWithTag(const std::string& tag);
 	};
 }
 

@@ -4,12 +4,20 @@
 #include "../../Framework/Input/InputHandler.h"
 #include "../Entities/World/WorldObjectFactory.h"
 
+#include "../Entities/Enemy/FloaterEnemy.h"
+
 namespace metalwalrus
 {
 	TileMap *GameScene::loadedMap = nullptr;
 	int GameScene::playerID = -1;
+	vector<GameObject*> *GameScene::enemies;
 
 	GameObject *player = nullptr;
+
+	FloaterEnemy *e;
+	Texture2D *eTex;
+	SpriteSheet *eSheet;
+	AnimatedSprite *eSprite;
 	
 	void GameScene::loadMapObjects()
 	{
@@ -41,6 +49,12 @@ namespace metalwalrus
 		delete loadedMap;
 		delete camera;
 		delete batch;
+
+		delete eTex;
+		delete eSheet;
+		delete eSprite;
+
+		delete enemies;
 	}
 
 	void GameScene::start()
@@ -51,15 +65,28 @@ namespace metalwalrus
 		// create camera
 		camera = new Camera();
 
+		enemies = new std::vector<GameObject*>();
+
 		loadedMap = utilities::JSONUtil::tiled_tilemap("assets/data/level/level1.json", camera);
 
 		loadMapObjects();
 
 		player = this->getWithID(playerID);
+
+		eTex = Texture2D::create("assets/sprite/smallEnemies.png");
+		eSheet = new SpriteSheet(eTex, 16, 16);
+		eSprite = new AnimatedSprite(eSheet);
+		FrameAnimation eAnim = FrameAnimation(6, 0, 0.2F);
+		eSprite->addAnimation("main", eAnim);
+		eSprite->play("main");
+		e = new FloaterEnemy(Vector2(100, 100), eSprite);
+		this->registerObject(e);
 	}
 
 	void GameScene::update(double delta)
 	{
+		*enemies = this->getWithTag("enemy");
+
 		for (int i = 0; i < objects.size(); i++)
 			objects[i]->update(delta);
 

@@ -32,6 +32,8 @@ namespace metalwalrus
 			DAMAGED
 		};
 
+		int health;
+
 		PlayerState currentState = PlayerState::IDLE;
 
 		TileMap *currentTilemap; // used for collision
@@ -73,6 +75,8 @@ namespace metalwalrus
 		void update(double delta) override;
 		void draw(SpriteBatch& batch) override;
 
+		void takeDamage(int damageAmount);
+
 		// methods used in modifying player state
 		PlayerInfo& get_playerInfo() { return this->playerInfo; }
 		AnimatedSprite* const get_animatedSprite() { return this->walrusSprite; }
@@ -93,6 +97,8 @@ namespace metalwalrus
 
 		const static int framesBetweenShots;
 		const static int framesBetweenShotAnimation;
+
+		const static int maxHealth;
 		// ----- END SETTINGS -----
 	};
 }

@@ -9,8 +9,8 @@ namespace metalwalrus
 	}
 
 	SolidObject::SolidObject(Vector2 position, float width, float height,
-		Vector2 offset)
-		: GameObject(position, width, height)
+		Vector2 offset, std::string tag)
+		: GameObject(position, width, height, tag)
 	{
 		this->boundingBoxOffset = offset;
 		this->boundingBox = AABB(position + offset, 

@@ -14,6 +14,7 @@ namespace metalwalrus
 	{
 		Camera *camera;
 		SpriteBatch *batch;
+		
 
 		void loadMapObjects();
 	public:
@@ -25,6 +26,7 @@ namespace metalwalrus
 
 		static TileMap *loadedMap;
 		static int playerID;
+		static std::vector<GameObject*> *enemies;
 	};
 }
 

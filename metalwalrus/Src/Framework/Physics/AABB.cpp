@@ -67,19 +67,19 @@ namespace metalwalrus
 		return *this;
 	}
 
-	bool AABB::intersects(AABB & other)
+	bool AABB::intersects(AABB other)
 	{
 		bool xOverlap = (this->min.x < other.max.x) && (this->max.x > other.min.x);
 		bool yOverlap = (this->max.y < other.min.y) && (this->min.y > other.max.y);
 		return xOverlap && yOverlap;
 	}
 
-	float AABB::getXDepth(AABB & other)
+	float AABB::getXDepth(AABB other)
 	{
 		return fabsf(this->min.x - other.min.x);
 	}
 
-	float AABB::getYDepth(AABB & other)
+	float AABB::getYDepth(AABB other)
 	{
 		return fabsf(this->min.y - other.min.y);
 	}

@@ -23,6 +23,7 @@
     <ClCompile Include="Src\Framework\Scene\IScene.cpp" />
     <ClCompile Include="Src\Framework\Scene\SceneManager.cpp" />
     <ClCompile Include="src\Framework\Util\JSONUtil.cpp" />
+    <ClCompile Include="Src\game\Entities\Enemy\FloaterEnemy.cpp" />
     <ClCompile Include="Src\game\Entities\Player\IdleState.cpp" />
     <ClCompile Include="Src\game\Entities\Player\InAirState.cpp" />
     <ClCompile Include="src\game\Entities\Player\Player.cpp" />
@@ -71,6 +72,8 @@
     <ClInclude Include="Src\Framework\State\PushDownState.h" />
     <ClInclude Include="src\Framework\State\PushDownStateMachine.h" />
     <ClInclude Include="src\Framework\Util\JSONUtil.h" />
+    <ClInclude Include="Src\game\Entities\Enemy\Enemy.h" />
+    <ClInclude Include="Src\game\Entities\Enemy\FloaterEnemy.h" />
     <ClInclude Include="src\game\Entities\Player\Player.h" />
     <ClInclude Include="Src\game\Entities\Player\PlayerBullet.h" />
     <ClInclude Include="Src\game\Entities\Player\States.h" />

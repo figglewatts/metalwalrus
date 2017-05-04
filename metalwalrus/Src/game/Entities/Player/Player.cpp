@@ -21,6 +21,8 @@ namespace metalwalrus
 	const int Player::framesBetweenShots = 20;
 	const int Player::framesBetweenShotAnimation = 40;
 
+	const int Player::maxHealth = 20;
+
 	bool Player::doCollision(AABB boundingBox, AABB& tbb)
 	{
 		int leftTile = boundingBox.get_left()
@@ -223,6 +225,16 @@ namespace metalwalrus
 		walrusKeyframe->set_flipX(playerInfo.facingLeft);
 		
 		batch.drawreg(*walrusKeyframe, position.x, position.y);
+	}
+
+	void Player::takeDamage(int damageAmount)
+	{
+		this->health -= damageAmount;
+
+		if (this->health <= 0)
+		{
+			// TODO death
+		}
 	}
 
 	void Player::updateCollisionEnvironment(TileMap *tileMap)

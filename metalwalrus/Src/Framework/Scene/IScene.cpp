@@ -35,4 +35,15 @@ namespace metalwalrus
 		}
 		return nullptr;
 	}
+
+	std::vector<GameObject*> IScene::getWithTag(const std::string & tag)
+	{
+		std::vector<GameObject*> returnVal;
+		for (int i = 0; i < objects.size(); i++)
+		{
+			if (objects[i]->get_tag() == tag)
+				returnVal.push_back(objects[i]);
+		}
+		return returnVal;
+	}
 }
