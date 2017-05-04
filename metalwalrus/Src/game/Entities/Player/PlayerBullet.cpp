@@ -5,7 +5,7 @@
 namespace metalwalrus
 {
 	PlayerBullet::PlayerBullet(Vector2 pos, bool facingLeft, Texture2D *bulletTex)
-		: SolidObject(pos, 8, 6, Vector2(4, 5)), facingLeft(facingLeft), bulletTex(bulletTex), timer(0) { }
+		: SolidObject(pos, 8, 6, Vector2::ZERO), facingLeft(facingLeft), bulletTex(bulletTex), timer(0) { }
 
 	void PlayerBullet::start()
 	{}
@@ -14,16 +14,24 @@ namespace metalwalrus
 	{
 		timer += delta;
 		if (timer > lifeTime)
+		{
 			this->parentScene->destroyObject(this);
+			return;
+		}
+
+		Vector2 moveVec = Vector2((facingLeft ? -1 : 1) * bulletSpeed, 0);
 		
-		this->position.x += (facingLeft ? -1 : 1) * bulletSpeed;
+		this->moveBy(moveVec);
 
 		for (auto o : *GameScene::enemies)
 		{
 			Enemy *e = (Enemy*)o;
+			AABB ebb = e->get_boundingBox();
 			if (this->boundingBox.intersects(e->get_boundingBox()))
 			{
-				e->die();
+				e->takeDamage(Player::shotDamage);
+				this->parentScene->destroyObject(this);
+				return;
 			}
 		}
 	}

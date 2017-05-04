@@ -24,6 +24,7 @@ namespace metalwalrus
 		virtual void start() override { };
 		virtual void update(double delta) override { };
 		virtual void draw(SpriteBatch& batch) override { };
+		virtual void drawDebug() override;
 
 		virtual void moveBy(Vector2 v) override;
 		virtual void moveTo(Vector2 v) override;

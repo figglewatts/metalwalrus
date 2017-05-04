@@ -69,9 +69,11 @@ namespace metalwalrus
 
 	bool AABB::intersects(AABB other)
 	{
-		bool xOverlap = (this->min.x < other.max.x) && (this->max.x > other.min.x);
-		bool yOverlap = (this->max.y < other.min.y) && (this->min.y > other.max.y);
-		return xOverlap && yOverlap;
+		if (this->max.x < other.min.x) return false; // we're left of it
+		if (this->min.x > other.max.x) return false; // right of it
+		if (this->max.y < other.min.y) return false; // under it
+		if (this->min.y > other.max.y) return false; // on top of it
+		return true;
 	}
 
 	float AABB::getXDepth(AABB other)

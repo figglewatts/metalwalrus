@@ -2,6 +2,8 @@
 
 #include "../../Scenes/GameScene.h"
 
+#include <GLFW/glfw3.h>
+
 namespace metalwalrus
 {
 	void FloaterEnemy::start()
@@ -12,7 +14,7 @@ namespace metalwalrus
 	void FloaterEnemy::update(double delta)
 	{
 		GameObject *player = this->parentScene->getWithID(GameScene::playerID);
-		Vector2 toPlayer = (this->position - player->get_center());
+		Vector2 toPlayer = (player->get_center() - this->position);
 		float distance = toPlayer.dist();
 
 		if (distance > 200)
@@ -21,10 +23,12 @@ namespace metalwalrus
 		if (distance > 8)
 		{
 			toPlayer = toPlayer.normalize() * this->speed;
-			this->position -= toPlayer;
+			this->moveBy(toPlayer);
 		}
 
 		this->sprite->update(delta);
+
+		
 	}
 
 	void FloaterEnemy::draw(SpriteBatch& batch)

@@ -42,6 +42,23 @@ namespace metalwalrus
 		recomputeBoundingBox();
 	}
 
+	void SolidObject::drawDebug()
+	{
+		glLineWidth(2);
+		glColor3f(1, 0, 1);
+		glBegin(GL_LINES);
+		glVertex2f(this->boundingBox.get_min().x, this->boundingBox.get_min().y);
+		glVertex2f(this->boundingBox.get_max().x, this->boundingBox.get_min().y);
+		glVertex2f(this->boundingBox.get_max().x, this->boundingBox.get_min().y);
+		glVertex2f(this->boundingBox.get_max().x, this->boundingBox.get_max().y);
+		glVertex2f(this->boundingBox.get_max().x, this->boundingBox.get_max().y);
+		glVertex2f(this->boundingBox.get_min().x, this->boundingBox.get_max().y);
+		glVertex2f(this->boundingBox.get_min().x, this->boundingBox.get_max().y);
+		glVertex2f(this->boundingBox.get_min().x, this->boundingBox.get_min().y);
+		glEnd();
+		glColor3f(1, 1, 1);
+	}
+
 	void SolidObject::moveBy(Vector2 v)
 	{
 		GameObject::moveBy(v);

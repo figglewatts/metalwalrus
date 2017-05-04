@@ -5,6 +5,7 @@
 #include "../Entities/World/WorldObjectFactory.h"
 
 #include "../Entities/Enemy/FloaterEnemy.h"
+#include "../../Framework/Util/Debug.h"
 
 namespace metalwalrus
 {
@@ -81,6 +82,8 @@ namespace metalwalrus
 		eSprite->play("main");
 		e = new FloaterEnemy(Vector2(100, 100), eSprite);
 		this->registerObject(e);
+		this->registerObject(new FloaterEnemy(Vector2(200, 200), eSprite));
+		this->registerObject(new FloaterEnemy(Vector2(300, 300), eSprite));
 	}
 
 	void GameScene::update(double delta)
@@ -108,6 +111,14 @@ namespace metalwalrus
 		for (int i = 0; i < objects.size(); i++)
 			objects[i]->draw(*batch);
 
+		if (Debug::debugMode)
+		{
+			for (int i = 0; i < objects.size(); i++)
+				objects[i]->drawDebug();
+		}
+
 		batch->end();
+
+		
 	}
 }

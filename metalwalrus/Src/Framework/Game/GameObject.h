@@ -32,6 +32,7 @@ namespace metalwalrus
 		virtual void start() { };
 		virtual void update(double delta) { };
 		virtual void draw(SpriteBatch& batch) { };
+		virtual void drawDebug() { };
 
 		inline virtual Vector2 get_position() final { return position; }
 		inline virtual int get_ID() final { return id; }

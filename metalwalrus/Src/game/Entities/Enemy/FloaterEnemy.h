@@ -17,7 +17,7 @@ namespace metalwalrus
 
 	public:
 		FloaterEnemy(Vector2 pos, AnimatedSprite *sprite)
-			: Enemy(pos, 10, 10, Vector2(3, 3), 1, 2), speed(0.4F), sprite(sprite) { }
+			: Enemy(pos, 16, 16, Vector2::ZERO, 1, 2), speed(0.4F), sprite(sprite) { }
 
 		void start() override;
 		void update(double delta) override;

@@ -99,6 +99,7 @@ namespace metalwalrus
 		const static int framesBetweenShotAnimation;
 
 		const static int maxHealth;
+		const static int shotDamage = 1;
 		// ----- END SETTINGS -----
 	};
 }
