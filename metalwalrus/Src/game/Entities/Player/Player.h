@@ -20,6 +20,10 @@ namespace metalwalrus
 		bool canShoot;
 		bool canMove;
 		bool touchedGroundLastFrame;
+		bool damaged;
+		bool damagedFromLeft;
+		bool canTakeDamage;
+		bool alive;
 	};
 	
 	class Player : public SolidObject
@@ -50,6 +54,7 @@ namespace metalwalrus
 		FrameAnimation idleShoot;
 		FrameAnimation runShoot;
 		FrameAnimation jumpShoot;
+		FrameAnimation damaged;
 
 		Vector2 oldPosition;
 
@@ -62,6 +67,7 @@ namespace metalwalrus
 		// FRAME TIMERS
 		int jumpFrameTimer;
 		int shootFrameTimer;
+		int damageImmunityFrameTimer;
 
 		bool doCollision(AABB boundingBox, AABB& tbb);
 		void shoot();
@@ -75,7 +81,7 @@ namespace metalwalrus
 		void update(double delta) override;
 		void draw(SpriteBatch& batch) override;
 
-		void takeDamage(int damageAmount);
+		void takeDamage(int damageAmount, GameObject* damager);
 
 		// methods used in modifying player state
 		PlayerInfo& get_playerInfo() { return this->playerInfo; }
@@ -99,7 +105,11 @@ namespace metalwalrus
 		const static int framesBetweenShotAnimation;
 
 		const static int maxHealth;
-		const static int shotDamage = 1;
+		const static int shotDamage;
+
+		const static int damageAnimationFrames;
+		const static float damageVelocity;
+		const static int damageImmunityFrames;
 		// ----- END SETTINGS -----
 	};
 }

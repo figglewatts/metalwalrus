@@ -90,6 +90,9 @@ namespace metalwalrus
 	{
 		*enemies = this->getWithTag("enemy");
 
+		for (GameObject* e : *enemies)
+			((Enemy*)e)->damagePlayer();
+
 		for (int i = 0; i < objects.size(); i++)
 			objects[i]->update(delta);
 

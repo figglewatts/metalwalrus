@@ -15,6 +15,12 @@ namespace metalwalrus
 
 	void RunState::update(double delta, Player& p)
 	{
+		if (p.get_playerInfo().damaged)
+		{
+			machine->push(new DamagedState("damaged", machine), p);
+			return;
+		}
+		
 		if (p.get_playerInfo().shooting)
 		{
 			machine->push(new ShootState("shoot", machine), p);

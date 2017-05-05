@@ -21,7 +21,12 @@ namespace metalwalrus
 	const int Player::framesBetweenShots = 20;
 	const int Player::framesBetweenShotAnimation = 40;
 
-	const int Player::maxHealth = 20;
+	const int Player::maxHealth = 100;
+	const int Player::shotDamage = 1;
+
+	const int Player::damageAnimationFrames = 20;
+	const float Player::damageVelocity = 1;
+	const int Player::damageImmunityFrames = 30;
 
 	bool Player::doCollision(AABB boundingBox, AABB& tbb)
 	{
@@ -149,12 +154,14 @@ namespace metalwalrus
 		idleShoot = FrameAnimation(0, 8, 0, "idle");
 		runShoot = FrameAnimation(4, 9, 0.2, "run");
 		jumpShoot = FrameAnimation(0, 13, 0, "jump");
+		damaged = FrameAnimation(0, 6, 0);
 		walrusSprite->addAnimation("idle", idle);
 		walrusSprite->addAnimation("run", run);
 		walrusSprite->addAnimation("jump", jump);
 		walrusSprite->addAnimation("idleShoot", idleShoot);
 		walrusSprite->addAnimation("runShoot", runShoot);
 		walrusSprite->addAnimation("jumpShoot", jumpShoot);
+		walrusSprite->addAnimation("damaged", damaged);
 		walrusSprite->play("idle");
 
 		playerInfo.canJump = false;
@@ -166,6 +173,12 @@ namespace metalwalrus
 		playerInfo.onGround = false;
 		playerInfo.shooting = false;
 		playerInfo.touchedGroundLastFrame = false;
+		playerInfo.damaged = false;
+		playerInfo.damagedFromLeft = false;
+		playerInfo.canTakeDamage = true;
+		playerInfo.alive = true;
+
+		this->health = this->maxHealth;
 
 		playerStateMachine.push(new IdleState("idle", &playerStateMachine), *this);
 
@@ -174,6 +187,17 @@ namespace metalwalrus
 
 	void Player::update(double delta)
 	{
+		if (!playerInfo.alive) return;
+		
+		if (damageImmunityFrameTimer <= 0)
+		{
+			playerInfo.canTakeDamage = true;
+		}
+		else
+		{
+			damageImmunityFrameTimer--;
+		}
+		
 		handleInput();
 
 		velocity.y -= gravity;
@@ -227,13 +251,24 @@ namespace metalwalrus
 		batch.drawreg(*walrusKeyframe, position.x, position.y);
 	}
 
-	void Player::takeDamage(int damageAmount)
+	void Player::takeDamage(int damageAmount, GameObject* damager)
 	{
+		if (!playerInfo.canTakeDamage || !playerInfo.alive)
+			return;
+
+		playerInfo.damaged = true;
+		playerInfo.canTakeDamage = false;
+
+		damageImmunityFrameTimer = Player::damageAnimationFrames + Player::damageImmunityFrames;
+
+		Vector2 toPlayer = damager->get_position() - this->position;
+		playerInfo.damagedFromLeft = toPlayer.dot(Vector2::RIGHT) < 0;
+		
 		this->health -= damageAmount;
 
 		if (this->health <= 0)
 		{
-			// TODO death
+			playerInfo.alive = false;
 		}
 	}
 

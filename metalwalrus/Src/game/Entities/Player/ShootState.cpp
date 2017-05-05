@@ -46,6 +46,12 @@ namespace metalwalrus
 			p.get_animatedSprite()->play("jumpShoot");
 			p.get_playerInfo().canJump = false;
 		}
+
+		if (p.get_playerInfo().damaged)
+		{
+			machine->push(new DamagedState("damaged", machine), p);
+			return;
+		}
 		
 		if (!p.get_playerInfo().shooting)
 		{

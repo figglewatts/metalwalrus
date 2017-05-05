@@ -138,6 +138,9 @@
     <ClCompile Include="Src\game\Entities\Enemy\FloaterEnemy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Src\game\Entities\Player\DamagedState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Framework\Game.h">
