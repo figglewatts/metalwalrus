@@ -19,7 +19,7 @@ namespace metalwalrus
 		healthTex = Texture2D::create("assets/sprite/health.png");
 		healthSheet = new SpriteSheet(healthTex, 16, 16);
 		healthBigSprite = new AnimatedSprite(healthSheet);
-		healthBigSprite->addAnimation("main", FrameAnimation(2, 0, 0.4));
+		healthBigSprite->addAnimation("main", FrameAnimation(2, 0, 0.3));
 		healthBigSprite->play("main");
 		healthSmallSprite = new TextureRegion(healthTex, 32, 0, 8, 8);
 

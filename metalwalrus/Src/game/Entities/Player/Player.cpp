@@ -58,7 +58,7 @@ namespace metalwalrus
 			{
 				playerInfo.climbing = true;
 				playerInfo.canJump = false;
-				this->moveTo(Vector2(l->get_position().x - 8, this->position.y));
+				this->moveTo(Vector2(l->get_position().x - 9, this->position.y));
 				this->velocity.x = 0;
 			}
 		}

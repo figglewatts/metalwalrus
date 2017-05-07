@@ -47,6 +47,8 @@ namespace metalwalrus
 	{
 		p.get_playerInfo().climbing = false;
 		p.get_playerInfo().canJump = false;
-		//p.get_animatedSprite()->play("climbingFinish");
+
+		// move the player a little on the x axis to stop them falling down again
+		p.moveBy(Vector2(p.get_playerInfo().facingLeft ? -3 : 2, 0));
 	}
 }

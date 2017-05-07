@@ -14,7 +14,7 @@ namespace metalwalrus
 		bool isSmall;
 		Vector2 velocity;
 
-		const int smallHealing = 3;
+		const int smallHealing = 2;
 		const int largeHealing = 6;
 
 		Texture2D *healthTex;
