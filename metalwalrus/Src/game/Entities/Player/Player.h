@@ -37,6 +37,7 @@ namespace metalwalrus
 		};
 
 		int health;
+		int score;
 
 		PlayerState currentState = PlayerState::IDLE;
 
@@ -87,6 +88,9 @@ namespace metalwalrus
 		PlayerInfo& get_playerInfo() { return this->playerInfo; }
 		AnimatedSprite* const get_animatedSprite() { return this->walrusSprite; }
 		Vector2& get_velocity() { return this->velocity; }
+		int get_health() const { return this->health; }
+		int get_score() const { return this->score; }
+		void add_score(int score) { this->score += score; }
 
 		void updateCollisionEnvironment(TileMap *tileMap);
 

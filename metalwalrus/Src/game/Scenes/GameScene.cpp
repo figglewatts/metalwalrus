@@ -6,6 +6,10 @@
 
 #include "../Entities/Enemy/FloaterEnemy.h"
 #include "../../Framework/Util/Debug.h"
+#include "../../Framework/Graphics/FontSheet.h"
+
+#include <sstream>
+#include <iomanip>
 
 namespace metalwalrus
 {
@@ -13,12 +17,27 @@ namespace metalwalrus
 	int GameScene::playerID = -1;
 	vector<GameObject*> *GameScene::enemies;
 
-	GameObject *player = nullptr;
+	Player *player = nullptr;
 
 	FloaterEnemy *e;
 	Texture2D *eTex;
 	SpriteSheet *eSheet;
 	AnimatedSprite *eSprite;
+
+	Texture2D *healthBarTex;
+	Texture2D *healthBarEmptyTex;
+	Vector2 healthBarPos = Vector2(24, 159);
+
+	Texture2D *fontTexture;
+	FontSheet *font;
+	Vector2 scorePos = Vector2(102, 216);
+
+	std::string zeroPadNumber(int num, int width)
+	{
+		std::stringstream ss;
+		ss << std::setw(width) << std::setfill('0') << num;
+		return ss.str();
+	}
 	
 	void GameScene::loadMapObjects()
 	{
@@ -56,6 +75,12 @@ namespace metalwalrus
 		delete eSprite;
 
 		delete enemies;
+
+		delete healthBarTex;
+		delete healthBarEmptyTex;
+
+		delete fontTexture;
+		delete font;
 	}
 
 	void GameScene::start()
@@ -72,7 +97,13 @@ namespace metalwalrus
 
 		loadMapObjects();
 
-		player = this->getWithID(playerID);
+		healthBarTex = Texture2D::create("assets/sprite/healthbar.png");
+		healthBarEmptyTex = Texture2D::create("assets/sprite/healthbar-empty.png");
+
+		fontTexture = Texture2D::create("assets/font.png");
+		font = new FontSheet(fontTexture, 8, 8, 0, 0);
+
+		player = (Player*)this->getWithID(playerID);
 
 		eTex = Texture2D::create("assets/sprite/smallEnemies.png");
 		eSheet = new SpriteSheet(eTex, 16, 16);
@@ -119,6 +150,23 @@ namespace metalwalrus
 			for (int i = 0; i < objects.size(); i++)
 				objects[i]->drawDebug();
 		}
+
+		// set to screen coords
+		batch->setTransformMat(Matrix3::IDENTITY);
+
+		batch->drawtex(*healthBarEmptyTex, healthBarPos.x, healthBarPos.y);
+
+		for (int i = 0; i < player->get_health(); i++)
+		{
+			batch->drawtex(*healthBarTex, healthBarPos.x, 
+				healthBarPos.y + (healthBarTex->get_height() * i));
+		}
+
+		std::string scoreString = zeroPadNumber(player->get_score(), 7);
+		batch->setColor(Color::BLACK);
+		font->drawText(*batch, scoreString, scorePos.x + 1, scorePos.y - 1);
+		batch->setColor(Color::WHITE);
+		font->drawText(*batch, scoreString, scorePos.x, scorePos.y);
 
 		batch->end();
 

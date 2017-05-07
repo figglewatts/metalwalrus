@@ -38,9 +38,4 @@ namespace metalwalrus
 		batch.drawreg(*kf, this->position.x, this->position.y);
 	}
 
-	void FloaterEnemy::die()
-	{
-		this->parentScene->destroyObject(this);
-	}
-
 }

@@ -84,6 +84,7 @@ namespace metalwalrus
 		
 		glLoadIdentity();
 		glLoadMatrixf(transformMat.glMatrix().data());
+		glColor3f(currentColor.get_r(), currentColor.get_b(), currentColor.get_b());
 
 		batchMesh->draw(spritesInBatch);
 		
@@ -132,6 +133,7 @@ namespace metalwalrus
 		glDisable(GL_DEPTH_TEST);
 		glDisable(GL_BLEND);
 		glPopMatrix();
+		glColor3f(1, 1, 1);
 		
 		drawing = false;
 	}
@@ -283,5 +285,12 @@ namespace metalwalrus
 		if (index > 0)
 			flush();
 		this->transformMat = m;
+	}
+
+	void SpriteBatch::setColor(Color c)
+	{
+		if (index > 0)
+			flush();
+		this->currentColor = c;
 	}
 }

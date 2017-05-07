@@ -21,7 +21,7 @@ namespace metalwalrus
 	const int Player::framesBetweenShots = 20;
 	const int Player::framesBetweenShotAnimation = 40;
 
-	const int Player::maxHealth = 100;
+	const int Player::maxHealth = 28;
 	const int Player::shotDamage = 1;
 
 	const int Player::damageAnimationFrames = 20;
@@ -179,6 +179,7 @@ namespace metalwalrus
 		playerInfo.alive = true;
 
 		this->health = this->maxHealth;
+		this->score = 0;
 
 		playerStateMachine.push(new IdleState("idle", &playerStateMachine), *this);
 

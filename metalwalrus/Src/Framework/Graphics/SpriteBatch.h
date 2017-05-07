@@ -31,6 +31,7 @@ namespace metalwalrus
 		Texture2D *lastTexture = nullptr;
 		float invTexWidth = 0;
 		float invTexHeight = 0;
+		Color currentColor = Color::WHITE;
 	
 		void flush();
 		void switchTexture(Texture2D *tex);
@@ -74,6 +75,7 @@ namespace metalwalrus
 			float scaleX = 1, float scaleY = 1, float rotation = 0);
 
 		void setTransformMat(Matrix3 m);
+		void setColor(Color c);
     };
 }
 #endif /* SPRITEBATCH_H */
