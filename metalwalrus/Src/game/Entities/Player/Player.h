@@ -6,6 +6,7 @@
 #include "../../../Framework/Graphics/TileMap.h"
 #include "../../../Framework/Animation/AnimatedSprite.h"
 #include "../../../Framework/State/PushDownStateMachine.h"
+#include "../World/Ladder.h"
 
 namespace metalwalrus
 {
@@ -24,6 +25,8 @@ namespace metalwalrus
 		bool damagedFromLeft;
 		bool canTakeDamage;
 		bool alive;
+		bool climbing;
+		bool canClimb;
 	};
 	
 	class Player : public SolidObject
@@ -56,6 +59,9 @@ namespace metalwalrus
 		FrameAnimation runShoot;
 		FrameAnimation jumpShoot;
 		FrameAnimation damaged;
+		FrameAnimation climbing;
+		FrameAnimation climbingShoot;
+		FrameAnimation climbingFinish;
 
 		Vector2 oldPosition;
 
@@ -73,6 +79,7 @@ namespace metalwalrus
 		bool doCollision(AABB boundingBox, AABB& tbb);
 		void shoot();
 		void handleInput();
+		Ladder *checkCanClimb();
 	public:
 		Player(Vector2 position, float width, float height, Vector2 offset)
 			: SolidObject(position, width, height, offset) { }
@@ -96,6 +103,8 @@ namespace metalwalrus
 
 		// ----- PLAYER SETTINGS -----
 		const static float walkSpeed;
+
+		const static float climbSpeed;
 
 		const static float jumpSpeed;
 		const static int jumpFrames;

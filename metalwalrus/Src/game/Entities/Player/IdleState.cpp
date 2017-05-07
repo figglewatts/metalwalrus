@@ -20,6 +20,12 @@ namespace metalwalrus
 			machine->push(new DamagedState("damaged", machine), p);
 			return;
 		}
+
+		if (p.get_playerInfo().climbing)
+		{
+			machine->transition(new ClimbingState("climbing", machine), p);
+			return;
+		}
 		
 		if (p.get_playerInfo().shooting)
 		{

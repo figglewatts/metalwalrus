@@ -24,6 +24,7 @@
     <ClCompile Include="Src\Framework\Scene\SceneManager.cpp" />
     <ClCompile Include="src\Framework\Util\JSONUtil.cpp" />
     <ClCompile Include="Src\game\Entities\Enemy\FloaterEnemy.cpp" />
+    <ClCompile Include="Src\game\Entities\Player\ClimbingState.cpp" />
     <ClCompile Include="Src\game\Entities\Player\DamagedState.cpp" />
     <ClCompile Include="Src\game\Entities\Player\IdleState.cpp" />
     <ClCompile Include="Src\game\Entities\Player\InAirState.cpp" />
@@ -31,6 +32,7 @@
     <ClCompile Include="Src\game\Entities\Player\PlayerBullet.cpp" />
     <ClCompile Include="Src\game\Entities\Player\RunState.cpp" />
     <ClCompile Include="Src\game\Entities\Player\ShootState.cpp" />
+    <ClCompile Include="Src\game\Entities\World\Ladder.cpp" />
     <ClCompile Include="Src\game\Entities\World\PlayerSpawn.cpp" />
     <ClCompile Include="Src\game\Entities\World\WorldObjectFactory.cpp" />
     <ClCompile Include="src\game\MetalWalrus.cpp" />
@@ -78,6 +80,7 @@
     <ClInclude Include="src\game\Entities\Player\Player.h" />
     <ClInclude Include="Src\game\Entities\Player\PlayerBullet.h" />
     <ClInclude Include="Src\game\Entities\Player\States.h" />
+    <ClInclude Include="Src\game\Entities\World\Ladder.h" />
     <ClInclude Include="Src\game\Entities\World\PlayerSpawn.h" />
     <ClInclude Include="Src\game\Entities\World\WorldObject.h" />
     <ClInclude Include="Src\game\Entities\World\WorldObjectFactory.h" />

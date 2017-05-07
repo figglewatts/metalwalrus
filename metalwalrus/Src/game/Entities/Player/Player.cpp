@@ -5,10 +5,13 @@
 
 #include "States.h"
 #include "PlayerBullet.h"
+#include "../../Scenes/GameScene.h"
 
 namespace metalwalrus
 {
 	const float Player::walkSpeed = 1.5;
+
+	const float Player::climbSpeed = 1;
 
 	const float Player::jumpSpeed = 4;
 	const int Player::jumpFrames = 11;
@@ -61,9 +64,19 @@ namespace metalwalrus
 		return false;
 	}
 
+	Ladder *Player::checkCanClimb()
+	{
+		for (Ladder *l : GameScene::ladders)
+		{
+			if (this->boundingBox.intersects(l->get_boundingBox()))
+				return l;
+		}
+		return nullptr;
+	}
+
 	void Player::shoot()
 	{
-		parentScene->registerObject(new PlayerBullet(position + Vector2(playerInfo.facingLeft ? 0 : 26, 11), 
+		parentScene->registerObject(new PlayerBullet(position + Vector2(playerInfo.facingLeft ? 0 : 26, 13), 
 			playerInfo.facingLeft, bulletTex));
 	}
 
@@ -71,6 +84,51 @@ namespace metalwalrus
 	{
 		if (!playerInfo.canMove) 
 			return;
+
+		// climbing
+		if (Ladder *l = checkCanClimb())
+		{
+			if (InputHandler::checkButton("up", ButtonState::DOWN))
+			{
+				playerInfo.climbing = true;
+				playerInfo.canJump = false;
+				this->moveTo(Vector2(l->get_position().x - 8, this->position.y));
+				this->velocity.x = 0;
+			}
+		}
+		else
+		{
+			playerInfo.climbing = false;
+		}
+
+		if (playerInfo.climbing)
+		{
+			if (InputHandler::checkButton("up", ButtonState::HELD))
+			{
+				velocity.y = climbSpeed;
+				playerInfo.moving = true;
+			}
+			else if (InputHandler::checkButton("down", ButtonState::HELD))
+			{
+				velocity.y = -climbSpeed;
+				playerInfo.moving = true;
+			}
+			else if (InputHandler::checkButton("up", ButtonState::IDLE)
+				&& InputHandler::checkButton("down", ButtonState::IDLE))
+			{
+				velocity.y = 0;
+				playerInfo.moving = false;
+			}
+
+			if (InputHandler::checkButton("left", ButtonState::DOWN))
+			{
+				playerInfo.facingLeft = true;
+			}
+			else if (InputHandler::checkButton("right", ButtonState::DOWN))
+			{
+				playerInfo.facingLeft = false;
+			}
+		}
 
 		// shooting
 		if (playerInfo.canShoot)
@@ -84,6 +142,9 @@ namespace metalwalrus
 			}
 		}
 		
+		if (playerInfo.climbing)
+			return;
+
 		if (InputHandler::checkButton("left", ButtonState::HELD))
 		{
 			velocity.x = -walkSpeed;
@@ -155,6 +216,9 @@ namespace metalwalrus
 		runShoot = FrameAnimation(4, 9, 0.2, "run");
 		jumpShoot = FrameAnimation(0, 13, 0, "jump");
 		damaged = FrameAnimation(0, 6, 0);
+		climbing = FrameAnimation(2, 16, 0.2);
+		climbingShoot = FrameAnimation(0, 18, 0);
+		climbingFinish = FrameAnimation(0, 19, 0);
 		walrusSprite->addAnimation("idle", idle);
 		walrusSprite->addAnimation("run", run);
 		walrusSprite->addAnimation("jump", jump);
@@ -162,6 +226,9 @@ namespace metalwalrus
 		walrusSprite->addAnimation("runShoot", runShoot);
 		walrusSprite->addAnimation("jumpShoot", jumpShoot);
 		walrusSprite->addAnimation("damaged", damaged);
+		walrusSprite->addAnimation("climbing", climbing);
+		walrusSprite->addAnimation("climbingShoot", climbingShoot);
+		walrusSprite->addAnimation("climbingFinish", climbingFinish);
 		walrusSprite->play("idle");
 
 		playerInfo.canJump = false;
@@ -177,6 +244,8 @@ namespace metalwalrus
 		playerInfo.damagedFromLeft = false;
 		playerInfo.canTakeDamage = true;
 		playerInfo.alive = true;
+		playerInfo.climbing = false;
+		playerInfo.canClimb = false;
 
 		this->health = this->maxHealth;
 		this->score = 0;
@@ -201,7 +270,8 @@ namespace metalwalrus
 		
 		handleInput();
 
-		velocity.y -= gravity;
+		if (!playerInfo.climbing)
+			velocity.y -= gravity;
 
 		if (velocity.y < terminalVelocity) velocity.y = terminalVelocity;
 

@@ -60,6 +60,16 @@ namespace metalwalrus
 		void exit(Player& p) override;
 		void update(double delta, Player& p) override;
 	};
+
+	class ClimbingState : public PushDownState<Player>
+	{
+	public:
+		ClimbingState(std::string name, PushDownStateMachine<Player> *machine)
+			: PushDownState(name, machine) { }
+		void enter(Player& p) override;
+		void exit(Player& p) override;
+		void update(double delta, Player& p) override;
+	};
 }
 
 #endif // PLAYER_STATES

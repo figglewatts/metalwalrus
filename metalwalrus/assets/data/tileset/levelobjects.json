@@ -13,6 +13,10 @@
         {
          "classname":"player_spawn",
          "facingLeft":false
+        },
+     "1":
+        {
+         "classname":"ladder"
         }
     },
  "tilepropertytypes":
@@ -21,6 +25,10 @@
         {
          "classname":"string",
          "facingLeft":"bool"
+        },
+     "1":
+        {
+         "classname":"string"
         }
     },
  "tilewidth":16

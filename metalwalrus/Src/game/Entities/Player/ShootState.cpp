@@ -17,6 +17,10 @@ namespace metalwalrus
 		{
 			p.get_animatedSprite()->play("jumpShoot");
 		}
+		else if (machine->peekBelow()->get_name() == "climbing")
+		{
+			p.get_animatedSprite()->play("climbingShoot");
+		}
 		frameTimer = Player::framesBetweenShotAnimation;
 		p.get_playerInfo().canShoot = false;
 	}
@@ -41,7 +45,13 @@ namespace metalwalrus
 			p.get_playerInfo().canJump = true;
 		}
 
-		if (!p.get_playerInfo().onGround)
+		if (p.get_playerInfo().climbing && p.get_playerInfo().moving)
+		{
+			machine->popAndUpdate(p);
+			return;
+		}
+
+		if (!p.get_playerInfo().onGround && !p.get_playerInfo().climbing)
 		{
 			p.get_animatedSprite()->play("jumpShoot");
 			p.get_playerInfo().canJump = false;

@@ -7,7 +7,7 @@ namespace metalwalrus
 	const std::string PlayerSpawn::staticClassname = "player_spawn";
 
 	PlayerSpawn::PlayerSpawn(Vector2 position, picojson::value properties)
-		: WorldObject(position, "player_spawn", properties)
+		: WorldObject(position, 0, 0, "player_spawn", properties)
 	{
 		this->facingLeft = properties.get("facingLeft").get<bool>();
 	}

@@ -16,6 +16,7 @@ namespace metalwalrus
 	TileMap *GameScene::loadedMap = nullptr;
 	int GameScene::playerID = -1;
 	vector<GameObject*> *GameScene::enemies;
+	vector<Ladder*> GameScene::ladders;
 
 	Player *player = nullptr;
 

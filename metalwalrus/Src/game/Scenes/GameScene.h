@@ -7,6 +7,7 @@
 #include "../../Framework/Graphics/Camera.h"
 
 #include "../Entities/Player/Player.h"
+#include "../Entities/World/Ladder.h"
 
 namespace metalwalrus
 {
@@ -27,6 +28,7 @@ namespace metalwalrus
 		static TileMap *loadedMap;
 		static int playerID;
 		static std::vector<GameObject*> *enemies;
+		static std::vector<Ladder*> ladders;
 	};
 }
 

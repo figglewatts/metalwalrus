@@ -4,20 +4,20 @@
 
 #include <picojson.h>
 
-#include "../../../Framework/Game/GameObject.h"
+#include "../../../Framework/Game/SolidObject.h"
 
 namespace metalwalrus
 {
-	class WorldObject : public GameObject
+	class WorldObject : public SolidObject
 	{
 	protected:
 		std::string classname;
 		picojson::value properties;
 
 	public:
-		WorldObject(Vector2 position, 
+		WorldObject(Vector2 position, unsigned width, unsigned height,
 			const std::string& classname, const picojson::value& properties)
-			: GameObject(position, 0, 0)
+			: SolidObject(position, width, height)
 			, classname(classname), properties(properties) { }
 		virtual ~WorldObject() = 0;
 
