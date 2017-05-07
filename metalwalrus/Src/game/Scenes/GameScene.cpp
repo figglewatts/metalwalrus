@@ -17,6 +17,10 @@ namespace metalwalrus
 	int GameScene::playerID = -1;
 	vector<GameObject*> *GameScene::enemies;
 	vector<Ladder*> GameScene::ladders;
+	Camera *GameScene::camera;
+	std::string GameScene::currentLevel;
+	const float GameScene::gravity = 0.5;
+	const float GameScene::terminalVelocity = -4;
 
 	Player *player = nullptr;
 
@@ -94,9 +98,7 @@ namespace metalwalrus
 
 		enemies = new std::vector<GameObject*>();
 
-		loadedMap = utilities::JSONUtil::tiled_tilemap("assets/data/level/level1.json", camera);
-
-		loadMapObjects();
+		this->loadLevel("level1.json");
 
 		healthBarTex = Texture2D::create("assets/sprite/healthbar.png");
 		healthBarEmptyTex = Texture2D::create("assets/sprite/healthbar-empty.png");
@@ -172,5 +174,15 @@ namespace metalwalrus
 		batch->end();
 
 		
+	}
+
+	void GameScene::loadLevel(const std::string & levelname)
+	{
+		this->destroyAllObjects();
+
+		currentLevel = levelname;
+		
+		loadedMap = utilities::JSONUtil::tiled_tilemap("assets/data/level/" + levelname, this->camera);
+		loadMapObjects();
 	}
 }

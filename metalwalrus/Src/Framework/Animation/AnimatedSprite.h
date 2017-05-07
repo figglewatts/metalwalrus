@@ -52,7 +52,6 @@ namespace metalwalrus
 		void queue(std::string name, std::function<void()> onFinish);
 
 		void update(double delta);
-		void draw(SpriteBatch& batch);
 		TextureRegion *get_keyframe();
 	};
 }

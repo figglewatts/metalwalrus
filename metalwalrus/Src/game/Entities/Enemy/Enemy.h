@@ -6,6 +6,10 @@
 
 #include "../Player/Player.h"
 #include "../../Scenes/GameScene.h"
+#include "../World/HealthPowerup.h"
+
+#include <ctime>
+#include <cstdlib>
 
 namespace metalwalrus
 {
@@ -18,39 +22,21 @@ namespace metalwalrus
 		bool facingLeft;
 		Player *p;
 
+		const int healthSpawnChance = 25; // chance of health spawn on kill (out of 100)
+		const int healthBigChance = 25; // chance of big health spawn on health spawn
+
 	public:
 		Enemy(Vector2 position, unsigned width, unsigned height, Vector2 offset,
-			int health, int damage, int score)
-			: SolidObject(position, width, height, offset, "enemy"), health(health), damage(damage), facingLeft(false)
-			, p(nullptr), score(score) { }
+			int health, int damage, int score);
 		virtual ~Enemy() { }
 
 		int get_health() const { return health; }
 		int get_damage() const { return damage; }
 
-		virtual void die()
-		{
-			if (p == nullptr)
-				p = ((Player*)this->parentScene->getWithID(GameScene::playerID));
+		virtual void die();
+		void takeDamage(int damageAmount);
 
-			p->add_score(this->score);
-			
-			this->parentScene->destroyObject(this);
-		}
-		void takeDamage(int damageAmount)
-		{
-			health -= damageAmount;
-			if (health <= 0) this->die();
-		}
-
-		void damagePlayer()
-		{
-			if (p == nullptr)
-				p = ((Player*)this->parentScene->getWithID(GameScene::playerID));
-			
-			if (this->boundingBox.intersects(p->get_boundingBox()))
-				p->takeDamage(this->damage, this);
-		}
+		void damagePlayer();
 	};
 }
 

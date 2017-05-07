@@ -18,9 +18,6 @@ namespace metalwalrus
 	const int Player::jumpAfterPlatformFrames = 7;
 	const float Player::jumpInAirTolerance = 2;
 
-	const float Player::gravity = 0.5;
-	const float Player::terminalVelocity = -4;
-
 	const int Player::framesBetweenShots = 20;
 	const int Player::framesBetweenShotAnimation = 40;
 
@@ -29,40 +26,9 @@ namespace metalwalrus
 
 	const int Player::damageAnimationFrames = 20;
 	const float Player::damageVelocity = 1;
-	const int Player::damageImmunityFrames = 30;
+	const int Player::damageImmunityFrames = 50;
 
-	bool Player::doCollision(AABB boundingBox, AABB& tbb)
-	{
-		int leftTile = boundingBox.get_left()
-			/ currentTilemap->get_sheets()[0]->get_spriteWidth();
-		int rightTile = boundingBox.get_right()
-			/ currentTilemap->get_sheets()[0]->get_spriteWidth();
-		int topTile = boundingBox.get_top()
-			/ currentTilemap->get_sheets()[0]->get_spriteHeight();
-		int bottomTile = boundingBox.get_bottom()
-			/ currentTilemap->get_sheets()[0]->get_spriteHeight();
-
-		if (leftTile < 0) leftTile = 0;
-		if (rightTile >= currentTilemap->get_width())
-			rightTile = currentTilemap->get_width() - 1;
-		if (bottomTile < 0) bottomTile = 0;
-		if (topTile >= currentTilemap->get_height())
-			topTile = currentTilemap->get_height() - 1;
-
-		for (int i = leftTile; i <= rightTile; i++)
-		{
-			for (int j = bottomTile; j <= topTile; j++)
-			{
-				Tile t = currentTilemap->get(i, j, 0);
-				if (t.is_solid())
-				{
-					tbb = t.get_boundingBox();
-					return true;
-				}
-			}
-		}
-		return false;
-	}
+	const int Player::framesAfterDeath = 30;
 
 	Ladder *Player::checkCanClimb()
 	{
@@ -219,6 +185,7 @@ namespace metalwalrus
 		climbing = FrameAnimation(2, 16, 0.2);
 		climbingShoot = FrameAnimation(0, 18, 0);
 		climbingFinish = FrameAnimation(0, 19, 0);
+		dead = FrameAnimation(0, 20, 0);
 		walrusSprite->addAnimation("idle", idle);
 		walrusSprite->addAnimation("run", run);
 		walrusSprite->addAnimation("jump", jump);
@@ -229,6 +196,7 @@ namespace metalwalrus
 		walrusSprite->addAnimation("climbing", climbing);
 		walrusSprite->addAnimation("climbingShoot", climbingShoot);
 		walrusSprite->addAnimation("climbingFinish", climbingFinish);
+		walrusSprite->addAnimation("dead", dead);
 		walrusSprite->play("idle");
 
 		playerInfo.canJump = false;
@@ -257,7 +225,15 @@ namespace metalwalrus
 
 	void Player::update(double delta)
 	{
-		if (!playerInfo.alive) return;
+		if (!playerInfo.alive)
+		{
+			deathFrameTimer--;
+			if (deathFrameTimer <= 0)
+			{
+				((GameScene*)this->parentScene)->loadLevel(GameScene::currentLevel);
+			}
+			return;
+		}
 		
 		if (damageImmunityFrameTimer <= 0)
 		{
@@ -271,21 +247,21 @@ namespace metalwalrus
 		handleInput();
 
 		if (!playerInfo.climbing)
-			velocity.y -= gravity;
+			velocity.y -= GameScene::gravity;
 
-		if (velocity.y < terminalVelocity) velocity.y = terminalVelocity;
+		if (velocity.y < GameScene::terminalVelocity) velocity.y = GameScene::terminalVelocity;
 
 		oldPosition = position;
 		AABB tbb;
 		moveBy(Vector2(velocity.x, 0));
-		if (doCollision(boundingBox, tbb))
+		if (GameScene::loadedMap->boundingBoxCollides(boundingBox, tbb))
 		{
 			moveTo(oldPosition);
 		}
 
 		oldPosition = position;
 		moveBy(Vector2(0, velocity.y));
-		if (doCollision(boundingBox, tbb))
+		if (GameScene::loadedMap->boundingBoxCollides(boundingBox, tbb))
 		{
 			moveTo(Vector2(position.x, velocity.y < 0 ? tbb.get_top() : (tbb.get_bottom() - boundingBox.get_height())));
 
@@ -340,11 +316,8 @@ namespace metalwalrus
 		if (this->health <= 0)
 		{
 			playerInfo.alive = false;
+			walrusSprite->play("dead");
+			deathFrameTimer = framesAfterDeath;
 		}
-	}
-
-	void Player::updateCollisionEnvironment(TileMap *tileMap)
-	{
-		this->currentTilemap = tileMap;
 	}
 }

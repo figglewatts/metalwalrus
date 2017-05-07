@@ -15,7 +15,6 @@ namespace metalwalrus
 	void PlayerSpawn::start()
 	{
 		Player *p = new Player(this->position, 12, 20, Vector2(11, 0));
-		p->updateCollisionEnvironment(GameScene::loadedMap);
 		this->parentScene->registerObject(p);
 		GameScene::playerID = p->get_ID();
 	}

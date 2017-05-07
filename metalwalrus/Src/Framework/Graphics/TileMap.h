@@ -100,6 +100,8 @@ namespace metalwalrus
 		TileLayer* get_layer(unsigned layer);
 		SpriteSheet& get_sheetFromTileID(unsigned tileID);
 		int get_sheetIndexFromTileID(unsigned tileID);
+
+		bool boundingBoxCollides(AABB boundingBox, AABB& tbb);
 	};
 
 	

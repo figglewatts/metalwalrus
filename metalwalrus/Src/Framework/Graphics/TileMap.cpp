@@ -139,6 +139,39 @@ namespace metalwalrus
 		throw std::runtime_error("Could not get tilesheet from tileID");
 	}
 
+	bool TileMap::boundingBoxCollides(AABB boundingBox, AABB& tbb)
+	{
+		int leftTile = boundingBox.get_left()
+			/ this->get_sheets()[0]->get_spriteWidth();
+		int rightTile = boundingBox.get_right()
+			/ this->get_sheets()[0]->get_spriteWidth();
+		int topTile = boundingBox.get_top()
+			/ this->get_sheets()[0]->get_spriteHeight();
+		int bottomTile = boundingBox.get_bottom()
+			/ this->get_sheets()[0]->get_spriteHeight();
+
+		if (leftTile < 0) leftTile = 0;
+		if (rightTile >= this->get_width())
+			rightTile = this->get_width() - 1;
+		if (bottomTile < 0) bottomTile = 0;
+		if (topTile >= this->get_height())
+			topTile = this->get_height() - 1;
+
+		for (int i = leftTile; i <= rightTile; i++)
+		{
+			for (int j = bottomTile; j <= topTile; j++)
+			{
+				Tile t = this->get(i, j, 0);
+				if (t.is_solid())
+				{
+					tbb = t.get_boundingBox();
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 
 	// -------------- TILE METHODS -----------------------
 

@@ -23,6 +23,7 @@
     <ClCompile Include="Src\Framework\Scene\IScene.cpp" />
     <ClCompile Include="Src\Framework\Scene\SceneManager.cpp" />
     <ClCompile Include="src\Framework\Util\JSONUtil.cpp" />
+    <ClCompile Include="Src\game\Entities\Enemy\Enemy.cpp" />
     <ClCompile Include="Src\game\Entities\Enemy\FloaterEnemy.cpp" />
     <ClCompile Include="Src\game\Entities\Player\ClimbingState.cpp" />
     <ClCompile Include="Src\game\Entities\Player\DamagedState.cpp" />
@@ -32,6 +33,7 @@
     <ClCompile Include="Src\game\Entities\Player\PlayerBullet.cpp" />
     <ClCompile Include="Src\game\Entities\Player\RunState.cpp" />
     <ClCompile Include="Src\game\Entities\Player\ShootState.cpp" />
+    <ClCompile Include="Src\game\Entities\World\HealthPowerup.cpp" />
     <ClCompile Include="Src\game\Entities\World\Ladder.cpp" />
     <ClCompile Include="Src\game\Entities\World\PlayerSpawn.cpp" />
     <ClCompile Include="Src\game\Entities\World\WorldObjectFactory.cpp" />
@@ -80,6 +82,7 @@
     <ClInclude Include="src\game\Entities\Player\Player.h" />
     <ClInclude Include="Src\game\Entities\Player\PlayerBullet.h" />
     <ClInclude Include="Src\game\Entities\Player\States.h" />
+    <ClInclude Include="Src\game\Entities\World\HealthPowerup.h" />
     <ClInclude Include="Src\game\Entities\World\Ladder.h" />
     <ClInclude Include="Src\game\Entities\World\PlayerSpawn.h" />
     <ClInclude Include="Src\game\Entities\World\WorldObject.h" />

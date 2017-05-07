@@ -13,9 +13,8 @@ namespace metalwalrus
 {
 	class GameScene : public IScene
 	{
-		Camera *camera;
+		static Camera *camera;
 		SpriteBatch *batch;
-		
 
 		void loadMapObjects();
 	public:
@@ -29,6 +28,11 @@ namespace metalwalrus
 		static int playerID;
 		static std::vector<GameObject*> *enemies;
 		static std::vector<Ladder*> ladders;
+		static std::string currentLevel;
+		static const float gravity;
+		static const float terminalVelocity;
+
+		void loadLevel(const std::string& levelname);
 	};
 }
 

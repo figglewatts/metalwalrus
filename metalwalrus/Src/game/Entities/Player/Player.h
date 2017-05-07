@@ -44,8 +44,6 @@ namespace metalwalrus
 
 		PlayerState currentState = PlayerState::IDLE;
 
-		TileMap *currentTilemap; // used for collision
-
 		Texture2D *walrusTex;
 		SpriteSheet *walrusSheet;
 
@@ -62,6 +60,7 @@ namespace metalwalrus
 		FrameAnimation climbing;
 		FrameAnimation climbingShoot;
 		FrameAnimation climbingFinish;
+		FrameAnimation dead;
 
 		Vector2 oldPosition;
 
@@ -75,8 +74,8 @@ namespace metalwalrus
 		int jumpFrameTimer;
 		int shootFrameTimer;
 		int damageImmunityFrameTimer;
+		int deathFrameTimer;
 
-		bool doCollision(AABB boundingBox, AABB& tbb);
 		void shoot();
 		void handleInput();
 		Ladder *checkCanClimb();
@@ -96,10 +95,13 @@ namespace metalwalrus
 		AnimatedSprite* const get_animatedSprite() { return this->walrusSprite; }
 		Vector2& get_velocity() { return this->velocity; }
 		int get_health() const { return this->health; }
+		void add_health(int health)
+		{
+			this->health += health;
+			if (this->health > this->maxHealth) this->health = this->maxHealth;
+		}
 		int get_score() const { return this->score; }
 		void add_score(int score) { this->score += score; }
-
-		void updateCollisionEnvironment(TileMap *tileMap);
 
 		// ----- PLAYER SETTINGS -----
 		const static float walkSpeed;
@@ -111,9 +113,6 @@ namespace metalwalrus
 		const static int jumpAfterPlatformFrames;
 		const static float jumpInAirTolerance;
 
-		const static float gravity;
-		const static float terminalVelocity;
-
 		const static int framesBetweenShots;
 		const static int framesBetweenShotAnimation;
 
@@ -123,6 +122,8 @@ namespace metalwalrus
 		const static int damageAnimationFrames;
 		const static float damageVelocity;
 		const static int damageImmunityFrames;
+
+		const static int framesAfterDeath;
 		// ----- END SETTINGS -----
 	};
 }
