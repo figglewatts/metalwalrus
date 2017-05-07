@@ -58,7 +58,7 @@ namespace metalwalrus
 			{
 				playerInfo.climbing = true;
 				playerInfo.canJump = false;
-				this->moveTo(Vector2(l->get_position().x - 9, this->position.y));
+				this->moveTo(Vector2(l->get_position().x - 8, this->position.y));
 				this->velocity.x = 0;
 			}
 		}
@@ -93,6 +93,11 @@ namespace metalwalrus
 			else if (InputHandler::checkButton("right", ButtonState::DOWN))
 			{
 				playerInfo.facingLeft = false;
+			}
+
+			if (InputHandler::checkButton("a", ButtonState::DOWN))
+			{
+				playerInfo.climbing = false;
 			}
 		}
 
@@ -253,27 +258,56 @@ namespace metalwalrus
 
 		oldPosition = position;
 		AABB tbb;
+		Tile t;
 		moveBy(Vector2(velocity.x, 0));
-		if (GameScene::loadedMap->boundingBoxCollides(boundingBox, tbb))
+		if (GameScene::loadedMap->boundingBoxCollides(boundingBox, tbb, t))
 		{
-			moveTo(oldPosition);
+			if (!t.is_oneWay())
+				moveTo(oldPosition);
 		}
 
 		oldPosition = position;
 		moveBy(Vector2(0, velocity.y));
-		if (GameScene::loadedMap->boundingBoxCollides(boundingBox, tbb))
+		if (GameScene::loadedMap->boundingBoxCollides(boundingBox, tbb, t))
 		{
-			moveTo(Vector2(position.x, velocity.y < 0 ? tbb.get_top() : (tbb.get_bottom() - boundingBox.get_height())));
-
-			if (velocity.y < 0)
+			if (t.is_oneWay() && oldPosition.y >= tbb.get_top())
 			{
+				moveTo(Vector2(position.x, tbb.get_top()));
 				playerInfo.onGround = true;
 				playerInfo.touchedGroundLastFrame = true;
 			}
+			else if (!t.is_oneWay() && oldPosition.y >= tbb.get_top())
+			{
+				moveTo(Vector2(position.x, tbb.get_top()));
+				playerInfo.onGround = true;
+				playerInfo.touchedGroundLastFrame = true;
+			}
+			else if (!t.is_oneWay() && (oldPosition.y + boundingBox.get_height()) < tbb.get_bottom())
+			{
+				moveTo(Vector2(position.x, tbb.get_bottom() - boundingBox.get_height()));
+			}
+			
+			/*
+			if (velocity.y < 0 && t.is_solidTop())
+			{
+				if (!playerInfo.onGround)
+				{
+					auto it = 1;
+				}
+				moveTo(Vector2(position.x, tbb.get_top()));
+			}
+			else if (velocity.y > 0 && t.is_solidBottom())
+			{
+				moveTo(Vector2(position.x, tbb.get_bottom() - boundingBox.get_height()));
+			}*/
 
-			velocity.y = 0;
-			playerInfo.jumping = false;
-			jumpFrameTimer = 0;
+			if (!t.is_oneWay())
+			{
+				velocity.y = 0;
+				playerInfo.jumping = false;
+				jumpFrameTimer = 0;
+			}
+			
 		}
 		else
 		{

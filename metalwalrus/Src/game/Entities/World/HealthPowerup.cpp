@@ -36,7 +36,8 @@ namespace metalwalrus
 		oldPos = position;
 		this->moveBy(velocity);
 		AABB tbb;
-		if (GameScene::loadedMap->boundingBoxCollides(this->boundingBox, tbb))
+		Tile t;
+		if (GameScene::loadedMap->boundingBoxCollides(this->boundingBox, tbb, t))
 		{
 			this->moveTo(Vector2(position.x, tbb.get_top()));
 		}

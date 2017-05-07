@@ -13,11 +13,13 @@ namespace metalwalrus
 	{
 	protected:
 		float speed; // speed to move towards the player
+		static Texture2D *floaterTex;
+		static SpriteSheet *floaterSheet;
 		AnimatedSprite *sprite;
 
 	public:
-		FloaterEnemy(Vector2 pos, AnimatedSprite *sprite)
-			: Enemy(pos, 16, 16, Vector2::ZERO, 1, 2, 100), speed(0.4F), sprite(sprite) { }
+		FloaterEnemy(Vector2 pos)
+			: Enemy(pos, 16, 16, Vector2::ZERO, 1, 2, 100), speed(0.4F) { }
 
 		void start() override;
 		void update(double delta) override;

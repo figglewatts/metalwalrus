@@ -1,6 +1,7 @@
 #include "WorldObjectFactory.h"
 #include "PlayerSpawn.h"
 #include "Ladder.h"
+#include "EnemySpawn.h"
 
 namespace metalwalrus
 {
@@ -11,6 +12,8 @@ namespace metalwalrus
 			return new PlayerSpawn(pos, properties);
 		else if (classname == Ladder::staticClassname)
 			return new Ladder(pos, properties);
+		else if (classname == EnemySpawn::staticClassname)
+			return new EnemySpawn(pos, properties);
 	}
 
 }

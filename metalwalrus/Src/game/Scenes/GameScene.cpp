@@ -24,11 +24,6 @@ namespace metalwalrus
 
 	Player *player = nullptr;
 
-	FloaterEnemy *e;
-	Texture2D *eTex;
-	SpriteSheet *eSheet;
-	AnimatedSprite *eSprite;
-
 	Texture2D *healthBarTex;
 	Texture2D *healthBarEmptyTex;
 	Vector2 healthBarPos = Vector2(24, 159);
@@ -75,10 +70,6 @@ namespace metalwalrus
 		delete camera;
 		delete batch;
 
-		delete eTex;
-		delete eSheet;
-		delete eSprite;
-
 		delete enemies;
 
 		delete healthBarTex;
@@ -107,17 +98,6 @@ namespace metalwalrus
 		font = new FontSheet(fontTexture, 8, 8, 0, 0);
 
 		player = (Player*)this->getWithID(playerID);
-
-		eTex = Texture2D::create("assets/sprite/smallEnemies.png");
-		eSheet = new SpriteSheet(eTex, 16, 16);
-		eSprite = new AnimatedSprite(eSheet);
-		FrameAnimation eAnim = FrameAnimation(6, 0, 0.2F);
-		eSprite->addAnimation("main", eAnim);
-		eSprite->play("main");
-		e = new FloaterEnemy(Vector2(100, 100), eSprite);
-		this->registerObject(e);
-		this->registerObject(new FloaterEnemy(Vector2(200, 200), eSprite));
-		this->registerObject(new FloaterEnemy(Vector2(300, 300), eSprite));
 	}
 
 	void GameScene::update(double delta)

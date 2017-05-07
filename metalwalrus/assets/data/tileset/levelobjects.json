@@ -17,6 +17,11 @@
      "1":
         {
          "classname":"ladder"
+        },
+     "2":
+        {
+         "classname":"enemy_spawn",
+         "enemyType":"floater"
         }
     },
  "tilepropertytypes":
@@ -29,6 +34,11 @@
      "1":
         {
          "classname":"string"
+        },
+     "2":
+        {
+         "classname":"string",
+         "enemyType":"string"
         }
     },
  "tilewidth":16

@@ -77,16 +77,19 @@ namespace metalwalrus
 					Vector2 tilePos = Vector2(x * tileWidth, y * tileHeight);
 
 					bool solid = false;
-					if (!layerObject->properties.getProperty<bool>("objectLayer"))
+					bool oneWay = false;
+					if (!layerObject->properties.getProperty<bool>("objectLayer")
+						&& tileID != 0)
 					{
-						solid = tileID == 0 ? false 
-							: tm->get_sheetFromTileID(tileID - 1).properties
-								.getProperty<bool>("solid", tileID - 1);
+						PropertyContainer *tileProp = &tm->get_sheetFromTileID(tileID - 1).properties;
+						
+						solid = tileProp->getProperty<bool>("solid", tileID - 1);
+						oneWay = tileProp->getProperty<bool>("oneWay", tileID - 1);
 					}
 
 					layerObject->get(x, y) = 
 						Tile(tileID, tilePos,
-							solid, tileWidth, tileHeight, tm);
+							solid, oneWay, tileWidth, tileHeight, tm);
 					
 					i++;
 				}

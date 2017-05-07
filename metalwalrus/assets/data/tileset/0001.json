@@ -11,258 +11,322 @@
     {
      "0":
         {
+         "oneWay":false,
          "solid":true
         },
      "1":
         {
+         "oneWay":false,
          "solid":true
         },
      "10":
         {
+         "oneWay":false,
          "solid":true
         },
      "11":
         {
+         "oneWay":false,
          "solid":true
         },
      "12":
         {
+         "oneWay":false,
          "solid":true
         },
      "13":
         {
+         "oneWay":false,
          "solid":true
         },
      "14":
         {
+         "oneWay":false,
          "solid":true
         },
      "15":
         {
+         "oneWay":false,
          "solid":true
         },
      "16":
         {
+         "oneWay":false,
          "solid":true
         },
      "17":
         {
+         "oneWay":false,
          "solid":true
         },
      "18":
         {
+         "oneWay":false,
          "solid":true
         },
      "19":
         {
+         "oneWay":false,
          "solid":true
         },
      "2":
         {
+         "oneWay":false,
          "solid":true
         },
      "20":
         {
+         "oneWay":false,
          "solid":true
         },
      "21":
         {
+         "oneWay":false,
          "solid":true
         },
      "22":
         {
+         "oneWay":false,
          "solid":true
         },
      "23":
         {
+         "oneWay":false,
          "solid":true
         },
      "24":
         {
+         "oneWay":false,
          "solid":true
         },
      "25":
         {
+         "oneWay":false,
          "solid":true
         },
      "26":
         {
+         "oneWay":false,
          "solid":true
         },
      "27":
         {
+         "oneWay":false,
          "solid":true
         },
      "28":
         {
+         "oneWay":false,
          "solid":true
         },
      "29":
         {
+         "oneWay":false,
          "solid":true
         },
      "3":
         {
+         "oneWay":false,
          "solid":true
         },
      "30":
         {
+         "oneWay":false,
          "solid":true
         },
      "31":
         {
+         "oneWay":false,
          "solid":true
         },
      "32":
         {
+         "oneWay":false,
          "solid":true
         },
      "33":
         {
+         "oneWay":false,
          "solid":true
         },
      "34":
         {
+         "oneWay":false,
          "solid":true
         },
      "35":
         {
+         "oneWay":false,
          "solid":true
         },
      "36":
         {
+         "oneWay":false,
          "solid":false
         },
      "37":
         {
+         "oneWay":false,
          "solid":false
         },
      "38":
         {
+         "oneWay":false,
          "solid":true
         },
      "39":
         {
+         "oneWay":false,
          "solid":true
         },
      "4":
         {
+         "oneWay":false,
          "solid":true
         },
      "40":
         {
+         "oneWay":false,
          "solid":true
         },
      "41":
         {
+         "oneWay":false,
          "solid":true
         },
      "42":
         {
+         "oneWay":false,
          "solid":true
         },
      "43":
         {
+         "oneWay":false,
          "solid":true
         },
      "44":
         {
+         "oneWay":false,
          "solid":true
         },
      "45":
         {
+         "oneWay":false,
          "solid":true
         },
      "46":
         {
+         "oneWay":false,
          "solid":true
         },
      "47":
         {
+         "oneWay":false,
          "solid":true
         },
      "48":
         {
+         "oneWay":false,
          "solid":false
         },
      "49":
         {
+         "oneWay":false,
          "solid":false
         },
      "5":
         {
+         "oneWay":false,
          "solid":true
         },
      "50":
         {
+         "oneWay":false,
          "solid":false
         },
      "51":
         {
+         "oneWay":false,
          "solid":false
         },
      "52":
         {
+         "oneWay":false,
          "solid":false
         },
      "53":
         {
+         "oneWay":false,
          "solid":false
         },
      "54":
         {
+         "oneWay":false,
          "solid":false
         },
      "55":
         {
+         "oneWay":false,
          "solid":false
         },
      "56":
         {
+         "oneWay":false,
          "solid":false
         },
      "57":
         {
-         "solid":false
+         "oneWay":true,
+         "solid":true
         },
      "58":
         {
+         "oneWay":false,
          "solid":false
         },
      "59":
         {
+         "oneWay":false,
          "solid":false
         },
      "6":
         {
+         "oneWay":false,
          "solid":true
         },
      "60":
         {
+         "oneWay":false,
          "solid":false
         },
      "61":
         {
+         "oneWay":false,
          "solid":false
         },
      "62":
         {
+         "oneWay":false,
          "solid":false
         },
      "63":
         {
+         "oneWay":false,
          "solid":false
         },
      "7":
         {
+         "oneWay":false,
          "solid":true
         },
      "8":
         {
+         "oneWay":false,
          "solid":true
         },
      "9":
         {
+         "oneWay":false,
          "solid":true
         }
     },
@@ -270,258 +334,322 @@
     {
      "0":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "1":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "10":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "11":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "12":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "13":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "14":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "15":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "16":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "17":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "18":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "19":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "2":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "20":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "21":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "22":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "23":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "24":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "25":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "26":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "27":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "28":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "29":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "3":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "30":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "31":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "32":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "33":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "34":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "35":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "36":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "37":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "38":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "39":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "4":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "40":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "41":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "42":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "43":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "44":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "45":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "46":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "47":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "48":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "49":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "5":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "50":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "51":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "52":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "53":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "54":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "55":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "56":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "57":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "58":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "59":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "6":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "60":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "61":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "62":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "63":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "7":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "8":
         {
+         "oneWay":"bool",
          "solid":"bool"
         },
      "9":
         {
+         "oneWay":"bool",
          "solid":"bool"
         }
     },

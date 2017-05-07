@@ -6,29 +6,40 @@
 
 namespace metalwalrus
 {
+	Texture2D *FloaterEnemy::floaterTex;
+	SpriteSheet *FloaterEnemy::floaterSheet;
+	
 	void FloaterEnemy::start()
 	{
-		
+		if (floaterTex == nullptr)
+			floaterTex = Texture2D::create("assets/sprite/floater.png");
+		if (floaterSheet == nullptr)
+			floaterSheet = new SpriteSheet(floaterTex, 16, 16);
+
+		this->sprite = new AnimatedSprite(floaterSheet);
+		this->sprite->addAnimation("main", FrameAnimation(6, 0, 0.2F));
+		this->sprite->addAnimation("idle", FrameAnimation(2, 0, 0.2F));
+		this->sprite->play("idle");
 	}
 
 	void FloaterEnemy::update(double delta)
 	{
+		this->sprite->update(delta);
+		
 		GameObject *player = this->parentScene->getWithID(GameScene::playerID);
 		Vector2 toPlayer = (player->get_center() - this->position);
 		float distance = toPlayer.dist();
 
-		if (distance > 200)
+		if (distance > 100)
 			return;
+
+		this->sprite->play("main");
 
 		if (distance > 8)
 		{
 			toPlayer = toPlayer.normalize() * this->speed;
 			this->moveBy(toPlayer);
 		}
-
-		this->sprite->update(delta);
-
-		
 	}
 
 	void FloaterEnemy::draw(SpriteBatch& batch)

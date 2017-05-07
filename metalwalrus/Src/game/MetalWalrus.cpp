@@ -57,7 +57,8 @@ namespace metalwalrus
 		InputHandler::addInput("up", GLFW_KEY_UP);
 		InputHandler::addInput("down", GLFW_KEY_DOWN);
 		InputHandler::addInput("right", GLFW_KEY_RIGHT);
-		InputHandler::addInput("shoot", GLFW_KEY_Z);
+		InputHandler::addInput("shoot", GLFW_KEY_X);
+		InputHandler::addInput("a", GLFW_KEY_Z);
 		InputHandler::addInput("esc", GLFW_KEY_ESCAPE);
 		InputHandler::addInput("f5", GLFW_KEY_F5);
 

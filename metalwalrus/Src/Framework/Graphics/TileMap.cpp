@@ -139,7 +139,7 @@ namespace metalwalrus
 		throw std::runtime_error("Could not get tilesheet from tileID");
 	}
 
-	bool TileMap::boundingBoxCollides(AABB boundingBox, AABB& tbb)
+	bool TileMap::boundingBoxCollides(AABB boundingBox, AABB& tbb, Tile& tile)
 	{
 		int leftTile = boundingBox.get_left()
 			/ this->get_sheets()[0]->get_spriteWidth();
@@ -165,6 +165,7 @@ namespace metalwalrus
 				if (t.is_solid())
 				{
 					tbb = t.get_boundingBox();
+					tile = t;
 					return true;
 				}
 			}
@@ -182,15 +183,16 @@ namespace metalwalrus
 		this->sheetIndex = 0;
 		this->position = Vector2();
 		this->solid = false;
+		this->oneWay = false;
 		this->boundingBox = AABB();
 		this->tileMap = map;
 	}
 
 	Tile::Tile(Vector2 pos, unsigned width, unsigned height, TileMap* map)
-		: Tile(0, pos, false, width, height, map)
+		: Tile(0, pos, false, false, width, height, map)
 	{ }
 
-	Tile::Tile(unsigned tileID, Vector2 pos, bool solid, 
+	Tile::Tile(unsigned tileID, Vector2 pos, bool solid, bool oneWay,
 		unsigned width, unsigned height, TileMap* map)
 	{
 		this->tileID = tileID;
@@ -198,6 +200,7 @@ namespace metalwalrus
 		this->sheetID = this->tileID -  map->get_sheetInitialTileID(map->get_sheets()[this->sheetIndex]);
 		this->position = pos;
 		this->solid = solid;
+		this->oneWay = oneWay;
 		this->boundingBox = AABB(position, Vector2(pos.x + width, pos.y + height));
 		this->tileMap = map;
 	}
@@ -209,6 +212,7 @@ namespace metalwalrus
 		this->sheetID = other.sheetID;
 		this->position = other.position;
 		this->solid = other.solid;
+		this->oneWay = other.oneWay;
 		this->boundingBox = other.boundingBox;
 		this->tileMap = other.tileMap;
 	}
@@ -222,6 +226,7 @@ namespace metalwalrus
 			this->sheetID = other.sheetID;
 			this->position = other.position;
 			this->solid = other.solid;
+			this->oneWay = other.oneWay;
 			this->boundingBox = other.boundingBox;
 			this->tileMap = other.tileMap;
 		}

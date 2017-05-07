@@ -22,13 +22,15 @@ namespace metalwalrus
 		unsigned sheetIndex;
 		Vector2 position;
 		bool solid;
+		bool oneWay;
 		AABB boundingBox;
 		TileMap *tileMap;
 
 	public:
+		Tile() { }
 		Tile(TileMap* map);
 		Tile(Vector2 pos, unsigned width, unsigned height, TileMap *map);
-		Tile(unsigned tileID, Vector2 pos, bool solid, 
+		Tile(unsigned tileID, Vector2 pos, bool solid, bool oneWay,
 			unsigned width, unsigned height, TileMap *map);
 		Tile(const Tile& other);
 
@@ -39,6 +41,7 @@ namespace metalwalrus
 		inline unsigned get_sheetIndex() const { return sheetIndex; }
 		inline Vector2 get_position() const { return position; }
 		inline bool is_solid() const { return solid; }
+		inline bool is_oneWay() const { return oneWay; }
 		inline AABB get_boundingBox() const { return boundingBox; }
 	};
 
@@ -101,7 +104,7 @@ namespace metalwalrus
 		SpriteSheet& get_sheetFromTileID(unsigned tileID);
 		int get_sheetIndexFromTileID(unsigned tileID);
 
-		bool boundingBoxCollides(AABB boundingBox, AABB& tbb);
+		bool boundingBoxCollides(AABB boundingBox, AABB& tbb, Tile& t);
 	};
 
 	
