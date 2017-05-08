@@ -286,20 +286,6 @@ namespace metalwalrus
 			{
 				moveTo(Vector2(position.x, tbb.get_bottom() - boundingBox.get_height()));
 			}
-			
-			/*
-			if (velocity.y < 0 && t.is_solidTop())
-			{
-				if (!playerInfo.onGround)
-				{
-					auto it = 1;
-				}
-				moveTo(Vector2(position.x, tbb.get_top()));
-			}
-			else if (velocity.y > 0 && t.is_solidBottom())
-			{
-				moveTo(Vector2(position.x, tbb.get_bottom() - boundingBox.get_height()));
-			}*/
 
 			if (!t.is_oneWay())
 			{
