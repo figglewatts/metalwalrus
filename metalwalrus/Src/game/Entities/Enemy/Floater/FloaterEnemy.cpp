@@ -1,6 +1,6 @@
 #include "FloaterEnemy.h"
 
-#include "../../Scenes/GameScene.h"
+#include "../../../Scenes/GameScene.h"
 
 #include <GLFW/glfw3.h>
 
@@ -17,9 +17,8 @@ namespace metalwalrus
 			floaterSheet = new SpriteSheet(floaterTex, 16, 16);
 
 		this->sprite = new AnimatedSprite(floaterSheet);
-		this->sprite->addAnimation("main", FrameAnimation(6, 0, 0.2F));
-		this->sprite->addAnimation("idle", FrameAnimation(2, 0, 0.2F));
-		this->sprite->play("idle");
+		this->sprite->addAnimation("main", FrameAnimation(6, this->hardEnemy ? 8 : 0, 0.2F));
+		this->sprite->play("main");
 	}
 
 	void FloaterEnemy::update(double delta)
@@ -32,8 +31,6 @@ namespace metalwalrus
 
 		if (distance > 100)
 			return;
-
-		this->sprite->play("main");
 
 		if (distance > 8)
 		{

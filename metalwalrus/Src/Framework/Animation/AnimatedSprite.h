@@ -20,6 +20,7 @@ namespace metalwalrus
 		std::queue<std::string> animationQueue;
 		bool loop;
 		int currentFrameCounter;
+		bool reverse;
 
 	public:
 		AnimatedSprite(SpriteSheet* animationSheet);
@@ -39,8 +40,12 @@ namespace metalwalrus
 
 		void playOneShot(std::string name);
 		void playOneShot(std::string name, std::function<void()> onFinish);
+		void playOneShotReverse(std::string name);
+		void playOneShotReverse(std::string name, std::function<void()> onFinish);
 		void play(std::string name);
 		void play(std::string name, std::function<void()> onLoop);
+		void playReverse(std::string name);
+		void playReverse(std::string name, std::function<void()> onLoop);
 		void playAtFrame(std::string name, int frame);
 		void playAtFrame(std::string name, int frame, std::function<void()> onLoop);
 		void playForFrames(std::string name, int frames);

@@ -53,12 +53,29 @@ namespace metalwalrus
 		this->currentAnimation = name;
 		this->isAnimating = true;
 		this->loop = false;
+		this->reverse = false;
 	}
 
 	void AnimatedSprite::playOneShot(std::string name, std::function<void()> onFinish)
 	{
 		this->animations[name].registerOnFinish(onFinish);
 		this->playOneShot(name);
+	}
+
+	void AnimatedSprite::playOneShotReverse(std::string name)
+	{
+		this->reverse = true;
+		this->animations[currentAnimation].resetToLastFrame();
+		this->currentFrameCounter = 0;
+		this->currentAnimation = name;
+		this->isAnimating = true;
+		this->loop = false;
+	}
+
+	void AnimatedSprite::playOneShotReverse(std::string name, std::function<void()> onFinish)
+	{
+		this->animations[name].registerOnFinish(onFinish);
+		this->playOneShotReverse(name);
 	}
 
 	void AnimatedSprite::play(std::string name)
@@ -69,6 +86,7 @@ namespace metalwalrus
 		this->currentAnimation = name;
 		this->isAnimating = true;
 		this->loop = true;
+		this->reverse = false;
 	}
 
 	void AnimatedSprite::play(std::string name, std::function<void()> onLoop)
@@ -78,28 +96,50 @@ namespace metalwalrus
 		this->play(name);
 	}
 
+	void AnimatedSprite::playReverse(std::string name)
+	{
+		if (currentAnimation == name) return;
+		this->currentFrameCounter = 0;
+		this->animations[currentAnimation].resetToLastFrame();
+		this->currentAnimation = name;
+		this->isAnimating = true;
+		this->loop = true;
+		this->reverse = true;
+	}
+
+	void AnimatedSprite::playReverse(std::string name, std::function<void()> onLoop)
+	{
+		if (currentAnimation == name) return;
+		this->animations[name].registerOnFinish(onLoop);
+		this->playReverse(name);
+	}
+
 	void AnimatedSprite::playAtFrame(std::string name, int frame)
 	{
 		this->animations[name].set_currentFrameRelative(frame);
 		this->play(name);
+		this->reverse = false;
 	}
 
 	void AnimatedSprite::playAtFrame(std::string name, int frame, std::function<void()> onLoop)
 	{
 		this->animations[name].set_currentFrameRelative(frame);
 		this->play(name, onLoop);
+		this->reverse = false;
 	}
 
 	void AnimatedSprite::playForFrames(std::string name, int frames)
 	{
 		this->play(name);
 		currentFrameCounter = frames;
+		this->reverse = false;
 	}
 
 	void AnimatedSprite::playForFrames(std::string name, int frames, std::function<void()> onFinish)
 	{
 		this->play(name, onFinish);
 		currentFrameCounter = frames;
+		this->reverse = false;
 	}
 
 	void AnimatedSprite::stop()
@@ -138,7 +178,7 @@ namespace metalwalrus
 
 		auto current = &animations[currentAnimation];
 
-		current->update(delta);
+		current->update(delta, this->reverse);
 
 		if (currentFrameCounter > 0)
 		{

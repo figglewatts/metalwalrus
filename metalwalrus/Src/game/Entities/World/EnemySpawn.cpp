@@ -1,5 +1,6 @@
 #include "EnemySpawn.h"
-#include "../Enemy/FloaterEnemy.h"
+#include "../Enemy/Floater/FloaterEnemy.h"
+#include "../Enemy/StationaryShooter/StationaryShooter.h"
 
 namespace metalwalrus
 {
@@ -9,11 +10,15 @@ namespace metalwalrus
 		: WorldObject(position, 16, 16, "enemy_spawn", properties)
 	{
 		this->enemyType = properties.get("enemyType").get<std::string>();
+		this->facingLeft = properties.get("facingLeft").get<bool>();
+		this->hardEnemy = properties.get("hardEnemy").get<bool>();
 	}
 	
 	void EnemySpawn::start()
 	{
 		if (enemyType == "floater")
-			this->parentScene->registerObject(new FloaterEnemy(this->position));
+			this->parentScene->registerObject(new FloaterEnemy(this->position, this->hardEnemy));
+		else if (enemyType == "shooter")
+			this->parentScene->registerObject(new StationaryShooter(this->position, this->hardEnemy));
 	}
 }

@@ -18,10 +18,89 @@
         {
          "classname":"ladder"
         },
+     "10":
+        {
+         "classname":"enemy_spawn",
+         "enemyType":"shooter",
+         "facingLeft":true,
+         "hardEnemy":false
+        },
+     "11":
+        {
+         "classname":"enemy_spawn",
+         "enemyType":"shooter",
+         "facingLeft":true,
+         "hardEnemy":true
+        },
+     "12":
+        {
+         "classname":"enemy_spawn",
+         "enemyType":"robot",
+         "facingLeft":true,
+         "hardEnemy":false
+        },
+     "13":
+        {
+         "classname":"enemy_spawn",
+         "enemyType":"robot",
+         "facingLeft":true,
+         "hardEnemy":true
+        },
      "2":
         {
          "classname":"enemy_spawn",
-         "enemyType":"floater"
+         "enemyType":"floater",
+         "facingLeft":false,
+         "hardEnemy":false
+        },
+     "3":
+        {
+         "classname":"enemy_spawn",
+         "enemyType":"floater",
+         "facingLeft":false,
+         "hardEnemy":true
+        },
+     "4":
+        {
+         "classname":"enemy_spawn",
+         "enemyType":"bouncing",
+         "facingLeft":false,
+         "hardEnemy":false
+        },
+     "5":
+        {
+         "classname":"enemy_spawn",
+         "enemyType":"bouncing",
+         "facingLeft":false,
+         "hardEnemy":true
+        },
+     "6":
+        {
+         "classname":"enemy_spawn",
+         "enemyType":"shooter",
+         "facingLeft":false,
+         "hardEnemy":false
+        },
+     "7":
+        {
+         "classname":"enemy_spawn",
+         "enemyType":"shooter",
+         "facingLeft":false,
+         "hardEnemy":true
+        },
+     "8":
+        {
+         "classname":"enemy_spawn",
+         "enemyType":"robot",
+         "facingLeft":false,
+         "hardEnemy":false
+        },
+     "9":
+        {
+         "classname":"enemy_spawn",
+         "enemyType":"robot",
+         "facingLeft":false,
+         "hardEnemy":true
         }
     },
  "tilepropertytypes":
@@ -35,11 +114,91 @@
         {
          "classname":"string"
         },
+     "10":
+        {
+         "classname":"string",
+         "enemyType":"string",
+         "facingLeft":"bool",
+         "hardEnemy":"bool"
+        },
+     "11":
+        {
+         "classname":"string",
+         "enemyType":"string",
+         "facingLeft":"bool",
+         "hardEnemy":"bool"
+        },
+     "12":
+        {
+         "classname":"string",
+         "enemyType":"string",
+         "facingLeft":"bool",
+         "hardEnemy":"bool"
+        },
+     "13":
+        {
+         "classname":"string",
+         "enemyType":"string",
+         "facingLeft":"bool",
+         "hardEnemy":"bool"
+        },
      "2":
         {
          "classname":"string",
-         "enemyType":"string"
+         "enemyType":"string",
+         "facingLeft":"bool",
+         "hardEnemy":"bool"
+        },
+     "3":
+        {
+         "classname":"string",
+         "enemyType":"string",
+         "facingLeft":"bool",
+         "hardEnemy":"bool"
+        },
+     "4":
+        {
+         "classname":"string",
+         "enemyType":"string",
+         "facingLeft":"bool",
+         "hardEnemy":"bool"
+        },
+     "5":
+        {
+         "classname":"string",
+         "enemyType":"string",
+         "facingLeft":"bool",
+         "hardEnemy":"bool"
+        },
+     "6":
+        {
+         "classname":"string",
+         "enemyType":"string",
+         "facingLeft":"bool",
+         "hardEnemy":"bool"
+        },
+     "7":
+        {
+         "classname":"string",
+         "enemyType":"string",
+         "facingLeft":"bool",
+         "hardEnemy":"bool"
+        },
+     "8":
+        {
+         "classname":"string",
+         "enemyType":"string",
+         "facingLeft":"bool",
+         "hardEnemy":"bool"
+        },
+     "9":
+        {
+         "classname":"string",
+         "enemyType":"string",
+         "facingLeft":"bool",
+         "hardEnemy":"bool"
         }
     },
- "tilewidth":16
+ "tilewidth":16,
+ "type":"tileset"
 }

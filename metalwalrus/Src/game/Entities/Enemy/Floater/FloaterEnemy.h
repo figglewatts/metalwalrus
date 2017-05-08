@@ -2,9 +2,9 @@
 #define FLOATERENEMY_H
 #pragma once
 
-#include "Enemy.h"
+#include "../Enemy.h"
 
-#include "../../../Framework/Animation/AnimatedSprite.h"
+#include "../../../../Framework/Animation/AnimatedSprite.h"
 
 namespace metalwalrus
 {
@@ -18,8 +18,11 @@ namespace metalwalrus
 		AnimatedSprite *sprite;
 
 	public:
-		FloaterEnemy(Vector2 pos)
-			: Enemy(pos, 16, 16, Vector2::ZERO, 1, 2, 100), speed(0.4F) { }
+		FloaterEnemy(Vector2 pos, bool isHard)
+			: Enemy(pos, 16, 16, Vector2::ZERO, isHard, 
+				isHard ? 2 : 1, 
+				isHard ? 3 : 2, 
+				isHard ? 400 : 100), speed(0.4F) { }
 
 		void start() override;
 		void update(double delta) override;
@@ -27,4 +30,4 @@ namespace metalwalrus
 	};
 }
 
-#endif
+#endif // FLOATERENEMY_H

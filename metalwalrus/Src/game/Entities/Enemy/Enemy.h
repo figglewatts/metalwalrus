@@ -20,6 +20,7 @@ namespace metalwalrus
 		int damage; // amount of damage player takes if they touch the enemy
 		int score; // score on kill
 		bool facingLeft;
+		bool hardEnemy;
 		Player *p;
 
 		const int healthSpawnChance = 25; // chance of health spawn on kill (out of 100)
@@ -27,7 +28,7 @@ namespace metalwalrus
 
 	public:
 		Enemy(Vector2 position, unsigned width, unsigned height, Vector2 offset,
-			int health, int damage, int score);
+			bool isHard, int health, int damage, int score);
 		virtual ~Enemy() { }
 
 		int get_health() const { return health; }

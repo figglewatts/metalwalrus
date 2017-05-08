@@ -18,10 +18,11 @@ namespace metalwalrus
 		std::function<void()> onFinish;
 		bool finished = false;
 
-		void animateFrame()
+		void animateFrame(bool reverse)
 		{
-			if (this->currentFrame < (this->startFrame + this->frameCount - 1))
-				this->currentFrame++;
+			if ((!reverse && this->currentFrame < (this->startFrame + this->frameCount - 1))
+				|| (reverse && this->currentFrame > this->startFrame))
+				reverse ? this->currentFrame-- : this->currentFrame++;
 			else
 			{
 				finished = true;
@@ -84,7 +85,14 @@ namespace metalwalrus
 			frameTimer = 0;
 		}
 
-		void update(double delta)
+		void resetToLastFrame()
+		{
+			currentFrame = startFrame + frameCount - 1;
+			finished = false;
+			frameTimer = 0;
+		}
+
+		void update(double delta, bool reverse)
 		{
 			if (frameLength == 0) return;
 			
@@ -93,7 +101,7 @@ namespace metalwalrus
 			if (frameTimer > frameLength)
 			{
 				frameTimer = 0;
-				animateFrame();
+				animateFrame(reverse);
 			}
 		}
 	};

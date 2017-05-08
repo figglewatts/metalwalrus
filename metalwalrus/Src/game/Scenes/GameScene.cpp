@@ -4,7 +4,7 @@
 #include "../../Framework/Input/InputHandler.h"
 #include "../Entities/World/WorldObjectFactory.h"
 
-#include "../Entities/Enemy/FloaterEnemy.h"
+#include "../Entities/Enemy/Enemy.h"
 #include "../../Framework/Util/Debug.h"
 #include "../../Framework/Graphics/FontSheet.h"
 

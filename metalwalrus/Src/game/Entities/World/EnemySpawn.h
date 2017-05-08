@@ -10,6 +10,8 @@ namespace metalwalrus
 		static Texture2D *smallEnemyTex;
 		
 		std::string enemyType;
+		bool facingLeft;
+		bool hardEnemy;
 	public:
 		static std::string staticClassname;
 

@@ -23,8 +23,12 @@
     <ClCompile Include="Src\Framework\Scene\IScene.cpp" />
     <ClCompile Include="Src\Framework\Scene\SceneManager.cpp" />
     <ClCompile Include="src\Framework\Util\JSONUtil.cpp" />
+    <ClCompile Include="Src\game\Entities\Enemy\BouncingRobot\BouncingRobot.cpp" />
     <ClCompile Include="Src\game\Entities\Enemy\Enemy.cpp" />
-    <ClCompile Include="Src\game\Entities\Enemy\FloaterEnemy.cpp" />
+    <ClCompile Include="Src\game\Entities\Enemy\EnemyBullet.cpp" />
+    <ClCompile Include="Src\game\Entities\Enemy\Floater\FloaterEnemy.cpp" />
+    <ClCompile Include="Src\game\Entities\Enemy\RobotShooter\RobotShooter.cpp" />
+    <ClCompile Include="Src\game\Entities\Enemy\StationaryShooter\StationaryShooter.cpp" />
     <ClCompile Include="Src\game\Entities\Player\ClimbingState.cpp" />
     <ClCompile Include="Src\game\Entities\Player\DamagedState.cpp" />
     <ClCompile Include="Src\game\Entities\Player\IdleState.cpp" />
@@ -78,8 +82,12 @@
     <ClInclude Include="Src\Framework\State\PushDownState.h" />
     <ClInclude Include="src\Framework\State\PushDownStateMachine.h" />
     <ClInclude Include="src\Framework\Util\JSONUtil.h" />
+    <ClInclude Include="Src\game\Entities\Enemy\BouncingRobot\BouncingRobot.h" />
     <ClInclude Include="Src\game\Entities\Enemy\Enemy.h" />
-    <ClInclude Include="Src\game\Entities\Enemy\FloaterEnemy.h" />
+    <ClInclude Include="Src\game\Entities\Enemy\EnemyBullet.h" />
+    <ClInclude Include="Src\game\Entities\Enemy\Floater\FloaterEnemy.h" />
+    <ClInclude Include="Src\game\Entities\Enemy\RobotShooter\RobotShooter.h" />
+    <ClInclude Include="Src\game\Entities\Enemy\StationaryShooter\StationaryShooter.h" />
     <ClInclude Include="src\game\Entities\Player\Player.h" />
     <ClInclude Include="Src\game\Entities\Player\PlayerBullet.h" />
     <ClInclude Include="Src\game\Entities\Player\States.h" />
