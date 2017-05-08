@@ -21,7 +21,7 @@ namespace metalwalrus
 
 		Vector2 moveVec = Vector2((facingLeft ? -1 : 1) * bulletSpeed, 0);
 		
-		this->moveBy(moveVec);
+		this->moveBy(moveVec * delta);
 
 		for (auto o : *GameScene::enemies)
 		{

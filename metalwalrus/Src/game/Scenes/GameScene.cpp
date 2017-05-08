@@ -19,8 +19,8 @@ namespace metalwalrus
 	vector<Ladder*> GameScene::ladders;
 	Camera *GameScene::camera;
 	std::string GameScene::currentLevel;
-	const float GameScene::gravity = 0.5;
-	const float GameScene::terminalVelocity = -4;
+	const float GameScene::gravity = 40;
+	const float GameScene::terminalVelocity = -250;
 
 	Player *player = nullptr;
 

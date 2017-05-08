@@ -11,7 +11,7 @@ namespace metalwalrus
 		Texture2D *texture;
 		float u, v;
 		float u2, v2;
-		int width, height;
+		float width, height;
 		bool flipX;
 		bool flipY;
 

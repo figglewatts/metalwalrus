@@ -18,39 +18,13 @@ using namespace metalwalrus;
 MetalWalrus *game;
 GLContext *context;
 
-double dt = 1 / 60; // 60fps in s
-double current = 0;
-double last = 0;
-double timeDelta = 0;
+const double dt = 1.0 / 60.0; // 60fps in s
+double t = 0;
+double currentTime = glfwGetTime();
+double accumulator = 0;
 double cumuFramerate = 0;
 int measurements = 0;
 double avgFramerate = 0;
-/*
-void display()
-{
-    
-}
-
-void handleInputDown(unsigned char key, int mouseX, int mouseY)
-{
-	InputHandler::updateKeys(key, true);
-}
-
-void handleInputDown(int key, int mouseX, int mouseY)
-{
-	InputHandler::updateSpecials(key, true);
-}
-
-void handleInputUp(unsigned char key, int mouseX, int mouseY)
-{
-	InputHandler::updateKeys(key, false);
-}
-
-void handleInputUp(int key, int mouseX, int mouseY)
-{
-	InputHandler::updateSpecials(key, false);
-}
-*/
 
 // Is called whenever a key is pressed/released via GLFW
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
@@ -98,23 +72,28 @@ void changeSizeCallback(GLFWwindow *window, int w, int h)
 
 void update()
 {
-	current = glfwGetTime();
-	timeDelta = current - last;
+	double newTime = glfwGetTime();
+	double frameTime = newTime - currentTime;
+	currentTime = newTime;
 
-	Debug::frameTime = timeDelta;
-	Debug::fps = 1.0 / timeDelta;
-	cumuFramerate += 1.0 / timeDelta;
+	accumulator += frameTime;
+
+	Debug::frameTime = frameTime;
+	Debug::fps = 1.0 / frameTime;
+	cumuFramerate += 1.0 / frameTime;
 	measurements++;
 	avgFramerate = cumuFramerate / (double)measurements;
 
-	if (timeDelta >= dt)
+	while (accumulator >= dt)
 	{
 		glfwPollEvents();
 
 		InputHandler::handleInput();
-		game->update(timeDelta);
+		
+		game->update(dt);
 
-		last = current;
+		accumulator -= dt;
+		t += dt;
 	}
 }
 
@@ -182,7 +161,6 @@ int main(int argc, char **argv)
 	game->start();
 
 	// Game loop
-	last = glfwGetTime();
 	while (!glfwWindowShouldClose(window))
 	{
 		update();

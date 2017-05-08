@@ -34,7 +34,7 @@ namespace metalwalrus
 		if (velocity.y < GameScene::terminalVelocity) velocity.y = GameScene::terminalVelocity;
 
 		oldPos = position;
-		this->moveBy(velocity);
+		this->moveBy(velocity * delta);
 		AABB tbb;
 		Tile t;
 		if (GameScene::loadedMap->boundingBoxCollides(this->boundingBox, tbb, t))

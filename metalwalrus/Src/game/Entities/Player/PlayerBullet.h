@@ -13,7 +13,7 @@ namespace metalwalrus
 		Texture2D *bulletTex;
 		bool facingLeft = false;
 
-		const int bulletSpeed = 3;
+		const int bulletSpeed = 200;
 	public:
 		PlayerBullet(Vector2 pos, bool facingLeft, Texture2D *bulletTex);
 

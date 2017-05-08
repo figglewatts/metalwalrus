@@ -9,12 +9,12 @@
 
 namespace metalwalrus
 {
-	const float Player::walkSpeed = 1.5;
+	const float Player::walkSpeed = 100;
 
-	const float Player::climbSpeed = 1;
+	const float Player::climbSpeed = 75;
 
-	const float Player::jumpSpeed = 4;
-	const int Player::jumpFrames = 11;
+	const float Player::jumpSpeed = 250;
+	const int Player::jumpFrames = 14;
 	const int Player::jumpAfterPlatformFrames = 7;
 	const float Player::jumpInAirTolerance = 2;
 
@@ -25,7 +25,7 @@ namespace metalwalrus
 	const int Player::shotDamage = 1;
 
 	const int Player::damageAnimationFrames = 20;
-	const float Player::damageVelocity = 1;
+	const float Player::damageVelocity = 75;
 	const int Player::damageImmunityFrames = 50;
 
 	const int Player::framesAfterDeath = 30;
@@ -259,7 +259,7 @@ namespace metalwalrus
 		oldPosition = position;
 		AABB tbb;
 		Tile t;
-		moveBy(Vector2(velocity.x, 0));
+		moveBy(Vector2((velocity.x * delta), 0));
 		if (GameScene::loadedMap->boundingBoxCollides(boundingBox, tbb, t))
 		{
 			if (!t.is_oneWay())
@@ -267,10 +267,10 @@ namespace metalwalrus
 		}
 
 		oldPosition = position;
-		moveBy(Vector2(0, velocity.y));
+		moveBy(Vector2(0, (velocity.y * delta)));
 		if (GameScene::loadedMap->boundingBoxCollides(boundingBox, tbb, t))
 		{
-			if (t.is_oneWay() && oldPosition.y >= tbb.get_top())
+			if (t.is_oneWay() && oldPosition.y >= (tbb.get_top()-1))
 			{
 				moveTo(Vector2(position.x, tbb.get_top()));
 				playerInfo.onGround = true;
@@ -293,7 +293,6 @@ namespace metalwalrus
 				playerInfo.jumping = false;
 				jumpFrameTimer = 0;
 			}
-			
 		}
 		else
 		{

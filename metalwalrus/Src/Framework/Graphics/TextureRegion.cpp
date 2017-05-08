@@ -70,10 +70,10 @@ namespace metalwalrus
 
 		// inset the UVs by an offset so we don't get texture bleeding
 		// for non integer camera positions
-		this->u = u + (1.0/128 * 1.0 / width);
-		this->v = v - (1.0/128 * 1.0 / height);
-		this->u2 = u2 + (1.0/128 * 1.0 / width);
-		this->v2 = v2 - (1.0/128 * 1.0 / height);
+		this->u = u + (1.0/1024 * 1.0 / width);
+		this->v = v - (1.0/1024 * 1.0 / height);
+		this->u2 = u2 + (1.0/1024 * 1.0 / width);
+		this->v2 = v2 - (1.0/1024 * 1.0 / height);
 	}
 
 	void TextureRegion::scroll(int xAmount, int yAmount)
@@ -92,7 +92,7 @@ namespace metalwalrus
 
 	void TextureRegion::changePos(int x, int y)
 	{
-		this->setRegion(x, y, width, height);
+		this->setRegion(x, y, (int)width, (int)height);
 	}
 
 	void TextureRegion::draw()
