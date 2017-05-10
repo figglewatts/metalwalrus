@@ -10,7 +10,7 @@ namespace metalwalrus
 	class EnemyBullet : public SolidObject
 	{
 		float timer;
-		const float lifeTime = 1.5;
+		const float lifeTime = 5.0;
 
 		int damage;
 

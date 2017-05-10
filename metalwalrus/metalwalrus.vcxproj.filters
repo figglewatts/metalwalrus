@@ -168,6 +168,24 @@
     <ClCompile Include="Src\game\Entities\Enemy\EnemyBullet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Src\game\Entities\Enemy\StationaryShooter\ShooterIdleState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\game\Entities\Enemy\StationaryShooter\ShooterShootState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\game\Entities\Enemy\BouncingRobot\BouncerIdleState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\game\Entities\Enemy\BouncingRobot\BouncerBouncingState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\game\Entities\Enemy\RobotShooter\RobotIdleState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\game\Entities\Enemy\RobotShooter\RobotShootingState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Framework\Game.h">

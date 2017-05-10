@@ -1,4 +1,5 @@
 #include "StationaryShooter.h"
+#include "../EnemyBullet.h"
 
 namespace metalwalrus
 {
@@ -7,10 +8,11 @@ namespace metalwalrus
 	
 	void StationaryShooter::shoot()
 	{
-		shooting = true;
+		shootingUp = !shootingUp;
 
-		// TODO: create bullet
-		sprite->playReverse("open", [&]{ shooting = false; });
+		Vector2 bulletVel = Vector2(facingLeft ? -bulletSpeed : bulletSpeed,
+			shootingUp ? bulletSpeed : -bulletSpeed);
+		parentScene->registerObject(new EnemyBullet(this->get_center(), bulletVel, this->damage));
 	}
 
 	void StationaryShooter::start()
@@ -20,16 +22,14 @@ namespace metalwalrus
 		if (shooterSheet == nullptr)
 			shooterSheet = new SpriteSheet(shooterTex, 16, 16);
 
-		int sheetAddition = this->hardEnemy ? 4 : 0;
+		int sheetAddition = this->hardEnemy ? 8 : 0;
 		this->sprite = new AnimatedSprite(shooterSheet);
 		this->sprite->addAnimation("idle", FrameAnimation(0, sheetAddition, 0));
 		this->sprite->addAnimation("open", FrameAnimation(4, sheetAddition, 0.1));
+		this->sprite->addAnimation("close", FrameAnimation(4, sheetAddition + 3, 0.1));
 		this->sprite->addAnimation("shoot", FrameAnimation(0, sheetAddition + 3, 0));
-		this->sprite->play("idle");
-
-		this->shootingUp = false;
-		this->shotFrameTimer = this->shotCooldownFrames;
-		this->shooting = false;
+		
+		machine.transition(new ShooterIdleState("idle", &machine), *this);
 	}
 
 	void StationaryShooter::update(double delta)
@@ -42,12 +42,10 @@ namespace metalwalrus
 		Vector2 toPlayer = (p->get_center() - this->position);
 		float distance = toPlayer.dist();
 
-		if (distance > 150 || shooting)
+		if (distance > 150)
 			return;
 
-		shotFrameTimer--;
-		if (shotFrameTimer <= 0)
-			sprite->play("open", [this] { this->shoot(); });
+		machine.update(delta, *this);
 	}
 
 	void StationaryShooter::draw(SpriteBatch& batch)

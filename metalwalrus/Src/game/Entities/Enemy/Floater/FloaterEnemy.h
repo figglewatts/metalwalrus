@@ -18,11 +18,16 @@ namespace metalwalrus
 		AnimatedSprite *sprite;
 
 	public:
-		FloaterEnemy(Vector2 pos, bool isHard)
-			: Enemy(pos, 16, 16, Vector2::ZERO, isHard, 
+		FloaterEnemy(Vector2 pos, bool isHard, bool facingLeft)
+			: Enemy(pos, 16, 16, Vector2::ZERO, isHard, facingLeft,
 				isHard ? 2 : 1, 
 				isHard ? 3 : 2, 
-				isHard ? 400 : 100), speed(0.4F) { }
+				isHard ? 400 : 100)
+			, speed(isHard ? 0.6F : 0.4F) { }
+		~FloaterEnemy()
+		{
+			delete sprite;
+		}
 
 		void start() override;
 		void update(double delta) override;

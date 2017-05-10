@@ -5,8 +5,8 @@
 
 namespace metalwalrus
 {
-	Enemy::Enemy(Vector2 position, unsigned width, unsigned height, Vector2 offset, bool isHard, int health, int damage, int score)
-		: SolidObject(position, width, height, offset, "enemy"), health(health), damage(damage), facingLeft(false)
+	Enemy::Enemy(Vector2 position, unsigned width, unsigned height, Vector2 offset, bool isHard, bool facingLeft, int health, int damage, int score)
+		: SolidObject(position, width, height, offset, "enemy"), health(health), damage(damage), facingLeft(facingLeft)
 		, p(nullptr), score(score), hardEnemy(isHard)
 	{
 		srand(time(nullptr));

@@ -28,7 +28,7 @@ namespace metalwalrus
 
 	public:
 		Enemy(Vector2 position, unsigned width, unsigned height, Vector2 offset,
-			bool isHard, int health, int damage, int score);
+			bool isHard, bool facingLeft, int health, int damage, int score);
 		virtual ~Enemy() { }
 
 		int get_health() const { return health; }

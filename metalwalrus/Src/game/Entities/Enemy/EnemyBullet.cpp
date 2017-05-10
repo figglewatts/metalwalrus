@@ -8,7 +8,7 @@ namespace metalwalrus
 	Player *EnemyBullet::p;
 	
 	EnemyBullet::EnemyBullet(Vector2 pos, Vector2 bulletVelocity, int damage)
-		: SolidObject(pos, 8, 6, Vector2::ZERO), timer(0), damage(damage) { }
+		: SolidObject(pos, 8, 6, Vector2::ZERO), bulletVelocity(bulletVelocity), timer(0), damage(damage) { }
 	
 	void EnemyBullet::start()
 	{
