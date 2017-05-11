@@ -6,6 +6,8 @@
 
 namespace metalwalrus
 {
+	Color GLContext::clearColor = Color::BLACK;
+	
 	GLContext::GLContext()
 	{}
 

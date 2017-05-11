@@ -4,15 +4,30 @@
 #include <iostream>
 #include <fstream>
 #include <regex>
+#include <sstream>
 
 #include "Debug.h"
 #include "../Graphics/Texture2D.h"
 #include "../Graphics/SpriteSheet.h"
+#include "../Graphics/GLContext.h"
 
 namespace metalwalrus
 {
 	namespace utilities
 	{
+		Color JSONUtil::colorFromHexString(const std::string & hexString)
+		{
+			std::stringstream convert(hexString.substr(1, std::string::npos));
+			unsigned int value;
+			convert >> std::hex >> value;
+
+			float r = ((value >> 16) & 0xFF) / 255.0;
+			float g = ((value >> 8) & 0xFF) / 255.0;
+			float b = ((value) & 0xFF) / 255.0;
+
+			return Color(r, g, b);
+		}
+
 		SpriteSheet *JSONUtil::tiled_spritesheet(std::string filePath)
 		{
 			picojson::value *json = jsonValueFromFile(filePath);
@@ -47,6 +62,9 @@ namespace metalwalrus
 				SpriteSheet *ss = tiled_spritesheet(pathToTileset);
 				tm->addTileSheet(ss);
 			}
+
+			tm->get_properties() = json->get("properties");
+			GLContext::clearColor = colorFromHexString(tm->get_properties().getProperty<std::string>("backgroundCol"));
 			
 			unsigned tileWidth = tm->get_sheets()[0]->get_spriteWidth();
 			unsigned tileHeight = tm->get_sheets()[0]->get_spriteHeight();

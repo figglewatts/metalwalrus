@@ -6,7 +6,7 @@
 #include <iostream>
 #include <string>
 #include "../Framework/Scene/SceneManager.h"
-#include "Scenes/GameScene.h"
+#include "Scenes/TitleScreenScene.h"
 #include "../Framework/Util/GLError.h"
 
 using namespace std;
@@ -84,8 +84,7 @@ namespace metalwalrus
 
 		debugBatch = new SpriteBatch();
 
-		GameScene *gameScene = new GameScene();
-		SceneManager::addScene(gameScene);
+		SceneManager::addScene(new TitleScreenScene());
 	}
 
 	void MetalWalrus::update(double delta)
@@ -108,7 +107,7 @@ namespace metalwalrus
 
 		screenBuffer->bind();
 
-		context->clear(Color(0.38, 0.827, 0.890)); // background color of scene
+		context->clear(context->clearColor); // background color of scene
 		
 		SceneManager::draw();
 		

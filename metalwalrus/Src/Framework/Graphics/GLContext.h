@@ -16,6 +16,8 @@ namespace metalwalrus
 		void clear(Color c);
 		
 		void viewport(int x, int y, int w, int h);
+
+		static Color clearColor;
 	};
 }
 

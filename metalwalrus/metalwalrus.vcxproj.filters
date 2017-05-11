@@ -192,6 +192,9 @@
     <ClCompile Include="Src\game\Entities\World\LevelFinish.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Src\game\Scenes\TitleScreenScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Framework\Game.h">

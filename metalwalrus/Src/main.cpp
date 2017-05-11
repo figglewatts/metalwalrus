@@ -99,15 +99,11 @@ void update()
 
 void draw()
 {
-	check_gl_error();
 	glMatrixMode(GL_MODELVIEW);
-	check_gl_error();
 	glPushMatrix();
-	check_gl_error();
 	float scaleX = (float)Settings::WIDTH / (float)Settings::VIRTUAL_WIDTH;
 	float scaleY = (float)Settings::HEIGHT / (float)Settings::VIRTUAL_HEIGHT;
 	glScalef(scaleX, scaleY, 0);
-	check_gl_error();
 
 	game->draw();
 

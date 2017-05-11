@@ -40,6 +40,14 @@
         }],
  "nextobjectid":1,
  "orientation":"orthogonal",
+ "properties":
+    {
+     "backgroundCol":"#ff00ffff"
+    },
+ "propertytypes":
+    {
+     "backgroundCol":"color"
+    },
  "renderorder":"right-down",
  "tileheight":16,
  "tilesets":[

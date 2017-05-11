@@ -73,6 +73,7 @@
     <ClCompile Include="Src\Framework\Game.cpp" />
     <ClCompile Include="Src\Framework\Util\MathUtil.cpp" />
     <ClCompile Include="Src\game\Scenes\GameScene.cpp" />
+    <ClCompile Include="Src\game\Scenes\TitleScreenScene.cpp" />
     <ClCompile Include="Src\main.cpp" />
     <ClCompile Include="Src\Framework\Graphics\Texture2D.cpp" />
     <ClCompile Include="src\Framework\Graphics\TextureRegion.cpp" />

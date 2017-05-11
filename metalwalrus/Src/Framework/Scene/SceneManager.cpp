@@ -20,10 +20,10 @@ namespace metalwalrus
 
 	void SceneManager::update(double delta)
 	{
-		for (auto scene : scenes)
+		for (int i = 0; i < scenes.size(); i++)
 		{
-			if (scene->get_updateable())
-				scene->update(delta);
+			if (scenes[i]->get_updateable())
+				scenes[i]->update(delta);
 		}
 	}
 

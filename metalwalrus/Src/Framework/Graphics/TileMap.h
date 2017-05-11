@@ -77,6 +77,7 @@ namespace metalwalrus
 		unsigned width;
 		unsigned height;
 		Camera* camera;
+		PropertyContainer properties;
 
 		void initializeEmpty();
 	public:
@@ -103,6 +104,7 @@ namespace metalwalrus
 		TileLayer* get_layer(unsigned layer);
 		SpriteSheet& get_sheetFromTileID(unsigned tileID);
 		int get_sheetIndexFromTileID(unsigned tileID);
+		PropertyContainer& get_properties() { return properties; }
 
 		bool boundingBoxCollides(AABB boundingBox, AABB& tbb, Tile& t);
 	};

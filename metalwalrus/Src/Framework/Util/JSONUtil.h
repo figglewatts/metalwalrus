@@ -12,6 +12,8 @@ namespace metalwalrus
 		class JSONUtil
 		{
 			JSONUtil();
+
+			static Color colorFromHexString(const std::string& hexString);
 		public:
 			static SpriteSheet *tiled_spritesheet(std::string filePath);
 			static TileMap *tiled_tilemap(std::string filePath, Camera *cam);
