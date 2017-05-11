@@ -133,7 +133,7 @@ namespace metalwalrus
 	{
 		for (int i = 0; i < tileSheets.size(); i++)
 		{
-			if (tileID < initialTileIDs[tileSheets[i]] + tileSheets[i]->get_numSprites())
+			if (tileID <= initialTileIDs[tileSheets[i]] + tileSheets[i]->get_numSprites())
 				return i;
 		}
 		throw std::runtime_error("Could not get tilesheet from tileID");

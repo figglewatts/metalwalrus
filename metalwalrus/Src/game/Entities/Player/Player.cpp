@@ -28,7 +28,7 @@ namespace metalwalrus
 	const float Player::damageVelocity = 75;
 	const int Player::damageImmunityFrames = 50;
 
-	const int Player::framesAfterDeath = 30;
+	const int Player::framesAfterDeath = 60;
 
 	Ladder *Player::checkCanClimb()
 	{
@@ -44,6 +44,13 @@ namespace metalwalrus
 	{
 		parentScene->registerObject(new PlayerBullet(position + Vector2(playerInfo.facingLeft ? 0 : 26, 13), 
 			playerInfo.facingLeft, bulletTex));
+	}
+
+	void Player::die()
+	{
+		playerInfo.alive = false;
+		walrusSprite->play("dead");
+		deathFrameTimer = framesAfterDeath;
 	}
 
 	void Player::handleInput()
@@ -235,9 +242,26 @@ namespace metalwalrus
 			deathFrameTimer--;
 			if (deathFrameTimer <= 0)
 			{
+				GameScene::playerDead = true;
 				((GameScene*)this->parentScene)->loadLevel(GameScene::currentLevel);
 			}
 			return;
+		}
+
+		for (KillBox* k : GameScene::killBoxes)
+		{
+			if (boundingBox.intersects(k->get_boundingBox()))
+				this->die();
+		}
+
+		for (LevelFinish* l : GameScene::levelFinish)
+		{
+			if (boundingBox.intersects(l->get_boundingBox()))
+			{
+				((GameScene*)this->parentScene)->loadLevel(++GameScene::currentLevel);
+				return;
+			}
+			
 		}
 		
 		if (damageImmunityFrameTimer <= 0)
@@ -334,9 +358,7 @@ namespace metalwalrus
 
 		if (this->health <= 0)
 		{
-			playerInfo.alive = false;
-			walrusSprite->play("dead");
-			deathFrameTimer = framesAfterDeath;
+			this->die();
 		}
 	}
 }

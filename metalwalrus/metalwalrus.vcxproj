@@ -45,7 +45,9 @@
     <ClCompile Include="Src\game\Entities\Player\ShootState.cpp" />
     <ClCompile Include="Src\game\Entities\World\EnemySpawn.cpp" />
     <ClCompile Include="Src\game\Entities\World\HealthPowerup.cpp" />
+    <ClCompile Include="Src\game\Entities\World\KillBox.cpp" />
     <ClCompile Include="Src\game\Entities\World\Ladder.cpp" />
+    <ClCompile Include="Src\game\Entities\World\LevelFinish.cpp" />
     <ClCompile Include="Src\game\Entities\World\PlayerSpawn.cpp" />
     <ClCompile Include="Src\game\Entities\World\WorldObjectFactory.cpp" />
     <ClCompile Include="src\game\MetalWalrus.cpp" />
@@ -99,7 +101,9 @@
     <ClInclude Include="Src\game\Entities\Player\States.h" />
     <ClInclude Include="Src\game\Entities\World\EnemySpawn.h" />
     <ClInclude Include="Src\game\Entities\World\HealthPowerup.h" />
+    <ClInclude Include="Src\game\Entities\World\KillBox.h" />
     <ClInclude Include="Src\game\Entities\World\Ladder.h" />
+    <ClInclude Include="Src\game\Entities\World\LevelFinish.h" />
     <ClInclude Include="Src\game\Entities\World\PlayerSpawn.h" />
     <ClInclude Include="Src\game\Entities\World\WorldObject.h" />
     <ClInclude Include="Src\game\Entities\World\WorldObjectFactory.h" />
@@ -133,6 +137,7 @@
     <ClInclude Include="Src\Framework\Graphics\VertexData.h" />
     <ClInclude Include="src\Framework\Graphics\TileMap.h" />
     <ClInclude Include="Src\game\Scenes\GameScene.h" />
+    <ClInclude Include="Src\game\Scenes\TitleScreenScene.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{BC71CF58-3950-4419-8D2A-03A201012C6D}</ProjectGuid>

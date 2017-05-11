@@ -22,7 +22,8 @@ namespace metalwalrus
 	{
 		for (auto scene : scenes)
 		{
-			scene->update(delta);
+			if (scene->get_updateable())
+				scene->update(delta);
 		}
 	}
 

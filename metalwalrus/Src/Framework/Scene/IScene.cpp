@@ -21,9 +21,11 @@ namespace metalwalrus
 
 	void IScene::destroyAllObjects()
 	{
+		this->updateable = false;
 		for (auto o : objects)
 			delete o;
 		objects.clear();
+		this->updateable = true;
 	}
 
 	GameObject *IScene::getWithID(int id)

@@ -186,6 +186,12 @@
     <ClCompile Include="Src\game\Entities\Enemy\RobotShooter\RobotShootingState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Src\game\Entities\World\KillBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\game\Entities\World\LevelFinish.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Framework\Game.h">
@@ -351,6 +357,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Src\game\Entities\Enemy\EnemyBullet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\game\Entities\World\KillBox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\game\Entities\World\LevelFinish.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\game\Scenes\TitleScreenScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -2,6 +2,8 @@
 #include "PlayerSpawn.h"
 #include "Ladder.h"
 #include "EnemySpawn.h"
+#include "KillBox.h"
+#include "LevelFinish.h"
 
 namespace metalwalrus
 {
@@ -14,6 +16,10 @@ namespace metalwalrus
 			return new Ladder(pos, properties);
 		else if (classname == EnemySpawn::staticClassname)
 			return new EnemySpawn(pos, properties);
+		else if (classname == "killbox")
+			return new KillBox(pos, properties);
+		else if (classname == "levelfinish")
+			return new LevelFinish(pos, properties);
 	}
 
 }

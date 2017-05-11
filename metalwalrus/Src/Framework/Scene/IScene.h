@@ -12,6 +12,7 @@ namespace metalwalrus
 	{
 	protected:
 		std::vector<GameObject*> objects;
+		bool updateable;
 	public:
 		virtual ~IScene()
 		{
@@ -21,6 +22,8 @@ namespace metalwalrus
 		virtual void start() = 0;
 		virtual void update(double delta) = 0;
 		virtual void draw() = 0;
+
+		bool get_updateable() const { return updateable; }
 
 		void registerObject(GameObject *obj);
 		void destroyObject(GameObject *obj);

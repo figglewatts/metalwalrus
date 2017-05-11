@@ -46,6 +46,14 @@
          "facingLeft":true,
          "hardEnemy":true
         },
+     "14":
+        {
+         "classname":"levelfinish"
+        },
+     "15":
+        {
+         "classname":"killbox"
+        },
      "2":
         {
          "classname":"enemy_spawn",
@@ -142,6 +150,14 @@
          "facingLeft":"bool",
          "hardEnemy":"bool"
         },
+     "14":
+        {
+         "classname":"string"
+        },
+     "15":
+        {
+         "classname":"string"
+        },
      "2":
         {
          "classname":"string",
@@ -199,6 +215,5 @@
          "hardEnemy":"bool"
         }
     },
- "tilewidth":16,
- "type":"tileset"
+ "tilewidth":16
 }

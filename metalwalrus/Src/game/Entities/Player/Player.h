@@ -77,6 +77,7 @@ namespace metalwalrus
 		int deathFrameTimer;
 
 		void shoot();
+		void die();
 		void handleInput();
 		Ladder *checkCanClimb();
 	public:

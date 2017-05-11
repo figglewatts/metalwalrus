@@ -8,6 +8,8 @@
 
 #include "../Entities/Player/Player.h"
 #include "../Entities/World/Ladder.h"
+#include "../Entities/World/KillBox.h"
+#include "../Entities/World/LevelFinish.h"
 
 namespace metalwalrus
 {
@@ -15,8 +17,10 @@ namespace metalwalrus
 	{
 		static Camera *camera;
 		SpriteBatch *batch;
+		std::vector<std::string> levels;
 
 		void loadMapObjects();
+		void onLevelLoad();
 	public:
 		~GameScene();
 
@@ -28,11 +32,14 @@ namespace metalwalrus
 		static int playerID;
 		static std::vector<GameObject*> *enemies;
 		static std::vector<Ladder*> ladders;
-		static std::string currentLevel;
+		static std::vector<KillBox*> killBoxes;
+		static std::vector<LevelFinish*> levelFinish;
+		static int currentLevel;
 		static const float gravity;
 		static const float terminalVelocity;
+		static bool playerDead;
 
-		void loadLevel(const std::string& levelname);
+		void loadLevel(int levelIndex);
 	};
 }
 

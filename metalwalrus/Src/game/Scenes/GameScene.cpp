@@ -17,10 +17,13 @@ namespace metalwalrus
 	int GameScene::playerID = -1;
 	vector<GameObject*> *GameScene::enemies;
 	vector<Ladder*> GameScene::ladders;
+	vector<KillBox*> GameScene::killBoxes;
+	vector<LevelFinish*> GameScene::levelFinish;
 	Camera *GameScene::camera;
-	std::string GameScene::currentLevel;
+	int GameScene::currentLevel;
 	const float GameScene::gravity = 40;
 	const float GameScene::terminalVelocity = -250;
+	bool GameScene::playerDead;
 
 	Player *player = nullptr;
 
@@ -64,6 +67,12 @@ namespace metalwalrus
 		}
 	}
 
+	void GameScene::onLevelLoad()
+	{
+		player = (Player*)this->getWithID(playerID);
+		GameScene::playerDead = false;
+	}
+
 	GameScene::~GameScene()
 	{
 		delete loadedMap;
@@ -81,6 +90,11 @@ namespace metalwalrus
 
 	void GameScene::start()
 	{
+		levels.push_back("level1.json");
+		levels.push_back("level2.json");
+
+		this->updateable = true;
+		
 		// create main SpriteBatch
 		batch = new SpriteBatch();
 
@@ -89,15 +103,14 @@ namespace metalwalrus
 
 		enemies = new std::vector<GameObject*>();
 
-		this->loadLevel("level1.json");
+		currentLevel = 0;
+		this->loadLevel(0);
 
 		healthBarTex = Texture2D::create("assets/sprite/healthbar.png");
 		healthBarEmptyTex = Texture2D::create("assets/sprite/healthbar-empty.png");
 
 		fontTexture = Texture2D::create("assets/font.png");
 		font = new FontSheet(fontTexture, 8, 8, 0, 0);
-
-		player = (Player*)this->getWithID(playerID);
 	}
 
 	void GameScene::update(double delta)
@@ -108,7 +121,11 @@ namespace metalwalrus
 			((Enemy*)e)->damagePlayer();
 
 		for (int i = 0; i < objects.size(); i++)
+		{
+			if (GameScene::playerDead)
+				return;
 			objects[i]->update(delta);
+		}
 
 		Vector2 playerCenter = player->get_center();
 		camera->centerOn(Vector2(playerCenter.x, playerCenter.y));
@@ -156,13 +173,20 @@ namespace metalwalrus
 		
 	}
 
-	void GameScene::loadLevel(const std::string & levelname)
+	void GameScene::loadLevel(int levelIndex)
 	{
 		this->destroyAllObjects();
 
-		currentLevel = levelname;
+		enemies->clear();
+		ladders.clear();
+		killBoxes.clear();
+		levelFinish.clear();
+
+		currentLevel = levelIndex;
 		
-		loadedMap = utilities::JSONUtil::tiled_tilemap("assets/data/level/" + levelname, this->camera);
+		loadedMap = utilities::JSONUtil::tiled_tilemap("assets/data/level/" + levels[levelIndex], this->camera);
 		loadMapObjects();
+
+		onLevelLoad();
 	}
 }
