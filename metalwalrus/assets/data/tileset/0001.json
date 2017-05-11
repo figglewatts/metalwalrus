@@ -87,11 +87,11 @@
      "22":
         {
          "oneWay":false,
-         "solid":true
+         "solid":false
         },
      "23":
         {
-         "oneWay":false,
+         "oneWay":true,
          "solid":true
         },
      "24":

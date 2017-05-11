@@ -21,7 +21,7 @@ namespace metalwalrus
 		FloaterEnemy(Vector2 pos, bool isHard, bool facingLeft)
 			: Enemy(pos, 16, 16, Vector2::ZERO, isHard, facingLeft,
 				isHard ? 2 : 1, 
-				isHard ? 3 : 2, 
+				isHard ? 6 : 3, 
 				isHard ? 400 : 100)
 			, speed(isHard ? 0.6F : 0.4F) { }
 		~FloaterEnemy()

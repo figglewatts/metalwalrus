@@ -24,7 +24,7 @@ namespace metalwalrus
 		StationaryShooter(Vector2 pos, bool isHard, bool facingLeft)
 			: Enemy(pos, 16, 16, Vector2::ZERO, isHard, facingLeft,
 				isHard ? 4 : 2,
-				isHard ? 2 : 1,
+				isHard ? 4 : 2,
 				isHard ? 200 : 100)
 			, shotCooldownFrames(isHard ? 40 : 80)
 			, shooting(false)

@@ -28,7 +28,7 @@ namespace metalwalrus
 		BouncingRobot(Vector2 pos, bool isHard, bool facingLeft)
 			: Enemy(pos, 16, 16, Vector2::ZERO, isHard, facingLeft,
 				isHard ? 4 : 2,
-				isHard ? 5 : 2,
+				isHard ? 5 : 3,
 				isHard ? 400 : 200)
 			, jumpVelocity(isHard ? 50 : 50)
 			, leapVelocity(isHard ? 100 : 100)

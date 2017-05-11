@@ -11,6 +11,8 @@ namespace metalwalrus
 		, p(nullptr), score(score), hardEnemy(isHard)
 	{
 		srand(time(nullptr));
+		this->healthSpawnChance = 10;
+		this->healthBigChance = 10;
 	}
 
 	void Enemy::die()

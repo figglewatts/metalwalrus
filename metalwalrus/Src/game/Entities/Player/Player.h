@@ -27,6 +27,7 @@ namespace metalwalrus
 		bool alive;
 		bool climbing;
 		bool canClimb;
+		bool facingLeftBeforeDamage;
 	};
 	
 	class Player : public SolidObject

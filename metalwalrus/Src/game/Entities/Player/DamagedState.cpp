@@ -31,5 +31,6 @@ namespace metalwalrus
 		p.get_playerInfo().damaged = false;
 		p.get_velocity().x = 0;
 		p.get_playerInfo().canMove = true;
+		p.get_playerInfo().facingLeft = p.get_playerInfo().facingLeftBeforeDamage;
 	}
 }

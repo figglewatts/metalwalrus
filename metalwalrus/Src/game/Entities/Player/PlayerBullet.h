@@ -9,7 +9,7 @@ namespace metalwalrus
 	class PlayerBullet : public SolidObject
 	{
 		float timer;
-		const float lifeTime = 1.5;
+		const float lifeTime = 0.6;
 		Texture2D *bulletTex;
 		bool facingLeft = false;
 

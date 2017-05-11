@@ -23,8 +23,8 @@ namespace metalwalrus
 		bool hardEnemy;
 		Player *p;
 
-		const int healthSpawnChance = 25; // chance of health spawn on kill (out of 100)
-		const int healthBigChance = 25; // chance of big health spawn on health spawn
+		int healthSpawnChance; // chance of health spawn on kill (out of 100)
+		int healthBigChance; // chance of big health spawn on health spawn
 
 	public:
 		Enemy(Vector2 position, unsigned width, unsigned height, Vector2 offset,

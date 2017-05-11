@@ -11,7 +11,7 @@ namespace metalwalrus
 
 	void InAirState::exit(Player& p)
 	{
-		Audio::engine->play2D("assets/snd/sfx/player_land.wav");
+		
 	}
 
 	void InAirState::update(double delta, Player& p)

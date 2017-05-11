@@ -229,6 +229,7 @@ namespace metalwalrus
 		playerInfo.alive = true;
 		playerInfo.climbing = false;
 		playerInfo.canClimb = false;
+		playerInfo.facingLeftBeforeDamage = false;
 
 		this->health = this->maxHealth;
 		this->score = 0;
@@ -303,12 +304,16 @@ namespace metalwalrus
 			if (t.is_oneWay() && oldPosition.y >= (tbb.get_top()-1))
 			{
 				moveTo(Vector2(position.x, tbb.get_top()));
+				if (!playerInfo.onGround)
+					Audio::engine->play2D("assets/snd/sfx/player_land.wav");
 				playerInfo.onGround = true;
 				playerInfo.touchedGroundLastFrame = true;
 			}
 			else if (!t.is_oneWay() && oldPosition.y >= tbb.get_top())
 			{
 				moveTo(Vector2(position.x, tbb.get_top()));
+				if (!playerInfo.onGround)
+					Audio::engine->play2D("assets/snd/sfx/player_land.wav");
 				playerInfo.onGround = true;
 				playerInfo.touchedGroundLastFrame = true;
 			}
@@ -362,6 +367,8 @@ namespace metalwalrus
 
 		Vector2 toPlayer = damager->get_position() - this->position;
 		playerInfo.damagedFromLeft = toPlayer.dot(Vector2::RIGHT) < 0;
+
+		playerInfo.facingLeftBeforeDamage = playerInfo.facingLeft;
 		
 		this->health -= damageAmount;
 
