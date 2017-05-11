@@ -4,12 +4,15 @@ namespace metalwalrus
 {
 	void BouncerIdleState::enter(BouncingRobot& b)
 	{
+		timer = b.get_timeOnGround();
 		if (b.get_springExtended())
 			b.get_animatedSprite().playOneShot("compress", [&b] { b.get_animatedSprite().play("idle"); });
 		else 
+		{
+			timer = 0;
 			b.get_animatedSprite().play("idle");
+		}
 		b.get_springExtended() = false;
-		timer = b.get_timeOnGround();
 	}
 
 	void BouncerIdleState::update(double delta, BouncingRobot& b)

@@ -30,7 +30,7 @@ namespace metalwalrus
 				isHard ? 4 : 2,
 				isHard ? 5 : 2,
 				isHard ? 400 : 200)
-			, jumpVelocity(isHard ? 40 : 40)
+			, jumpVelocity(isHard ? 50 : 50)
 			, leapVelocity(isHard ? 100 : 100)
 			, timeOnGround(isHard ? 1.0 : 2.0)
 			, onGround(true)

@@ -1,4 +1,5 @@
 #include "States.h"
+#include "../../../Framework/Audio/Audio.h"
 
 namespace metalwalrus
 {
@@ -10,6 +11,7 @@ namespace metalwalrus
 
 	void InAirState::exit(Player& p)
 	{
+		Audio::engine->play2D("assets/snd/sfx/player_land.wav");
 	}
 
 	void InAirState::update(double delta, Player& p)

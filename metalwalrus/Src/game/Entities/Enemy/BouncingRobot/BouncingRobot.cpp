@@ -61,7 +61,7 @@ namespace metalwalrus
 		Vector2 toPlayer = (p->get_center() - this->position);
 		float distance = toPlayer.dist();
 
-		if (distance > 150)
+		if (distance > 120)
 			return;
 
 		this->machine.update(delta, *this);

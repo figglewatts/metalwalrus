@@ -1,6 +1,7 @@
 #include "SceneManager.h"
 
 #include <algorithm>
+#include "../Audio/Audio.h"
 
 namespace metalwalrus
 {
@@ -46,5 +47,6 @@ namespace metalwalrus
 		for (auto s : scenes)
 			delete s;
 		scenes.clear();
+		Audio::engine->stopAllSounds();
 	}
 }

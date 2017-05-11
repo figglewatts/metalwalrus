@@ -29,7 +29,7 @@ namespace metalwalrus
 		Vector2 toPlayer = (player->get_center() - this->position);
 		float distance = toPlayer.dist();
 
-		if (distance > 100)
+		if (distance > 140)
 			return;
 
 		if (distance > 8)

@@ -22,11 +22,11 @@
      "10":
         {
          "oneWay":false,
-         "solid":true
+         "solid":false
         },
      "11":
         {
-         "oneWay":false,
+         "oneWay":true,
          "solid":true
         },
      "12":
@@ -82,7 +82,7 @@
      "21":
         {
          "oneWay":false,
-         "solid":true
+         "solid":false
         },
      "22":
         {
@@ -97,32 +97,32 @@
      "24":
         {
          "oneWay":false,
-         "solid":true
+         "solid":false
         },
      "25":
         {
          "oneWay":false,
-         "solid":true
+         "solid":false
         },
      "26":
         {
          "oneWay":false,
-         "solid":true
+         "solid":false
         },
      "27":
         {
          "oneWay":false,
-         "solid":true
+         "solid":false
         },
      "28":
         {
          "oneWay":false,
-         "solid":true
+         "solid":false
         },
      "29":
         {
          "oneWay":false,
-         "solid":true
+         "solid":false
         },
      "3":
         {
@@ -132,7 +132,7 @@
      "30":
         {
          "oneWay":false,
-         "solid":true
+         "solid":false
         },
      "31":
         {
@@ -162,12 +162,12 @@
      "36":
         {
          "oneWay":false,
-         "solid":false
+         "solid":true
         },
      "37":
         {
          "oneWay":false,
-         "solid":false
+         "solid":true
         },
      "38":
         {
@@ -227,12 +227,12 @@
      "48":
         {
          "oneWay":false,
-         "solid":false
+         "solid":true
         },
      "49":
         {
          "oneWay":false,
-         "solid":false
+         "solid":true
         },
      "5":
         {
@@ -242,37 +242,37 @@
      "50":
         {
          "oneWay":false,
-         "solid":false
+         "solid":true
         },
      "51":
         {
          "oneWay":false,
-         "solid":false
+         "solid":true
         },
      "52":
         {
          "oneWay":false,
-         "solid":false
+         "solid":true
         },
      "53":
         {
          "oneWay":false,
-         "solid":false
+         "solid":true
         },
      "54":
         {
          "oneWay":false,
-         "solid":false
+         "solid":true
         },
      "55":
         {
          "oneWay":false,
-         "solid":false
+         "solid":true
         },
      "56":
         {
          "oneWay":false,
-         "solid":false
+         "solid":true
         },
      "57":
         {
@@ -282,12 +282,12 @@
      "58":
         {
          "oneWay":false,
-         "solid":false
+         "solid":true
         },
      "59":
         {
          "oneWay":false,
-         "solid":false
+         "solid":true
         },
      "6":
         {
@@ -297,22 +297,22 @@
      "60":
         {
          "oneWay":false,
-         "solid":false
+         "solid":true
         },
      "61":
         {
          "oneWay":false,
-         "solid":false
+         "solid":true
         },
      "62":
         {
          "oneWay":false,
-         "solid":false
+         "solid":true
         },
      "63":
         {
          "oneWay":false,
-         "solid":false
+         "solid":true
         },
      "7":
         {

@@ -2,6 +2,7 @@
 
 #include "../../../Framework/Graphics/Texture2D.h"
 #include "../../../Framework/Input/InputHandler.h"
+#include "../../../Framework/Audio/Audio.h"
 
 #include "States.h"
 #include "PlayerBullet.h"
@@ -25,7 +26,7 @@ namespace metalwalrus
 	const int Player::shotDamage = 1;
 
 	const int Player::damageAnimationFrames = 20;
-	const float Player::damageVelocity = 75;
+	const float Player::damageVelocity = 100;
 	const int Player::damageImmunityFrames = 50;
 
 	const int Player::framesAfterDeath = 60;
@@ -44,6 +45,7 @@ namespace metalwalrus
 	{
 		parentScene->registerObject(new PlayerBullet(position + Vector2(playerInfo.facingLeft ? 0 : 26, 13), 
 			playerInfo.facingLeft, bulletTex));
+		Audio::engine->play2D("assets/snd/sfx/shoot.wav");
 	}
 
 	void Player::die()
@@ -51,11 +53,12 @@ namespace metalwalrus
 		playerInfo.alive = false;
 		walrusSprite->play("dead");
 		deathFrameTimer = framesAfterDeath;
+		Audio::engine->play2D("assets/snd/sfx/player_death.wav");
 	}
 
 	void Player::handleInput()
 	{
-		if (!playerInfo.canMove) 
+		if (!playerInfo.canMove || !playerInfo.alive) 
 			return;
 
 		// climbing
@@ -244,14 +247,17 @@ namespace metalwalrus
 			{
 				GameScene::playerDead = true;
 				((GameScene*)this->parentScene)->loadLevel(GameScene::currentLevel);
+				return;
 			}
-			return;
 		}
 
-		for (KillBox* k : GameScene::killBoxes)
+		if (playerInfo.alive)
 		{
-			if (boundingBox.intersects(k->get_boundingBox()))
-				this->die();
+			for (KillBox* k : GameScene::killBoxes)
+			{
+				if (boundingBox.intersects(k->get_boundingBox()))
+					this->die();
+			}
 		}
 
 		for (LevelFinish* l : GameScene::levelFinish)
@@ -328,9 +334,12 @@ namespace metalwalrus
 			playerInfo.touchedGroundLastFrame = false;
 		}
 
-		walrusSprite->update(delta);
+		if (playerInfo.alive)
+		{
+			walrusSprite->update(delta);
 
-		playerStateMachine.update(delta, *this);
+			playerStateMachine.update(delta, *this);
+		}
 	}
 
 	void Player::draw(SpriteBatch& batch)
@@ -355,6 +364,8 @@ namespace metalwalrus
 		playerInfo.damagedFromLeft = toPlayer.dot(Vector2::RIGHT) < 0;
 		
 		this->health -= damageAmount;
+
+		Audio::engine->play2D("assets/snd/sfx/player_hurt.wav");
 
 		if (this->health <= 0)
 		{

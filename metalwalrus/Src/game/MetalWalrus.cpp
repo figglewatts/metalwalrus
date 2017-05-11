@@ -8,6 +8,7 @@
 #include "../Framework/Scene/SceneManager.h"
 #include "Scenes/TitleScreenScene.h"
 #include "../Framework/Util/GLError.h"
+#include "../Framework/Audio/Audio.h"
 
 using namespace std;
 
@@ -48,10 +49,13 @@ namespace metalwalrus
 		delete screenBuffer;
 		delete debugBatch;
 		SceneManager::clearScenes();
+		Audio::dropEngine();
 	}
 
 	void MetalWalrus::start()
 	{
+		Audio::createEngine();
+		
 		// initialize inputs
 		InputHandler::addInput("left", GLFW_KEY_LEFT);
 		InputHandler::addInput("up", GLFW_KEY_UP);
