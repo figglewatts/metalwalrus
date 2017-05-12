@@ -5,12 +5,14 @@
 
 #include <iostream>
 #include <string>
+using namespace std;
+
+#include <irrKlang/irrKlang.h>
+
 #include "../Framework/Scene/SceneManager.h"
 #include "Scenes/TitleScreenScene.h"
 #include "../Framework/Util/GLError.h"
 #include "../Framework/Audio/Audio.h"
-
-using namespace std;
 
 #include "../Framework/Settings.h"
 #include "../Framework/Graphics/VertexData.h"
@@ -23,6 +25,8 @@ using namespace std;
 #include "../Framework/Graphics/TileMap.h"
 #include "../Framework/Input/InputHandler.h"
 #include "../Framework/Util/Debug.h"
+#include "../Framework/Audio/PCAudio.h"
+#include "../Framework/Audio/AudioLocator.h"
 
 #include "Entities/Player/Player.h"
 
@@ -43,18 +47,26 @@ namespace metalwalrus
 
 	MetalWalrus::~MetalWalrus()
 	{
+		SceneManager::clearScenes();
+		AudioLocator::dispose();
 		delete fontTex;
 		delete fontSheet;
 		delete screenVbo;
 		delete screenBuffer;
 		delete debugBatch;
-		SceneManager::clearScenes();
-		Audio::dropEngine();
 	}
 
 	void MetalWalrus::start()
 	{
-		Audio::createEngine();
+		// create audio device
+		AudioLocator::initialize();
+		irrklang::ISoundEngine *engine = irrklang::createIrrKlangDevice();
+		PCAudio *audioService = nullptr;
+		if (engine != nullptr)
+		{
+			audioService = new PCAudio(engine);
+		}
+		AudioLocator::provide(audioService);
 		
 		// initialize inputs
 		InputHandler::addInput("left", GLFW_KEY_LEFT);

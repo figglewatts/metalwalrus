@@ -10,6 +10,7 @@ namespace metalwalrus
 	{
 		picojson::value properties;
 
+		PropertyContainer() : properties() { }
 		PropertyContainer(picojson::value properties) : properties(properties) { }
 
 		bool hasProperty(const std::string& name) const

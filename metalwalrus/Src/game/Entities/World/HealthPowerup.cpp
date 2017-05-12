@@ -1,6 +1,6 @@
 #include "HealthPowerup.h"
 #include "../../Scenes/GameScene.h"
-#include "../../../Framework/Audio/Audio.h"
+#include "../../../Framework/Audio/AudioLocator.h"
 
 namespace metalwalrus
 {
@@ -46,7 +46,7 @@ namespace metalwalrus
 		if (boundingBox.intersects(p->get_boundingBox()))
 		{
 			p->add_health(isSmall ? this->smallHealing : this->largeHealing);
-			Audio::engine->play2D("assets/snd/sfx/get_health.wav");
+			AudioLocator::getAudio().playSound("assets/snd/sfx/get_health.wav");
 			this->parentScene->destroyObject(this);
 		}
 	}

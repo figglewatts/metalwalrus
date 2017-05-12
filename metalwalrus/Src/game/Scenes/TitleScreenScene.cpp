@@ -7,7 +7,7 @@
 #include "../../Framework/Graphics/GLContext.h"
 
 #include <cmath>
-#include "../../Framework/Audio/Audio.h"
+#include "../../Framework/Audio/AudioLocator.h"
 
 namespace metalwalrus
 {
@@ -31,7 +31,7 @@ namespace metalwalrus
 
 	void TitleScreenScene::start()
 	{
-		Audio::engine->play2D("assets/snd/music/mw8.ogg", true);
+		AudioLocator::getAudio().playSound("assets/snd/music/mw8.ogg", true);
 		
 		this->updateable = true;
 		

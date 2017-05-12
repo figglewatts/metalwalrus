@@ -2,7 +2,7 @@
 
 #include "../../../Framework/Graphics/Texture2D.h"
 #include "../../../Framework/Input/InputHandler.h"
-#include "../../../Framework/Audio/Audio.h"
+#include "../../../Framework/Audio/AudioLocator.h"
 
 #include "States.h"
 #include "PlayerBullet.h"
@@ -45,7 +45,7 @@ namespace metalwalrus
 	{
 		parentScene->registerObject(new PlayerBullet(position + Vector2(playerInfo.facingLeft ? 0 : 26, 13), 
 			playerInfo.facingLeft, bulletTex));
-		Audio::engine->play2D("assets/snd/sfx/shoot.wav");
+		AudioLocator::getAudio().playSound("assets/snd/sfx/shoot.wav");
 	}
 
 	void Player::die()
@@ -53,7 +53,7 @@ namespace metalwalrus
 		playerInfo.alive = false;
 		walrusSprite->play("dead");
 		deathFrameTimer = framesAfterDeath;
-		Audio::engine->play2D("assets/snd/sfx/player_death.wav");
+		AudioLocator::getAudio().playSound("assets/snd/sfx/player_death.wav");
 	}
 
 	void Player::handleInput()
@@ -305,7 +305,7 @@ namespace metalwalrus
 			{
 				moveTo(Vector2(position.x, tbb.get_top()));
 				if (!playerInfo.onGround)
-					Audio::engine->play2D("assets/snd/sfx/player_land.wav");
+					AudioLocator::getAudio().playSound("assets/snd/sfx/player_land.wav");
 				playerInfo.onGround = true;
 				playerInfo.touchedGroundLastFrame = true;
 			}
@@ -313,7 +313,7 @@ namespace metalwalrus
 			{
 				moveTo(Vector2(position.x, tbb.get_top()));
 				if (!playerInfo.onGround)
-					Audio::engine->play2D("assets/snd/sfx/player_land.wav");
+					AudioLocator::getAudio().playSound("assets/snd/sfx/player_land.wav");
 				playerInfo.onGround = true;
 				playerInfo.touchedGroundLastFrame = true;
 			}
@@ -372,7 +372,7 @@ namespace metalwalrus
 		
 		this->health -= damageAmount;
 
-		Audio::engine->play2D("assets/snd/sfx/player_hurt.wav");
+		AudioLocator::getAudio().playSound("assets/snd/sfx/player_hurt.wav");
 
 		if (this->health <= 0)
 		{

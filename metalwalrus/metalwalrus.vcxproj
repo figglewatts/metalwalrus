@@ -20,7 +20,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Framework\Animation\AnimatedSprite.cpp" />
-    <ClCompile Include="Src\Framework\Audio\Audio.cpp" />
+    <ClCompile Include="Src\Framework\Audio\AudioLocator.cpp" />
+    <ClCompile Include="Src\Framework\Audio\PCAudio.cpp" />
     <ClCompile Include="Src\Framework\Scene\IScene.cpp" />
     <ClCompile Include="Src\Framework\Scene\SceneManager.cpp" />
     <ClCompile Include="src\Framework\Util\JSONUtil.cpp" />
@@ -85,6 +86,9 @@
     <ClInclude Include="src\Framework\Animation\AnimatedSprite.h" />
     <ClInclude Include="src\Framework\Animation\FrameAnimation.h" />
     <ClInclude Include="Src\Framework\Audio\Audio.h" />
+    <ClInclude Include="Src\Framework\Audio\AudioLocator.h" />
+    <ClInclude Include="Src\Framework\Audio\NullAudio.h" />
+    <ClInclude Include="Src\Framework\Audio\PCAudio.h" />
     <ClInclude Include="Src\Framework\Data\PropertyContainer.h" />
     <ClInclude Include="src\Framework\Math\Rectangle.h" />
     <ClInclude Include="Src\Framework\Scene\SceneManager.h" />

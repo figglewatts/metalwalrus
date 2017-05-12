@@ -195,7 +195,10 @@
     <ClCompile Include="Src\game\Scenes\TitleScreenScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Framework\Audio\Audio.cpp">
+    <ClCompile Include="Src\Framework\Audio\PCAudio.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Framework\Audio\AudioLocator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -375,6 +378,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Src\Framework\Audio\Audio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Framework\Audio\PCAudio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Framework\Audio\NullAudio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Framework\Audio\AudioLocator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -2,7 +2,7 @@
 
 #include <cstdlib>
 #include <ctime>
-#include "../../../Framework/Audio/Audio.h"
+#include "../../../Framework/Audio/AudioLocator.h"
 
 namespace metalwalrus
 {
@@ -35,7 +35,7 @@ namespace metalwalrus
 	void Enemy::takeDamage(int damageAmount)
 	{
 		health -= damageAmount;
-		Audio::engine->play2D("assets/snd/sfx/enemy_hurt.wav");
+		AudioLocator::getAudio().playSound("assets/snd/sfx/enemy_hurt.wav");
 		if (health <= 0) this->die();
 	}
 

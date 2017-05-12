@@ -10,7 +10,7 @@
 
 #include <sstream>
 #include <iomanip>
-#include "../../Framework/Audio/Audio.h"
+#include "../../Framework/Audio/AudioLocator.h"
 
 namespace metalwalrus
 {
@@ -94,7 +94,7 @@ namespace metalwalrus
 		levels.push_back("level1.json");
 		levels.push_back("level2.json");
 
-		Audio::engine->play2D("assets/snd/music/selection8.ogg", true);
+		AudioLocator::getAudio().playSound("assets/snd/music/selection8.ogg", true);
 
 		this->updateable = true;
 		

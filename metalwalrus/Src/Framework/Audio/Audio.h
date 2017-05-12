@@ -2,19 +2,14 @@
 #define AUDIO_H
 #pragma once
 
-#include <irrKlang/irrKlang.h>
-
 namespace metalwalrus
 {
 	class Audio
 	{
 	public:
-		~Audio();
-
-		static void createEngine();
-		static void dropEngine();
-
-		static irrklang::ISoundEngine *engine; 
+		virtual ~Audio() {}
+		virtual void playSound(const char* sound, bool loop = false) = 0;
+		virtual void stopAllSounds() = 0;
 	};
 }
 
