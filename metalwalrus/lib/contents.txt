@@ -1,5 +1,6 @@
-freeglut.lib
 glew32.lib
 glfw3.lib
 glfw3dll.lib
+irrKlang.exp
+irrKlang.lib
 lodepng.cpp
