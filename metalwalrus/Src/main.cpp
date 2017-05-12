@@ -7,6 +7,8 @@
 #include <iostream>
 using namespace std;
 
+#include "../resource.h"
+
 #include "Framework/Util/Debug.h"
 #include "Framework/Util/GLError.h"
 #include "Framework/Input/InputHandler.h"

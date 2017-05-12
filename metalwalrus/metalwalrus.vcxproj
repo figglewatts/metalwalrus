@@ -83,6 +83,7 @@
     <ClCompile Include="src\Framework\Graphics\TileMap.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="resource.h" />
     <ClInclude Include="src\Framework\Animation\AnimatedSprite.h" />
     <ClInclude Include="src\Framework\Animation\FrameAnimation.h" />
     <ClInclude Include="Src\Framework\Audio\Audio.h" />
@@ -145,6 +146,9 @@
     <ClInclude Include="src\Framework\Graphics\TileMap.h" />
     <ClInclude Include="Src\game\Scenes\GameScene.h" />
     <ClInclude Include="Src\game\Scenes\TitleScreenScene.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{BC71CF58-3950-4419-8D2A-03A201012C6D}</ProjectGuid>

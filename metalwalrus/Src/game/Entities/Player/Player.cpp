@@ -43,7 +43,7 @@ namespace metalwalrus
 
 	void Player::shoot()
 	{
-		parentScene->registerObject(new PlayerBullet(position + Vector2(playerInfo.facingLeft ? 0 : 26, 13), 
+		parentScene->registerObject(new PlayerBullet(position + Vector2(playerInfo.facingLeft ? 0 : 26, 11), 
 			playerInfo.facingLeft, bulletTex));
 		AudioLocator::getAudio().playSound("assets/snd/sfx/shoot.wav");
 	}
