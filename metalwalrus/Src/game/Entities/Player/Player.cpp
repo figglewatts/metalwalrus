@@ -31,6 +31,8 @@ namespace metalwalrus
 
 	const int Player::framesAfterDeath = 60;
 
+	int Player::score = 0;
+
 	Ladder *Player::checkCanClimb()
 	{
 		for (Ladder *l : GameScene::ladders)
@@ -232,7 +234,6 @@ namespace metalwalrus
 		playerInfo.facingLeftBeforeDamage = false;
 
 		this->health = this->maxHealth;
-		this->score = 0;
 
 		playerStateMachine.push(new IdleState("idle", &playerStateMachine), *this);
 

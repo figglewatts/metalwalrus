@@ -41,7 +41,7 @@ namespace metalwalrus
 		};
 
 		int health;
-		int score;
+		static int score;
 
 		PlayerState currentState = PlayerState::IDLE;
 

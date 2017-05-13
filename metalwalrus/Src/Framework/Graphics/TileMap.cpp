@@ -150,12 +150,12 @@ namespace metalwalrus
 		int bottomTile = boundingBox.get_bottom()
 			/ this->get_sheets()[0]->get_spriteHeight();
 
-		if (leftTile < 0) leftTile = 0;
+		if (leftTile < 0) return false;
 		if (rightTile >= this->get_width())
-			rightTile = this->get_width() - 1;
-		if (bottomTile < 0) bottomTile = 0;
+			return false;
+		if (bottomTile < 0) return false;
 		if (topTile >= this->get_height())
-			topTile = this->get_height() - 1;
+			return false;
 
 		for (int i = leftTile; i <= rightTile; i++)
 		{
