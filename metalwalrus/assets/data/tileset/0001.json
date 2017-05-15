@@ -162,7 +162,7 @@
      "36":
         {
          "oneWay":false,
-         "solid":true
+         "solid":false
         },
      "37":
         {
@@ -653,5 +653,6 @@
          "solid":"bool"
         }
     },
- "tilewidth":16
+ "tilewidth":16,
+ "type":"tileset"
 }
