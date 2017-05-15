@@ -9,6 +9,7 @@ namespace metalwalrus
 		p.get_playerInfo().jumping = false;
 		p.get_playerInfo().canJump = false;
 		p.get_playerInfo().canMove = false;
+		p.get_playerInfo().climbing = false;
 
 		p.get_playerInfo().facingLeft = p.get_playerInfo().damagedFromLeft;
 

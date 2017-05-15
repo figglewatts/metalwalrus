@@ -12,7 +12,7 @@ namespace metalwalrus
 		static const std::string staticClassname;
 
 		Ladder(Vector2 pos, picojson::value properties)
-			: WorldObject(pos, 16, 15, "ladder", properties) { }
+			: WorldObject(pos, 16, 16, "ladder", properties) { }
 
 		void start() override;
 	};

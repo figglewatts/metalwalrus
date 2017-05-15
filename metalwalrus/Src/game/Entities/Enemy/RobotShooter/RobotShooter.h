@@ -9,7 +9,7 @@ namespace metalwalrus
 	{
 		static Texture2D *robotTex;
 		static SpriteSheet *robotSheet;
-		const static int SENSE_DISTANCE = 80;
+		const static int SENSE_DISTANCE = 140;
 		AnimatedSprite *sprite;
 		
 		float timeBetweenShots;
@@ -23,10 +23,10 @@ namespace metalwalrus
 		RobotShooter(Vector2 pos, bool isHard, bool facingLeft)
 			: Enemy(pos, 15, 30, Vector2(6, 0), isHard, facingLeft,
 				isHard ? 6 : 4,
-				isHard ? 3 : 2,
+				isHard ? 4 : 3,
 				isHard ? 600 : 400)
 			, timeBetweenShots(isHard ? 0.1 : 0.2)
-			, shotCooldown(isHard ? 1.5 : 3)
+			, shotCooldown(isHard ? 0.6 : 1)
 			, bulletSpeed(isHard ? 100 : 100)
 			, numberOfShots(isHard ? 3 : 3) { }
 		~RobotShooter()

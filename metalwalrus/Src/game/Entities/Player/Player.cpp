@@ -40,6 +40,10 @@ namespace metalwalrus
 			if (this->boundingBox.intersects(l->get_boundingBox()))
 				return l;
 		}
+		if (!playerInfo.climbing)
+		{
+			playerInfo.canClimb = true;
+		}
 		return nullptr;
 	}
 
@@ -66,17 +70,31 @@ namespace metalwalrus
 		// climbing
 		if (Ladder *l = checkCanClimb())
 		{
-			if (InputHandler::checkButton("up", ButtonState::DOWN))
+			if (InputHandler::checkButton("up", ButtonState::DOWN) 
+				&& this->boundingBox.get_bottom() < l->get_boundingBox().get_top())
 			{
 				playerInfo.climbing = true;
 				playerInfo.canJump = false;
+				playerInfo.canClimb = false;
 				this->moveTo(Vector2(l->get_position().x - 8, this->position.y));
+				this->velocity.x = 0;
+			}
+
+			if (InputHandler::checkButton("down", ButtonState::DOWN)
+				&& this->boundingBox.get_bottom() >= l->get_boundingBox().get_top())
+			{
+				playerInfo.climbing = true;
+				playerInfo.canJump = false;
+				playerInfo.canClimb = false;
+				playerInfo.onGround = false;
+				this->moveTo(Vector2(l->get_position().x - 8, this->position.y-2));
 				this->velocity.x = 0;
 			}
 		}
 		else
 		{
 			playerInfo.climbing = false;
+			playerInfo.canClimb = false;
 		}
 
 		if (playerInfo.climbing)
@@ -230,7 +248,7 @@ namespace metalwalrus
 		playerInfo.canTakeDamage = true;
 		playerInfo.alive = true;
 		playerInfo.climbing = false;
-		playerInfo.canClimb = false;
+		playerInfo.canClimb = true;
 		playerInfo.facingLeftBeforeDamage = false;
 
 		this->health = this->maxHealth;

@@ -31,7 +31,7 @@ namespace metalwalrus
 
 	void TitleScreenScene::start()
 	{
-		AudioLocator::getAudio().playSound("assets/snd/music/mw8.ogg", true);
+		AudioLocator::getAudio().playSound("assets/snd/music/selection8.ogg", true);
 		
 		this->updateable = true;
 		

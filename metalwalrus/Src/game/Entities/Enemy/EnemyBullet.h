@@ -16,7 +16,7 @@ namespace metalwalrus
 
 		const Vector2 bulletVelocity;
 		static Texture2D *bulletTex;
-		static Player *p;
+		Player *p = nullptr;
 	public:
 		EnemyBullet(Vector2 pos, Vector2 bulletVelocity, int damage);
 

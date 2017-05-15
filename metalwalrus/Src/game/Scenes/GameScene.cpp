@@ -94,7 +94,7 @@ namespace metalwalrus
 		levels.push_back("level1.json");
 		levels.push_back("level2.json");
 
-		AudioLocator::getAudio().playSound("assets/snd/music/selection8.ogg", true);
+		AudioLocator::getAudio().playSound("assets/snd/music/mw8.ogg", true);
 
 		this->updateable = true;
 		

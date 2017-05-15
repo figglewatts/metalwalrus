@@ -41,11 +41,11 @@ namespace metalwalrus
 		if (GameScene::loadedMap->boundingBoxCollides(boundingBox, bb, t))
 		{
 			this->velocity.y = 0;
-			this->velocity.x = 0;
 			this->moveTo(oldPosition);
 			if (this->position.y > bb.get_top())
 			{
 				this->onGround = true;
+				this->velocity.x = 0;
 			}
 		}
 		else

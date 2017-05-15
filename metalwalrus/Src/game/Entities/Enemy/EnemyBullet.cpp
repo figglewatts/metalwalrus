@@ -5,10 +5,11 @@
 namespace metalwalrus
 {
 	Texture2D *EnemyBullet::bulletTex;
-	Player *EnemyBullet::p;
 	
 	EnemyBullet::EnemyBullet(Vector2 pos, Vector2 bulletVelocity, int damage)
-		: SolidObject(pos, 8, 6, Vector2::ZERO), bulletVelocity(bulletVelocity), timer(0), damage(damage) { }
+		: SolidObject(pos, 8, 6, Vector2::ZERO), bulletVelocity(bulletVelocity), timer(0), damage(damage), p(nullptr)
+	{
+	}
 	
 	void EnemyBullet::start()
 	{
@@ -18,8 +19,10 @@ namespace metalwalrus
 
 	void EnemyBullet::update(double delta)
 	{
-		if (p == nullptr)
+		if (!p)
+		{
 			p = (Player*)this->parentScene->getWithID(GameScene::playerID);
+		}
 		
 		timer += delta;
 		if (timer > lifeTime)
