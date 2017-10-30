@@ -1,5 +1,7 @@
 # METAL WALRUS
 
+This was a 2D game I had to make for a computer graphics module at University. I used OpenGL with GLEW and GLFW.
+
 ## Level design info
 
 ### Max Jumps
